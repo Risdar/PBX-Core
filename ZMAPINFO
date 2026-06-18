@@ -1,0 +1,4 @@
+Gameinfo
+{
+	addeventhandlers = "PBXCore_HUDHandler"
+}

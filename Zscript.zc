@@ -1,0 +1,24 @@
+Version 4.13
+
+// General
+#include "Zscript/PBX_Core/PBXCore_HUDSystem.zs"
+#include "Zscript/PBX_Core/PBXCore_HUDData.zs"
+
+class PBXHUDData : Object
+{
+    bool Handled;
+
+    bool SkipAutoDraw;
+
+    String Image1;
+    String Image2;
+    String Image3;
+
+    Vector2 Offset1;
+    Vector2 Offset2;
+    Vector2 Offset3;
+
+    double Scale1;
+    double Scale2;
+    double Scale3;
+}
