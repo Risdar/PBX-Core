@@ -21,3 +21,10 @@ user float PBXWeapons_WeaponModehud_scale = 2.5;
 user float PBXWeapons_WeaponModehud_alpha = 1.0;
 user int PBXWeapons_WeaponModehud_boxW = 56;
 user int PBXWeapons_WeaponModehud_boxH = 56;
+
+user int PBXWeapons_Armorhud_x = -100;
+user int PBXWeapons_Armorhud_y = -90;
+user float PBXWeapons_Armorhud_scale = 1.0;
+user float PBXWeapons_Armorhud_alpha = 1.0;
+user int PBXWeapons_Armorhud_boxW = 96;
+user int PBXWeapons_Armorhud_boxH = 36;

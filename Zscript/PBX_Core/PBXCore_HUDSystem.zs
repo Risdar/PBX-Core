@@ -1,6 +1,7 @@
 enum PBX_eHudSettingFlags{
-    DisablePBX_WeaponHud    = 1 << 0,
-    DisablePBX_ArmorHud		= 1 << 1
+    DisablePBX_WeaponHud        = 1 << 0,
+    DisablePBX_WeaponModeHud    = 1 << 1,
+    DisablePBX_ArmorHud		    = 1 << 2
 }
 
 // HUD System
@@ -8,28 +9,30 @@ class PBXCore_HUDHandler : EventHandler
 {
 //////////////////////////// VARIABLES ////////////////////////////////////////////////////////////////////////////////////
     // Position
-    ui int pbx_weapon_PosX, pbx_weapon_PosY, pbx_weaponmode_PosX, pbx_weaponmode_PosY;
+    ui int pbx_weapon_PosX, pbx_weapon_PosY, pbx_weaponmode_PosX, pbx_weaponmode_PosY, pbx_armor_PosX, pbx_armor_PosY;
 
     // Scale
-    ui double pbx_weaponmode_hudscale, pbx_weapon_hudscale;
+    ui double pbx_weapon_hudscale, pbx_weaponmode_hudscale, pbx_armor_hudscale;
 
     // Transparency
-    ui double pbx_weapon_alpha, pbx_weaponmode_alpha;
+    ui double pbx_weapon_alpha, pbx_weaponmode_alpha, pbx_armor_alpha;
 
     // Cut Off Range (Box)
     ui int pbx_weapon_boxW, pbx_weapon_boxH;
     ui int pbx_weaponmode_boxW, pbx_weaponmode_boxH;
+    ui int pbx_armor_boxW, pbx_armor_boxH;
 
     // Combine all individual values into one vector2
     ui Vector2 pbx_weapon_pos, pbx_weapon_truescale, pbx_weapon_box1;
     ui Vector2 pbx_weapon_pos2, pbx_weapon_truescale2, pbx_weapon_box2;
     ui Vector2 pbx_weapon_pos3, pbx_weapon_truescale3, pbx_weapon_box3;
+    ui Vector2 pbx_armor_pos, pbx_armor_truescale, pbx_armor_box1;
 
     // Flags
     ui int flagsleft, flagsright, flagssTextAlignRight, flagsManualVisor1, flagsManualVisor2;
 
     // Icons
-    ui string pbx_image, pbx_image2, pbx_image3;
+    ui string pbx_image, pbx_image2, pbx_image3, pbx_image4;
 
     // Services
     ui Array<Service> PBX_HUDServices;
@@ -58,6 +61,10 @@ class PBXCore_HUDHandler : EventHandler
         if(PBXWeapons_hudsetting_filter & DisablePBX_WeaponHud) 
             return;
 
+        // Get a pointer to the player
+        let plr = players[consoleplayer];
+        if (!plr) return;
+
         // Dont draw if the player is not in a leve or if the automap is active
         if (gamestate != GS_LEVEL || automapactive)
             return;
@@ -70,9 +77,9 @@ class PBXCore_HUDHandler : EventHandler
         if (phud.hudState == BaseStatusBar.HUD_None || phud.PlayerWasDead) 
             return;
 
-        // Get a pointer to the player and weapon
-        let plr = players[consoleplayer];
+        // Get a pointer to the weapon
         let weap = plr.ReadyWeapon;
+        if (!weap) return;
         let pbWeap = PB_WeaponBase(weap);
         if (!pbWeap) return;
 
@@ -83,15 +90,21 @@ class PBXCore_HUDHandler : EventHandler
         // Begin drawing the HUD
         phud.BeginHUD();                   // Initialize
         FindHUDServices();                 // Find other mods that uses PBX HUD
-        DrawPBXWeaponAuto(phud,pbWeap);    // Automatically draw weapons that set their AltHudIcon
-        DrawPBWeapon(phud,pbWeap);         // Draw the PB Weapons
-        DrawPBXHUD(phud,pbweap);           // Draw every weapon that has a PBHUDData
+        DrawPBWeapon(phud,pbWeap);         // Get the Weapon Data for PB Weapons
+        DrawPBXHUD(phud,pbweap);           // Get the Weapon Data for everything else
+        DrawPBXWeaponAuto(phud,pbWeap);    // Automatically get the weapon Icons
 
          // Actually Draw the Thing
         if(pbweap.akimboMode) 
             PBX_DrawImage(phud,DRAW_WEAPON_ICON,true); // Draw an extra icon behind the weapon if in dual wield
 
         PBX_DrawImage(phud, DRAW_WEAPON_ICON);
+
+        // Dont draw the rest if the weapon mode hud is disabled
+        if((PBXWeapons_hudsetting_filter & DisablePBX_WeaponModeHud)) 
+            return;
+
+        // phud.PBHud_DrawImage("EQUPBO", (-250, -17), flagsright, phud.playerBoxAlpha);
 
         if(pbx_image2 != "") 
             PBX_DrawImage(phud, DRAW_MODE_ICON);
@@ -194,15 +207,15 @@ class PBXCore_HUDHandler : EventHandler
             // Slot 3
             "PB_Shotgun", "PB_Autoshotgun", "PB_QuadSG",
             // Slot 4
-            "PB_DMR",
+            "PB_DMR", "PB_LMG", "PB_ChexRifle"
             // Slot 5
             "PB_Minigun",
             // Slot 7
             "PB_M2Plasma",
             // Slot 8
-            "PB_Flamethrower"
+            "PB_Flamethrower",
             // Slot 9
-
+            "PB_BFG9000","PB_Unmaker"
         };
 
         // Handle exceptions
