@@ -1,7 +1,9 @@
 enum PBX_eHudSettingFlags{
     DisablePBX_WeaponHud        = 1 << 0,
     DisablePBX_WeaponModeHud    = 1 << 1,
-    DisablePBX_ArmorHud		    = 1 << 2
+    DisablePBX_WeaponModeBG     = 1 << 2,
+    DisablePBX_ArmorHud		    = 1 << 3,
+    DisablePBX_ArmorHudBG		= 1 << 4
 }
 
 // HUD System
@@ -26,10 +28,10 @@ class PBXCore_HUDHandler : EventHandler
     ui Vector2 pbx_weapon_pos, pbx_weapon_truescale, pbx_weapon_box1;
     ui Vector2 pbx_weapon_pos2, pbx_weapon_truescale2, pbx_weapon_box2;
     ui Vector2 pbx_weapon_pos3, pbx_weapon_truescale3, pbx_weapon_box3;
-    ui Vector2 pbx_armor_pos, pbx_armor_truescale, pbx_armor_box1;
+    ui Vector2 pbx_armor_pos, pbx_armor_truescale, pbx_armor_box;
 
     // Flags
-    ui int flagsleft, flagsright, flagssTextAlignRight, flagsManualVisor1, flagsManualVisor2;
+    ui int flagsleft, flagsright, flagssTextAlignRight, flagsManualVisor1, flagsManualVisor2, flagsLeftCenter;
 
     // Icons
     ui string pbx_image, pbx_image2, pbx_image3, pbx_image4;
@@ -55,6 +57,39 @@ class PBXCore_HUDHandler : EventHandler
     const AKIMBO_POSITION_Y = -10;
     
 //////////////////////////// MAIN FUNCTION ////////////////////////////////////////////////////////////////////////////////////
+    override void RenderOverlay(RenderEvent e)
+    {
+        // Dont draw if the HUD is disabled
+        if(PBXWeapons_hudsetting_filter & DisablePBX_ArmorHud) 
+            return;
+
+        // Get a pointer to the player
+        let plr = players[consoleplayer];
+        if (!plr) return;
+
+        // Dont draw if the player is not in a leve or if the automap is active
+        if (gamestate != GS_LEVEL || automapactive)
+            return;
+
+        // Get a pointer to the PB Hud so we can access it
+        let phud = PB_Hud_ZS(StatusBar);
+        if (!phud) return;
+
+        // Dont draw if the player is dead
+        if (phud.hudState == BaseStatusBar.HUD_None || phud.PlayerWasDead) 
+            return;
+
+        // If the menu is active or the console is up
+        if (menuactive || consolestate == c_up)
+            gatherArmorHUDCVARs(plr); // Gather the CVARs
+
+        // Begin drawing the HUD
+        phud.BeginHUD();                   // Initialize
+        DrawArmorHUD(plr,phud);
+        // Actually Draw the Thing
+
+    }
+
     override void RenderUnderlay(RenderEvent e)
     {
         // Dont draw if the HUD is disabled
@@ -85,7 +120,7 @@ class PBXCore_HUDHandler : EventHandler
 
         // If the menu is active or the console is up
         if (menuactive || consolestate == c_up)
-            gatherPBXCVARs(plr,phud); // Gather the CVARs
+            gatherWeaponHUDCVARs(plr,phud); // Gather the CVARs
 
         // Begin drawing the HUD
         phud.BeginHUD();                   // Initialize
@@ -138,6 +173,7 @@ class PBXCore_HUDHandler : EventHandler
     private
     ui PBXHUDData GetExternalHUD(PB_WeaponBase weapon)
     {
+        if(!weapon) return null;
         for (int i = 0; i < PBX_HUDServices.Size(); i++)
         {
             let data = PBXHUDData(PBX_HUDServices[i].GetObjectUI("PBX_HUD",objectArg:weapon));
@@ -151,7 +187,7 @@ class PBXCore_HUDHandler : EventHandler
 
     // Get the user CVARs
     protected
-    ui void gatherPBXCVARs(PlayerInfo plr, PB_Hud_ZS phud)
+    ui void gatherWeaponHUDCVARs(PlayerInfo plr, PB_Hud_ZS phud)
     {
         // Weapon Pickup Sprites
         pbx_weapon_PosX = CVar.GetCVar("pbxweapons_Weaponhud_x", plr).GetInt();
@@ -176,19 +212,39 @@ class PBXCore_HUDHandler : EventHandler
         pbx_weapon_pos2 = (pbx_weaponmode_PosX, pbx_weaponmode_PosY);
         pbx_weapon_truescale2 = (pbx_weaponmode_hudscale, pbx_weaponmode_hudscale);
         pbx_weapon_box2 = (pbx_weaponmode_boxW, pbx_weaponmode_boxH);
-        
+
         // Special cases where weapons uses two modes at the same time
         pbx_weapon_pos3 = pbx_weapon_pos2 + (0,-10);
         pbx_weapon_truescale3 = pbx_weapon_truescale2;
         pbx_weapon_box3 = (pbx_weaponmode_boxW, pbx_weaponmode_boxH);
 
         // Flags
-        flagsleft = BaseStatusBar.DI_SCREEN_LEFT_BOTTOM | BaseStatusBar.DI_ITEM_LEFT_BOTTOM;
         flagsright = BaseStatusBar.DI_SCREEN_RIGHT_BOTTOM | BaseStatusBar.DI_ITEM_RIGHT_BOTTOM;
         flagssTextAlignRight = BaseStatusBar.DI_TEXT_ALIGN_RIGHT;
 
         // Others
         akimboPosition = (AKIMBO_POSITION_X,AKIMBO_POSITION_Y);
+
+    }
+    
+    protected
+    ui void gatherArmorHUDCVARs(PlayerInfo plr)
+    {
+        // Armor
+        pbx_armor_PosX = CVar.GetCVar("PBXWeapons_Armorhud_x", plr).GetInt();
+        pbx_armor_PosY = CVar.GetCVar("PBXWeapons_Armorhud_y", plr).GetInt();
+        pbx_armor_hudscale = CVar.GetCVar("PBXWeapons_Armorhud_scale", plr).GetFloat();
+        pbx_armor_alpha = CVar.GetCVar("PBXWeapons_Armorhud_alpha", plr).GetFloat();
+        pbx_armor_boxW = CVar.GetCVar("PBXWeapons_Armorhud_boxW", plr).GetInt();
+        pbx_armor_boxH = CVar.GetCVar("PBXWeapons_Armorhud_boxH", plr).GetInt();
+
+        pbx_armor_pos = (pbx_armor_PosX, pbx_armor_PosY);
+        pbx_armor_truescale = (pbx_armor_hudscale, pbx_armor_hudscale);
+        pbx_armor_box = (pbx_armor_boxW, pbx_armor_boxH);
+
+        // Flags
+        flagsleft = BaseStatusBar.DI_SCREEN_LEFT_BOTTOM | BaseStatusBar.DI_ITEM_LEFT_BOTTOM;
+        flagsLeftCenter = BaseStatusBar.DI_SCREEN_LEFT_BOTTOM | BaseStatusBar.DI_ITEM_CENTER;
 
     }
 
@@ -267,7 +323,14 @@ class PBXCore_HUDHandler : EventHandler
             case DRAW_MODE_ICON   : image = pbx_image2; pos = pbx_weapon_pos2; scale = pbx_weapon_truescale2; transparency = pbx_weaponmode_alpha; box = pbx_weapon_box2; break;
             case DRAW_MODE2_ICON  : image = pbx_image3; pos = pbx_weapon_pos3; scale = pbx_weapon_truescale3; transparency = pbx_weaponmode_alpha; box = pbx_weapon_box3; break;
         }
-        phud.PBHud_DrawImage(image, drawAkimbo ? pos + akimboPosition : pos, flagsright, transparency, scale: scale);
+        phud.PBHud_DrawImage(
+            image, 
+            drawAkimbo ? pos + akimboPosition : pos,
+            flagsright, 
+            transparency, 
+            scale:scale 
+            // box:box
+        );
     }
 
     static clearscope bool PBX_PlayerHasInventory(name inv)

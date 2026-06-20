@@ -222,33 +222,25 @@ extend class PBXCore_HUDHandler
                 bool tripleMode   = PBX_PlayerHasInventory("TripleBarrelMode");
                 bool chaingunMode = PBX_PlayerHasInventory("ChainGunMode");
 
-                // If the current mode is the triplebarrel
-                int mode =  ! chaingunMode && tripleMode   ? 2     // triple
-                            : chaingunMode && !tripleMode  ? 1     // chaingun (default)
-                            : 0;                                   // normal
-
                 pbx_image   = icon;
                 adjustPos   = (-15,32);
                 pbx_image3  = "";
 
                 // Weapon Mode
-                switch(mode)
+                if(tripleMode)
                 {
-                    case 0:
-                    case 1:
-                        pbx_image2      = mode == 1 ? "graphics/WeaponIcons/NORMALSPEED.png" 
-                                                    : "graphics/WeaponIcons/HIGHSPEED.png";
-                        adjustPos2      = (0, 0);
-                        adjustScale2    = 0.9;
-                        break;
-
-                    case 2:
-                        pbx_image       = "8GUNA0";
-                        pbx_image2      = "graphics/WeaponIcons/EXTREMELYHIHGSPID.png";
-                        adjustPos       = (-20,32);
-                        adjustPos2      = (-3, 0);
-                        adjustScale2    = 0.5;
-                        break;
+                    pbx_image       = "8GUNA0";
+                    pbx_image2      = "graphics/WeaponIcons/EXTREMELYHIHGSPID.png";
+                    adjustPos       = (-20,32);
+                    adjustPos2      = (-3, 0);
+                    adjustScale2    = 0.5;
+                }
+                else
+                {
+                    pbx_image2      = !chaingunMode ? "graphics/WeaponIcons/HIGHSPEED.png" 
+                                                    : "graphics/WeaponIcons/NORMALSPEED.png";
+                    adjustPos2      = (0, 0);
+                    adjustScale2    = 0.9;
                 }
                 break;
 
@@ -410,5 +402,67 @@ extend class PBXCore_HUDHandler
         // If akimbo then put the icon higher regardless
         if(isAkimbo || hdmrGrenMode) // Edge case for the HDMR Grenade Mode
             pbx_weapon_pos.y += AKIMBO_POSITION_WHOLE;
+    }
+
+    protected
+    ui void DrawArmorHUD(PlayerInfo plr, PB_Hud_ZS phud)
+    {
+        // Draw the BG if its enabled
+        if(!(PBXWeapons_hudsetting_filter & DisablePBX_ArmorHudBG)) 
+            phud.PBHud_DrawImage(
+                "ARMRBO", 
+                pbx_armor_pos, // This is so the BG always follow the icon
+                flagsLeftCenter,
+                pbx_armor_alpha
+            );
+
+        // Big thanks to vortex for this code, I've modified it a bit to fit what I need
+        let barmor = BasicArmor(plr.mo.FindInventory("BasicArmor", true));
+        if(!barmor) return;
+
+        if (barmor.Amount > 0)
+        {
+            TextureID iconID = barmor.Icon;
+            class<Inventory> armorClass = (class<Inventory>)(barmor.ArmorType);
+            if (armorClass)
+            {
+                name armorType = armorClass.GetClassName();
+
+                // Hardcoded icons because PB's Armors doesnt have their icons set
+                if (armorType == 'PB_GreenArmor') 
+                {
+                    iconID = TexMan.CheckForTexture("4RM1A0", TexMan.Type_Any);
+                    pbx_armor_truescale *= 5.0;
+                }
+                else if (armorType == 'PB_BlueArmor')  
+                {
+                    iconID = TexMan.CheckForTexture("4RM2A0", TexMan.Type_Any);
+                    pbx_armor_truescale *= 5.0;
+                }
+                // Automatically draw the AltHudIcon for the armors
+                else
+                {
+                    let def = GetDefaultByType(armorClass);
+                    iconID = def.AltHUDIcon.IsValid() ? def.AltHUDIcon : def.Icon;
+                }
+            }
+            pbx_image4 = TexMan.GetName(iconID);
+        }
+        else
+        {
+            // Draw a No Armor Text if the player didnt have any
+            pbx_image4 = "ARMRNO";
+            pbx_armor_truescale = (1.5,1.5);
+
+        }
+
+        // Actually Draw the thing
+        phud.PBHud_DrawImage(
+            pbx_image4, 
+            pbx_armor_pos, 
+            flagsLeftCenter,
+            pbx_armor_alpha,
+            scale:pbx_armor_truescale
+        );
     }
 }

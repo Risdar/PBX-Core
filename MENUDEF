@@ -14,25 +14,32 @@ OptionMenu "PBXHud_Menu"
     Slider     "Vertical (Y)",          "PBXWeapons_Weaponhud_y",          -700, 700, 1
     Slider     "Scale",                 "PBXWeapons_Weaponhud_scale",      0.1, 10, 0.1
     Slider     "Transparency",	        "PBXWeapons_Weaponhud_alpha",      0, 1, 0.02, 2
-    Slider     "Scale Cut-Off (X)",     "PBXWeapons_Weaponhud_boxW",       1, 250, 1
-    Slider     "Scale Cut-Off (Y)",     "PBXWeapons_Weaponhud_boxH",       1, 250, 1
+    /* Slider     "Scale Cut-Off (X)",     "PBXWeapons_Weaponhud_boxW",       1, 250, 1
+    Slider     "Scale Cut-Off (Y)",     "PBXWeapons_Weaponhud_boxH",       1, 250, 1 */
     StaticText " "
     FlagOption "Weapon Mode HUD",       "PBXWeapons_hudsetting_filter",    "OffOn", 1
     Slider     "Horizontal (X)",        "PBXWeapons_WeaponModehud_x",      -700, 700, 1
     Slider     "Vertical (Y)",          "PBXWeapons_WeaponModehud_y",      -700, 700, 1
     Slider     "Scale",                 "PBXWeapons_WeaponModehud_scale",  0.1, 10, 0.1
     Slider     "Transparency",	        "PBXWeapons_WeaponModehud_alpha",  0, 1, 0.02, 2
-    Slider     "Scale Cut-Off (X)",     "PBXWeapons_WeaponModehud_boxW",   1, 250, 1
-    Slider     "Scale Cut-Off (Y)",     "PBXWeapons_WeaponModehud_boxH",   1, 250, 1
+    /* Slider     "Scale Cut-Off (X)",     "PBXWeapons_WeaponModehud_boxW",   1, 250, 1
+    Slider     "Scale Cut-Off (Y)",     "PBXWeapons_WeaponModehud_boxH",   1, 250, 1 */
     StaticText " "
-    
-   
-    StaticText " "
+    FlagOption "Armor HUD",             "PBXWeapons_hudsetting_filter",    "OffOn", 3
+    FlagOption "Armor HUD Background",  "PBXWeapons_hudsetting_filter",    "OffOn", 4
+    Slider     "Horizontal (X)",        "PBXWeapons_Armorhud_x",      -700, 700, 1
+    Slider     "Vertical (Y)",          "PBXWeapons_Armorhud_y",      -700, 700, 1
+    Slider     "Scale",                 "PBXWeapons_Armorhud_scale",  0.1, 10, 0.1
+    Slider     "Transparency",	        "PBXWeapons_Armorhud_alpha",  0, 1, 0.02, 2
+    /* Slider     "Scale Cut-Off (X)",     "PBXWeapons_Armorhud_boxW",   1, 250, 1
+    Slider     "Scale Cut-Off (Y)",     "PBXWeapons_Armorhud_boxH",   1, 250, 1 */
     
     StaticText " "
     
     // Reset
-    Command "Reset HUD to Default", "resetcvar PBXWeapons_Weaponhud_x; resetcvar PBXWeapons_Weaponhud_y; resetcvar PBXWeapons_Weaponhud_scale; resetcvar PBXWeapons_Weaponhud_alpha; resetcvar PBXWeapons_Weaponhud_boxW; resetcvar PBXWeapons_Weaponhud_boxH; resetcvar PBXWeapons_WeaponModehud_x; resetcvar PBXWeapons_WeaponModehud_y; resetcvar PBXWeapons_WeaponModehud_scale; resetcvar PBXWeapons_WeaponModehud_alpha; resetcvar PBXWeapons_WeaponModehud_boxW; resetcvar PBXWeapons_WeaponModehud_boxH"
+    Command "Reset Weapon HUD to Default", "resetcvar PBXWeapons_Weaponhud_x; resetcvar PBXWeapons_Weaponhud_y; resetcvar PBXWeapons_Weaponhud_scale; resetcvar PBXWeapons_Weaponhud_alpha; resetcvar PBXWeapons_Weaponhud_boxW; resetcvar PBXWeapons_Weaponhud_boxH"
+    Command "Reset Weapon Mode HUD to Default", "resetcvar PBXWeapons_WeaponModehud_x; resetcvar PBXWeapons_WeaponModehud_y; resetcvar PBXWeapons_WeaponModehud_scale; resetcvar PBXWeapons_WeaponModehud_alpha; resetcvar PBXWeapons_WeaponModehud_boxW; resetcvar PBXWeapons_WeaponModehud_boxH"
+    Command "Reset Armor HUD to Default", "resetcvar PBXWeapons_Armorhud_x; resetcvar PBXWeapons_Armorhud_y; resetcvar PBXWeapons_Armorhud_scale; resetcvar PBXWeapons_Armorhud_alpha; resetcvar PBXWeapons_Armorhud_boxW; resetcvar PBXWeapons_Armorhud_boxH"
     
     StaticText " "
 
