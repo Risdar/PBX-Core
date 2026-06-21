@@ -1,3 +1,43 @@
+AddOptionMenu "OptionsMenu"
+{
+    Submenu "$PBXCore_Settings", "PB_AddonOptions"
+}
+AddOptionMenu "OptionsMenuSimple"
+{
+	Submenu "$PBXCore_Settings", "PB_AddonOptions"
+}
+ListMenu "MainMenu"
+{
+	Font		"PBBIG",	"red",	"white"
+	StaticPatch	160, -2,	"M_DOOMPB",	1
+	Position	85, 66
+	TextItem	"New Game",	"n",	"PlayerclassMenu"
+	Selector	"M_SKULL1",	-30, -8
+	ifOption(SwapMenu)
+	{
+		TextItem "Load Game",			"l",	"LoadGameMenu"
+		TextItem "Save Game",			"s",	"SaveGameMenu"
+		TextItem "Options",				"o",	"OptionsMenu"
+		TextItem "Project Brutality",	"p",	"PBSettings"
+		TextItem "PB Extended",	        "p",	"PB_AddonOptions"
+	}
+	else
+	{
+		TextItem "Options",				"o",	"OptionsMenu"
+		TextItem "Project Brutality",	"p",	"PBSettings"
+		TextItem "PB Extended",	        "p",	"PB_AddonOptions"
+		TextItem "Load Game",			"l",	"LoadGameMenu"
+		TextItem "Save Game",			"s",	"SaveGameMenu"
+	}
+	ifOption(ReadThis)
+	{
+		TextItem "Read This!","r",	"ReadThisMenu"
+	}
+	TextItem "Quit Game",	"q",	"QuitMenu"
+	Size Clean
+}
+
+
 AddOptionMenu "PB_AddonOptions"
 {
     Submenu "$PBXHud_Settings", "PBXHud_Menu"
@@ -6,9 +46,8 @@ OptionMenu "PBXHud_Menu"
 {
     Title "$PBXHud_Settings"
 	Class "PB_OptionMenu"
-
-    StaticText "PBX HUD Settings", grey
-    StaticText " "
+    Position	-48
+    StaticText	"--------- Weapon HUD Settings ---------", 1
     FlagOption "Weapon HUD",            "PBXWeapons_hudsetting_filter",    "OffOn", 0
     Slider     "Horizontal (X)",        "PBXWeapons_Weaponhud_x",          -700, 700, 1
     Slider     "Vertical (Y)",          "PBXWeapons_Weaponhud_y",          -700, 700, 1
@@ -25,6 +64,7 @@ OptionMenu "PBXHud_Menu"
     /* Slider     "Scale Cut-Off (X)",     "PBXWeapons_WeaponModehud_boxW",   1, 250, 1
     Slider     "Scale Cut-Off (Y)",     "PBXWeapons_WeaponModehud_boxH",   1, 250, 1 */
     StaticText " "
+    StaticText	"--------- Armor HUD Settings ---------", 1
     FlagOption "Armor HUD",             "PBXWeapons_hudsetting_filter",    "OffOn", 3
     FlagOption "Armor HUD Background",  "PBXWeapons_hudsetting_filter",    "OffOn", 4
     Slider     "Horizontal (X)",        "PBXWeapons_Armorhud_x",      -700, 700, 1
@@ -33,15 +73,11 @@ OptionMenu "PBXHud_Menu"
     Slider     "Transparency",	        "PBXWeapons_Armorhud_alpha",  0, 1, 0.02, 2
     /* Slider     "Scale Cut-Off (X)",     "PBXWeapons_Armorhud_boxW",   1, 250, 1
     Slider     "Scale Cut-Off (Y)",     "PBXWeapons_Armorhud_boxH",   1, 250, 1 */
-    
     StaticText " "
-    
     // Reset
-    Command "Reset Weapon HUD to Default", "resetcvar PBXWeapons_Weaponhud_x; resetcvar PBXWeapons_Weaponhud_y; resetcvar PBXWeapons_Weaponhud_scale; resetcvar PBXWeapons_Weaponhud_alpha; resetcvar PBXWeapons_Weaponhud_boxW; resetcvar PBXWeapons_Weaponhud_boxH"
-    Command "Reset Weapon Mode HUD to Default", "resetcvar PBXWeapons_WeaponModehud_x; resetcvar PBXWeapons_WeaponModehud_y; resetcvar PBXWeapons_WeaponModehud_scale; resetcvar PBXWeapons_WeaponModehud_alpha; resetcvar PBXWeapons_WeaponModehud_boxW; resetcvar PBXWeapons_WeaponModehud_boxH"
-    Command "Reset Armor HUD to Default", "resetcvar PBXWeapons_Armorhud_x; resetcvar PBXWeapons_Armorhud_y; resetcvar PBXWeapons_Armorhud_scale; resetcvar PBXWeapons_Armorhud_alpha; resetcvar PBXWeapons_Armorhud_boxW; resetcvar PBXWeapons_Armorhud_boxH"
-    
+    SafeCommand  "Reset Weapon HUD to Default", "resetcvar PBXWeapons_Weaponhud_x; resetcvar PBXWeapons_Weaponhud_y; resetcvar PBXWeapons_Weaponhud_scale; resetcvar PBXWeapons_Weaponhud_alpha; resetcvar PBXWeapons_Weaponhud_boxW; resetcvar PBXWeapons_Weaponhud_boxH"
+    SafeCommand  "Reset Weapon Mode HUD to Default", "resetcvar PBXWeapons_WeaponModehud_x; resetcvar PBXWeapons_WeaponModehud_y; resetcvar PBXWeapons_WeaponModehud_scale; resetcvar PBXWeapons_WeaponModehud_alpha; resetcvar PBXWeapons_WeaponModehud_boxW; resetcvar PBXWeapons_WeaponModehud_boxH"
+    SafeCommand  "Reset Armor HUD to Default", "resetcvar PBXWeapons_Armorhud_x; resetcvar PBXWeapons_Armorhud_y; resetcvar PBXWeapons_Armorhud_scale; resetcvar PBXWeapons_Armorhud_alpha; resetcvar PBXWeapons_Armorhud_boxW; resetcvar PBXWeapons_Armorhud_boxH"
     StaticText " "
-
-    StaticText "$PBXHud_Version"
+    StaticText "$PBXCore_Version"
 }

@@ -173,12 +173,16 @@ class PBXCore_HUDHandler : EventHandler
     private
     ui PBXHUDData GetExternalHUD(PB_WeaponBase weapon)
     {
-        if(!weapon) return null;
         for (int i = 0; i < PBX_HUDServices.Size(); i++)
         {
-            let data = PBXHUDData(PBX_HUDServices[i].GetObjectUI("PBX_HUD",objectArg:weapon));
+            if(!weapon) 
+                return null;
+
+            let svc = PBX_HUDServices[i];
+            if (!svc) continue;
+
+            let data = PBXHUDData(svc.GetObjectUI("PBX_HUD", objectArg: weapon));
             if (data && data.Handled){
-                // console.printf("data loaded");
                 return data;
             }
         }
@@ -306,6 +310,75 @@ class PBXCore_HUDHandler : EventHandler
             pbx_weapon_truescale3 *= ext.Scale3;
 
         }
+    }
+
+    protected
+    ui void DrawArmorHUD(PlayerInfo plr, PB_Hud_ZS phud)
+    {
+        // Draw the BG if its enabled
+        if(!(PBXWeapons_hudsetting_filter & DisablePBX_ArmorHudBG)) 
+            phud.PBHud_DrawImage(
+                "ARMRBO", 
+                pbx_armor_pos, // This is so the BG always follow the icon
+                flagsLeftCenter,
+                pbx_armor_alpha,
+                scale:pbx_armor_truescale*4
+            );
+
+        // Big thanks to vortex for this code, I've modified it a bit to fit what I need
+        let barmor = BasicArmor(plr.mo.FindInventory("BasicArmor", true));
+        if(!barmor) return;
+
+        if (barmor.Amount > 0)
+        {
+            TextureID iconID = barmor.Icon;
+            class<Inventory> armorClass = (class<Inventory>)(barmor.ArmorType);
+            if (armorClass)
+            {
+                name armorType = armorClass.GetClassName();
+                if (armorType == 'PB_GreenArmor') 
+                {
+                    iconID = TexMan.CheckForTexture("4RM1A0", TexMan.Type_Any);
+                    pbx_armor_truescale *= 5.0;
+                }
+                else if (armorType == 'PB_BlueArmor')  
+                {
+                    iconID = TexMan.CheckForTexture("4RM2A0", TexMan.Type_Any);
+                    pbx_armor_truescale *= 5.0;
+                }
+                else
+                {
+                    let def = GetDefaultByType(armorClass);
+                    iconID = def.AltHUDIcon.IsValid() ? def.AltHUDIcon : def.Icon;
+                }
+                // Uncomment this when Vampy's Build has been merged
+                // // Hardcoded scale stuff because PB's Icons doesnt have the same scale
+                // // as the rest of the PBX - Armors
+                // if (armorType == 'PB_GreenArmor' || armorType == 'PB_BlueArmor') 
+                // {
+                //     pbx_armor_truescale *= 5.0;
+                // }
+                // let def = GetDefaultByType(armorClass);
+                // iconID = def.AltHUDIcon.IsValid() ? def.AltHUDIcon : def.Icon;
+            }
+            pbx_image4 = TexMan.GetName(iconID);
+        }
+        else
+        {
+            // Draw a No Armor Text if the player didnt have any
+            pbx_image4 = "ARMRNO";
+            pbx_armor_truescale *= 6;
+
+        }
+
+        // Actually Draw the thing
+        phud.PBHud_DrawImage(
+            pbx_image4, 
+            pbx_armor_pos, 
+            flagsLeftCenter,
+            pbx_armor_alpha,
+            scale:pbx_armor_truescale
+        );
     }
 
 //////////////////////////// HELPER FUNCTIONS ////////////////////////////////////////////////////////////////////////////////////
