@@ -79,5 +79,5 @@ OptionMenu "PBXHud_Menu"
     SafeCommand  "Reset Weapon Mode HUD to Default", "resetcvar PBXWeapons_WeaponModehud_x; resetcvar PBXWeapons_WeaponModehud_y; resetcvar PBXWeapons_WeaponModehud_scale; resetcvar PBXWeapons_WeaponModehud_alpha; resetcvar PBXWeapons_WeaponModehud_boxW; resetcvar PBXWeapons_WeaponModehud_boxH"
     SafeCommand  "Reset Armor HUD to Default", "resetcvar PBXWeapons_Armorhud_x; resetcvar PBXWeapons_Armorhud_y; resetcvar PBXWeapons_Armorhud_scale; resetcvar PBXWeapons_Armorhud_alpha; resetcvar PBXWeapons_Armorhud_boxW; resetcvar PBXWeapons_Armorhud_boxH"
     StaticText " "
-    StaticText "$PBXCore_Version"
+    StaticText "$PBXCore_Version",cyan
 }
