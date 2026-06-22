@@ -3,6 +3,19 @@ Version 4.13
 // General
 #include "Zscript/PBX_Core/PBXCore_HUDSystem.zs"
 #include "Zscript/PBX_Core/PBXCore_HUDData.zs"
+#include "Zscript/PBX_Core/PBXCore_Powerups.zs"
+
+// Big thanks to EmeraldCoastt and the BDP team for this
+#include "Zscript/PBX_Core/MathsNMixins/Include.zsc"
+
+enum PBXCore_PowerupValues
+{
+    // Default Durations, Negative value means seconds instead of tic
+    REGEN_DEFAULT_DURATION          = -60,
+    FRIGHTENER_DEFAULT_DURATION     = -60,
+    TIMEFREEZE_DEFAULT_DURATION     = -12,
+    INFAMMO_DEFAULT_DURATION        = -12
+}
 
 class PBXHUDData : Object
 {
