@@ -98,14 +98,14 @@ class PBX_PowerInfiniteAmmo : PowerInfiniteAmmo
 	override void DoEffect()
 	{
 		Super.DoEffect();
-		PowerupTimer("Yellow");
+		PowerupTimer("yellow");
 	}
 
 	override void EndEffect()
 	{
 		Super.EndEffect();
 		if(!Owner) return;
-		EndBlend("Yellow");
+		EndBlend("yellow");
 		owner.A_RemoveLight("InfAmmoLight");
 	}
 }

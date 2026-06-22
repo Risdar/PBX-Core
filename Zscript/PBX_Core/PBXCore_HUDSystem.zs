@@ -44,6 +44,7 @@ class PBXCore_HUDHandler : EventHandler
     ui bool isAkimbo;
     ui vector2 akimboPosition;
 
+
     enum PBXHud_DrawImageSettings{
         DRAW_WEAPON_ICON    = 1,
         DRAW_MODE_ICON      = 2,
@@ -80,12 +81,13 @@ class PBXCore_HUDHandler : EventHandler
             return;
 
         // If the menu is active or the console is up
-        if (menuactive || consolestate == c_up)
+        if (!menuactive || consolestate == c_up)
             gatherArmorHUDCVARs(plr); // Gather the CVARs
 
         // Begin drawing the HUD
         phud.BeginHUD();                   // Initialize
         DrawArmorHUD(plr,phud);
+        DrawPowerups(plr,phud,(16, -76));
         // Actually Draw the Thing
 
     }
@@ -119,7 +121,7 @@ class PBXCore_HUDHandler : EventHandler
         if (!pbWeap) return;
 
         // If the menu is active or the console is up
-        if (menuactive || consolestate == c_up)
+        if (!menuactive || consolestate == c_up)
             gatherWeaponHUDCVARs(plr,phud); // Gather the CVARs
 
         // Begin drawing the HUD
@@ -252,7 +254,7 @@ class PBXCore_HUDHandler : EventHandler
 
     }
 
-//////////////////////////// AUTOMATIC DRAW ////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////// AUTOMATIC DRAW WEAPONS ////////////////////////////////////////////////////////////////////////////////////
     protected
     ui void DrawPBXWeaponAuto(PB_Hud_ZS phud, PB_WeaponBase pbWeap)
     {
@@ -312,6 +314,7 @@ class PBXCore_HUDHandler : EventHandler
         }
     }
 
+//////////////////////////// AUTOMATIC DRAW ARMORS ////////////////////////////////////////////////////////////////////////////////////
     protected
     ui void DrawArmorHUD(PlayerInfo plr, PB_Hud_ZS phud)
     {
@@ -379,6 +382,85 @@ class PBXCore_HUDHandler : EventHandler
             pbx_armor_alpha,
             scale:pbx_armor_truescale
         );
+    }
+
+//////////////////////////// AUTOMATIC DRAW POWERUPS ////////////////////////////////////////////////////////////////////////////////////
+    // Custom powerups in PBX
+    private 
+    ui bool IsPBXPowerup(name powerName)
+    {
+        return powerName == 'PBX_PowerRegeneration'
+            || powerName == 'PBX_PowerFrightener'
+            || powerName == 'PBX_PowerTimeFreezer'
+            || powerName == 'PBX_PowerInfiniteAmmo';
+    }
+
+    // Set what icon to use here
+    // Make sure to update it everytime pb added new powerups
+    private 
+    ui string GetPowerupImage(name powerName)
+    {
+        switch (powerName)
+        {
+            // PB Powerups
+            case 'PB_PowerInvul':         return "PWRINVUL";
+            case 'PB_PowerIronFeet':      return "PWRRADSU";
+            case 'PB_PowerInvis':         return "PWRINVIS";
+            case 'PB_PowerLightAmp':      return "PWRINFRA";
+            case 'PB_PowerDoomDamage':    return "PWRQUADD";
+            case 'PB_PowerSpeed':         return "PWRHASTE";
+            // PBX Powerups
+            case 'PBX_PowerRegeneration': return "PWRREGEN";
+            case 'PBX_PowerFrightener':   return "PWRFRGHT";
+            case 'PBX_PowerTimeFreezer':  return "PWRTMFRZ";
+            case 'PBX_PowerInfiniteAmmo': return "PWRINFAM";
+            default:                      return "";
+        }
+    }
+
+    // What Actually Draws it
+    protected 
+    ui void DrawPowerups(PlayerInfo plr, PB_Hud_ZS phud, vector2 initialpos, int step = 22)
+    {
+        let mo = plr.mo;
+        if (!mo) return;
+
+        string image;
+		string powerTime;
+		name powerName;
+		int fontCol;
+
+        // Count PB powerups first so we can start above them
+        int baseCount = 0;
+        for (let i = mo.inv; i != null; i = i.inv)
+        {
+            powerName = i.GetClassName();
+            let power = Powerup(i);
+            
+            if (!power || IsPBXPowerup(powerName)) continue;
+            if (GetPowerupImage(powerName) != "") baseCount++;
+        }
+
+        initialpos.y -= baseCount * step;
+
+        // Draw PBX Powerups
+        for (let i = mo.inv; i != null; i = i.inv)
+        {
+            powerName = i.GetClassName();
+            let power = Powerup(i);
+
+            if (!power || !IsPBXPowerup(powerName)) continue;
+
+            image = GetPowerupImage(powerName);
+            if (image == "") continue;
+
+            powerTime = phud.FormatPowerupTime(power);
+            fontCol = Font.FindFontColor(powerName);
+
+            phud.PBHud_DrawImage(image, initialpos, flagsleft, phud.playerBoxAlpha);
+            phud.PBHud_DrawString(phud.mBoldFont, powerTime, (initialpos.x + 28, initialpos.y - 20), flagsleft, fontCol);
+            initialpos.y -= step;
+        }
     }
 
 //////////////////////////// HELPER FUNCTIONS ////////////////////////////////////////////////////////////////////////////////////

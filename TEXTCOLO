@@ -1,0 +1,20 @@
+// Powerup Font Colors
+PBX_PowerRegeneration
+{
+	#1C6ED0 #0ed3ed
+}
+
+PBX_PowerFrightener
+{
+	#8B0000 #ca1717
+}
+
+PBX_PowerTimeFreezer
+{
+	#9e5a1b #f09533
+}
+
+PBX_PowerInfiniteAmmo
+{
+	#E8A030 #F0C060
+}
