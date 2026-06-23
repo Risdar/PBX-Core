@@ -46,56 +46,26 @@ class PBXCore_HUDHandler : EventHandler
 
 
     enum PBXHud_DrawImageSettings{
-        DRAW_WEAPON_ICON    = 1,
-        DRAW_MODE_ICON      = 2,
-        DRAW_MODE2_ICON     = 3
+        DRAW_WEAPON_ICON,
+        DRAW_MODE_ICON,
+        DRAW_MODE2_ICON,
+        DRAW_ARMOR_ICON,
+        DRAW_ARMOR_BG
     }
 
     // How many steps the whole icon should move
     const AKIMBO_POSITION_WHOLE = -15;
 
+    // Where should the position of the second icon be
+    // if dual wield is active
     const AKIMBO_POSITION_X = -10;
     const AKIMBO_POSITION_Y = -10;
     
 //////////////////////////// MAIN FUNCTION ////////////////////////////////////////////////////////////////////////////////////
     override void RenderOverlay(RenderEvent e)
     {
-        // Dont draw if the HUD is disabled
-        if(PBXWeapons_hudsetting_filter & DisablePBX_ArmorHud) 
-            return;
-
-        // Get a pointer to the player
-        let plr = players[consoleplayer];
-        if (!plr) return;
-
-        // Dont draw if the player is not in a leve or if the automap is active
-        if (gamestate != GS_LEVEL || automapactive)
-            return;
-
-        // Get a pointer to the PB Hud so we can access it
-        let phud = PB_Hud_ZS(StatusBar);
-        if (!phud) return;
-
-        // Dont draw if the player is dead
-        if (phud.hudState == BaseStatusBar.HUD_None || phud.PlayerWasDead) 
-            return;
-
-        // If the menu is active or the console is up
-        if (!menuactive || consolestate == c_up)
-            gatherArmorHUDCVARs(plr); // Gather the CVARs
-
-        // Begin drawing the HUD
-        phud.BeginHUD();                   // Initialize
-        DrawArmorHUD(plr,phud);
-        DrawPowerups(plr,phud,(16, -76));
-        // Actually Draw the Thing
-
-    }
-
-    override void RenderUnderlay(RenderEvent e)
-    {
-        // Dont draw if the HUD is disabled
-        if(PBXWeapons_hudsetting_filter & DisablePBX_WeaponHud) 
+        // Dont bother drawing if both the Weapon and Armor HUD is off
+        if(CheckFlag(DisablePBX_WeaponHud) && CheckFlag(DisablePBX_ArmorHud))
             return;
 
         // Get a pointer to the player
@@ -122,32 +92,14 @@ class PBXCore_HUDHandler : EventHandler
 
         // If the menu is active or the console is up
         if (!menuactive || consolestate == c_up)
-            gatherWeaponHUDCVARs(plr,phud); // Gather the CVARs
+            gatherHUDCVARs(plr,phud); // Gather the CVARs
 
         // Begin drawing the HUD
-        phud.BeginHUD();                   // Initialize
-        FindHUDServices();                 // Find other mods that uses PBX HUD
-        DrawPBWeapon(phud,pbWeap);         // Get the Weapon Data for PB Weapons
-        DrawPBXHUD(phud,pbweap);           // Get the Weapon Data for everything else
-        DrawPBXWeaponAuto(phud,pbWeap);    // Automatically get the weapon Icons
-
-         // Actually Draw the Thing
-        if(pbweap.akimboMode) 
-            PBX_DrawImage(phud,DRAW_WEAPON_ICON,true); // Draw an extra icon behind the weapon if in dual wield
-
-        PBX_DrawImage(phud, DRAW_WEAPON_ICON);
-
-        // Dont draw the rest if the weapon mode hud is disabled
-        if((PBXWeapons_hudsetting_filter & DisablePBX_WeaponModeHud)) 
-            return;
-
-        // phud.PBHud_DrawImage("EQUPBO", (-250, -17), flagsright, phud.playerBoxAlpha);
-
-        if(pbx_image2 != "") 
-            PBX_DrawImage(phud, DRAW_MODE_ICON);
-
-        if(pbx_image3 != "") 
-            PBX_DrawImage(phud,DRAW_MODE2_ICON);
+        phud.BeginHUD();                // Initialize
+        DrawEveryWeapon(phud,pbweap);
+        DrawArmors(plr,phud);
+        DrawPowerups(plr,phud,(16, -76));
+        
 
     }
 
@@ -193,7 +145,7 @@ class PBXCore_HUDHandler : EventHandler
 
     // Get the user CVARs
     protected
-    ui void gatherWeaponHUDCVARs(PlayerInfo plr, PB_Hud_ZS phud)
+    ui void gatherHUDCVARs(PlayerInfo plr, PB_Hud_ZS phud)
     {
         // Weapon Pickup Sprites
         pbx_weapon_PosX = CVar.GetCVar("pbxweapons_Weaponhud_x", plr).GetInt();
@@ -219,23 +171,6 @@ class PBXCore_HUDHandler : EventHandler
         pbx_weapon_truescale2 = (pbx_weaponmode_hudscale, pbx_weaponmode_hudscale);
         pbx_weapon_box2 = (pbx_weaponmode_boxW, pbx_weaponmode_boxH);
 
-        // Special cases where weapons uses two modes at the same time
-        pbx_weapon_pos3 = pbx_weapon_pos2 + (0,-10);
-        pbx_weapon_truescale3 = pbx_weapon_truescale2;
-        pbx_weapon_box3 = (pbx_weaponmode_boxW, pbx_weaponmode_boxH);
-
-        // Flags
-        flagsright = BaseStatusBar.DI_SCREEN_RIGHT_BOTTOM | BaseStatusBar.DI_ITEM_RIGHT_BOTTOM;
-        flagssTextAlignRight = BaseStatusBar.DI_TEXT_ALIGN_RIGHT;
-
-        // Others
-        akimboPosition = (AKIMBO_POSITION_X,AKIMBO_POSITION_Y);
-
-    }
-    
-    protected
-    ui void gatherArmorHUDCVARs(PlayerInfo plr)
-    {
         // Armor
         pbx_armor_PosX = CVar.GetCVar("PBXWeapons_Armorhud_x", plr).GetInt();
         pbx_armor_PosY = CVar.GetCVar("PBXWeapons_Armorhud_y", plr).GetInt();
@@ -248,15 +183,27 @@ class PBXCore_HUDHandler : EventHandler
         pbx_armor_truescale = (pbx_armor_hudscale, pbx_armor_hudscale);
         pbx_armor_box = (pbx_armor_boxW, pbx_armor_boxH);
 
+        // Special cases where weapons uses two modes at the same time
+        pbx_weapon_pos3 = pbx_weapon_pos2 + (0,-10);
+        pbx_weapon_truescale3 = pbx_weapon_truescale2;
+        pbx_weapon_box3 = (pbx_weaponmode_boxW, pbx_weaponmode_boxH);
+
         // Flags
+        flagsright = BaseStatusBar.DI_SCREEN_RIGHT_BOTTOM | BaseStatusBar.DI_ITEM_RIGHT_BOTTOM;
+        flagssTextAlignRight = BaseStatusBar.DI_TEXT_ALIGN_RIGHT;
         flagsleft = BaseStatusBar.DI_SCREEN_LEFT_BOTTOM | BaseStatusBar.DI_ITEM_LEFT_BOTTOM;
         flagsLeftCenter = BaseStatusBar.DI_SCREEN_LEFT_BOTTOM | BaseStatusBar.DI_ITEM_CENTER;
 
+        // Others
+        akimboPosition = (AKIMBO_POSITION_X,AKIMBO_POSITION_Y);
+
     }
 
-//////////////////////////// AUTOMATIC DRAW WEAPONS ////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////// WEAPONS ////////////////////////////////////////////////////////////////////////////////////
+    // Automatically get weapon icons
     protected
-    ui void DrawPBXWeaponAuto(PB_Hud_ZS phud, PB_WeaponBase pbWeap)
+    ui void GetWeaponDataAuto(PB_WeaponBase pbWeap)
     {
         // Dont draw if SkipAutoDraw is true
         let ext = GetExternalHUD(pbWeap);
@@ -293,8 +240,9 @@ class PBXCore_HUDHandler : EventHandler
 
     }
 
+    // Get data from any PBXHUDData
     protected
-    ui void DrawPBXHUD(PB_Hud_ZS phud, PB_WeaponBase pbWeap)
+    ui void GetPBXData(PB_WeaponBase pbWeap)
     {
         let ext = GetExternalHUD(pbWeap);
         if (ext)
@@ -314,21 +262,45 @@ class PBXCore_HUDHandler : EventHandler
         }
     }
 
-//////////////////////////// AUTOMATIC DRAW ARMORS ////////////////////////////////////////////////////////////////////////////////////
-    protected
-    ui void DrawArmorHUD(PlayerInfo plr, PB_Hud_ZS phud)
+    // Draw Function
+    private
+    ui void DrawEveryWeapon(PB_Hud_ZS phud,PB_WeaponBase pbWeap)
     {
-        // Draw the BG if its enabled
-        if(!(PBXWeapons_hudsetting_filter & DisablePBX_ArmorHudBG)) 
-            phud.PBHud_DrawImage(
-                "ARMRBO", 
-                pbx_armor_pos, // This is so the BG always follow the icon
-                flagsLeftCenter,
-                pbx_armor_alpha,
-                scale:pbx_armor_truescale*4
-            );
+        // Dont draw if its disabled
+        if(CheckFlag(DisablePBX_WeaponHud)) return;
 
-        // Big thanks to vortex for this code, I've modified it a bit to fit what I need
+        FindHUDServices();              // Find other mods that uses PBX HUD
+        GetPBWeaponData(pbWeap);        // Get the Weapon Data for PB Weapons
+        GetPBXData(pbweap);             // Get the Weapon Data for any PBXHUDData
+        GetWeaponDataAuto(pbWeap);      // Automatically get the weapon Icons
+
+        // Draw Function
+        if(pbweap.akimboMode) 
+            PBX_DrawImage(phud,DRAW_WEAPON_ICON,true); // Draw an extra icon behind the weapon if in dual wield
+        PBX_DrawImage(phud, DRAW_WEAPON_ICON);
+
+        // Dont draw the Weapon Mode if its disabled
+        if(CheckFlag(DisablePBX_WeaponModeHud)) return;
+        if(pbx_image2 != "") 
+                PBX_DrawImage(phud, DRAW_MODE_ICON);
+        if(pbx_image3 != "") 
+            PBX_DrawImage(phud,DRAW_MODE2_ICON);
+    }
+
+//////////////////////////// ARMORS ////////////////////////////////////////////////////////////////////////////////////
+    // Get Armor Icon and Draw Function 
+    private
+    ui void DrawArmors(PlayerInfo plr,PB_Hud_ZS phud)
+    {
+        // Dont draw if its disabled
+        if(CheckFlag(DisablePBX_ArmorHud)) return;
+
+
+        // Draw the Armor Box if Enabled
+        if(!CheckFlag(DisablePBX_ArmorHudBG))
+            PBX_DrawImage(phud,DRAW_ARMOR_BG);
+
+        // Get the data for the armors
         let barmor = BasicArmor(plr.mo.FindInventory("BasicArmor", true));
         if(!barmor) return;
 
@@ -374,17 +346,11 @@ class PBXCore_HUDHandler : EventHandler
 
         }
 
-        // Actually Draw the thing
-        phud.PBHud_DrawImage(
-            pbx_image4, 
-            pbx_armor_pos, 
-            flagsLeftCenter,
-            pbx_armor_alpha,
-            scale:pbx_armor_truescale
-        );
+        // Draw
+        PBX_DrawImage(phud,DRAW_ARMOR_ICON);
     }
 
-//////////////////////////// AUTOMATIC DRAW POWERUPS ////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////// POWERUPS ////////////////////////////////////////////////////////////////////////////////////
     // Custom powerups in PBX
     private 
     ui bool IsPBXPowerup(name powerName)
@@ -418,7 +384,7 @@ class PBXCore_HUDHandler : EventHandler
         }
     }
 
-    // What Actually Draws it
+    // Draw Function
     protected 
     ui void DrawPowerups(PlayerInfo plr, PB_Hud_ZS phud, vector2 initialpos, int step = 22)
     {
@@ -467,25 +433,79 @@ class PBXCore_HUDHandler : EventHandler
     protected
     ui void PBX_DrawImage(PB_Hud_ZS phud, PBXHud_DrawImageSettings whatimage, bool drawAkimbo = false)
     {
+        int flags;
         string image; 
         Vector2 pos, scale, box; 
         double transparency;
 
+        vector2 armorBGScale = pbx_armor_truescale*4;
+
         switch (whatimage)
         {
             default:
-            case DRAW_WEAPON_ICON : image = pbx_image;  pos = pbx_weapon_pos;  scale = pbx_weapon_truescale;  transparency = pbx_weapon_alpha;     box = pbx_weapon_box1; break;
-            case DRAW_MODE_ICON   : image = pbx_image2; pos = pbx_weapon_pos2; scale = pbx_weapon_truescale2; transparency = pbx_weaponmode_alpha; box = pbx_weapon_box2; break;
-            case DRAW_MODE2_ICON  : image = pbx_image3; pos = pbx_weapon_pos3; scale = pbx_weapon_truescale3; transparency = pbx_weaponmode_alpha; box = pbx_weapon_box3; break;
+            case DRAW_WEAPON_ICON: 
+                image           = pbx_image;  
+                pos             = pbx_weapon_pos;  
+                scale           = pbx_weapon_truescale;  
+                transparency    = pbx_weapon_alpha;     
+                box             = pbx_weapon_box1;   
+                flags           = flagsright;     
+                break;
+
+            case DRAW_MODE_ICON: 
+                image           = pbx_image2; 
+                pos             = pbx_weapon_pos2; 
+                scale           = pbx_weapon_truescale2; 
+                transparency    = pbx_weaponmode_alpha; 
+                box             = pbx_weapon_box2;   
+                flags           = flagsright;     
+                break;
+
+            case DRAW_MODE2_ICON: 
+                image           = pbx_image3; 
+                pos             = pbx_weapon_pos3; 
+                scale           = pbx_weapon_truescale3; 
+                transparency    = pbx_weaponmode_alpha; 
+                box             = pbx_weapon_box3;   
+                flags           = flagsright;     
+                break;
+
+            case DRAW_ARMOR_ICON: 
+                image           = pbx_image4; 
+                pos             = pbx_armor_pos;   
+                scale           = pbx_armor_truescale;   
+                transparency    = pbx_armor_alpha;      
+                box             = pbx_armor_box;     
+                flags           = flagsLeftCenter;
+                break;
+
+            case DRAW_ARMOR_BG: 
+                image           = "ARMRBO";   
+                pos             = pbx_armor_pos;   
+                scale           = armorBGScale; 
+                transparency    = pbx_armor_alpha;      
+                box             = pbx_armor_box;     
+                flags           = flagsLeftCenter;
+                break;
+
         }
         phud.PBHud_DrawImage(
             image, 
             drawAkimbo ? pos + akimboPosition : pos,
-            flagsright, 
+            flags, 
             transparency, 
             scale:scale 
             // box:box
         );
+    }
+
+    // Just a non verbose way to check flags
+    // will always check PBXWeapons_hudsetting_filter
+    protected 
+    ui bool CheckFlag(int tipFlag)
+    {
+        let check = CVar.FindCVar("PBXWeapons_hudsetting_filter");
+        return (check.GetInt() & tipflag) == tipflag;
     }
 
     static clearscope bool PBX_PlayerHasInventory(name inv)

@@ -4,7 +4,7 @@ extend class PBXCore_HUDHandler
 {
 //////////////////////////// PB WEAPONS ////////////////////////////////////////////////////////////////////////////////////
     protected
-    ui void DrawPBWeapon(PB_Hud_ZS phud, PB_WeaponBase pbWeap)
+    ui void GetPBWeaponData(PB_WeaponBase pbWeap)
     {
         
         // Set Defaults & Variables

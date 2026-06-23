@@ -1,7 +1,25 @@
 // PowerUps
-pulselight RegenLight
+pulselight BuddhaLight 
 {
-	color 0.0 0.1 0.1
+	color 1.0 0.549 0.0
+	size 60
+	secondarySize 75
+	Interval 1.0
+	Offset 0 16 0
+}
+ 
+pulselight DrainLight 
+{
+	color 0.698 0.133 0.133
+	size 60
+	secondarySize 75
+	Interval 1.0
+	Offset 0 16 0
+}
+ 
+pulselight FlightLight 
+{
+	color 0.388 0.722 1.0
 	size 60
 	secondarySize 75
 	Interval 1.0
@@ -17,9 +35,9 @@ pulselight FrightenerLight
 	Offset 0 16 0
 }
 
-pulselight TimeFreezeLight
+pulselight HighJumpLight
 {
-	color 1.0 0.5 0.0
+	color 0.0 0.749 1.0
 	size 60
 	secondarySize 75
 	Interval 1.0
@@ -34,3 +52,40 @@ pulselight InfAmmoLight
 	Interval 1.0
 	Offset 0 16 0
 }
+
+pulselight ProtectLight
+{
+	color 0.733 1.0 1.0
+	size 60
+	secondarySize 75
+	Interval 1.0
+	Offset 0 16 0
+}
+ 
+pulselight ReflectLight
+{
+	color 0.749 0.243 1.0
+	size 60
+	secondarySize 75
+	Interval 1.0
+	Offset 0 16 0
+}
+
+pulselight RegenLight
+{
+	color 0.0 0.1 0.1
+	size 60
+	secondarySize 75
+	Interval 1.0
+	Offset 0 16 0
+}
+
+pulselight TimeFreezeLight
+{
+	color 1.0 0.5 0.0
+	size 60
+	secondarySize 75
+	Interval 1.0
+	Offset 0 16 0
+}
+
