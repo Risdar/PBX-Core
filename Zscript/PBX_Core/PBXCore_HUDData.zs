@@ -20,15 +20,21 @@ extend class PBXCore_HUDHandler
         {
 //////////////// SLOT 1 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             case 'PB_Fists':
+                pbx_image2 = ""; //its empty for now
+                pbx_image3 = ""; //its empty for now
                 adjustPos = (-15, 20); 
                 adjustScale = 0.6;
                 break;
 
             case 'PB_Chainsaw':
+                pbx_image2 = ""; //its empty for now
+                pbx_image3 = ""; //its empty for now
                 adjustPos = (-20, 32); 
                 break;
 
             case 'PB_Axe':
+                pbx_image2 = ""; //its empty for now
+                pbx_image3 = ""; //its empty for now
                 adjustPos = (-30, 40); 
                 break;
 
