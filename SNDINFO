@@ -1,0 +1,11 @@
+ElectricAura/aura VELECAUR
+$random ElectricAura/electric { electric1 electric2 }
+electric1 VELECTR1
+electric2 VELECTR2
+electric3 VELECTR3
+electric4 VELECTR4
+$pitchset ElectricAura/electric 0.8 1.2
+$limit ElectricAura/electric 0
+$attenuation ElectricAura/electric 0.1
+
+

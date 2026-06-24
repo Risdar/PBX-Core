@@ -348,7 +348,7 @@ extend class PBXCore_HUDHandler
                 bool cryoMissile = cryorifle.cryoPrimary   == cryorifle.PRIM_MISSILE;
                 bool cryoSpear   = cryorifle.cryoSecondary == cryorifle.SEC_SPEAR;
 
-                pbx_image = "FRPKA0";
+                pbx_image  = "FRPKA0";
                 pbx_image2 = cryoSpear ? "graphics/pywheel/CryoRifle_Spear.png" : "graphics/pywheel/CryoRifle_Flak.png";
                 pbx_image3 = cryoMissile ? "graphics/pywheel/CryoRifle_Missile.png" : "graphics/pywheel/CryoRifle_Beam.png";
 

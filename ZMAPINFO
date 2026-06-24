@@ -1,4 +1,5 @@
 Gameinfo
 {
 	addeventhandlers = "PBXCore_HUDHandler"
+	addeventhandlers = "PBXCore_CheatsHandler"
 }

@@ -4,6 +4,7 @@ Version 4.13
 #include "Zscript/PBX_Core/PBXCore_HUDSystem.zs"
 #include "Zscript/PBX_Core/PBXCore_HUDData.zs"
 #include "Zscript/PBX_Core/PBXCore_Powerups.zs"
+#include "Zscript/PBX_Core/PBXCore_Cheats.zs"
 
 // Big thanks to EmeraldCoastt and the BDP team for this
 #include "Zscript/PBX_Core/MathsNMixins/Include.zsc"
@@ -11,6 +12,12 @@ Version 4.13
 enum PBXCore_PowerupValues
 {
     // Default Values
+    // Special Powerups
+    INVISTAINT_DEFAULT_DURATION     = -75,
+    DEFLECT_DEFAULT_DURATION        = -60,
+    ELECTAURA_DEFAULT_DURATION      = -60,
+    INVULTAINT_DEFAULT_DURATION     = -30,
+    // Vanilla Powerups
     BUDDHA_DEFAULT_DURATION         = -60,
     DRAIN_DEFAULT_DURATION          = -60,
     FLIGHT_DEFAULT_DURATION         = -60,

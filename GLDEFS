@@ -1,4 +1,42 @@
-// PowerUps
+// Special PowerUps
+pulselight InvisTaintedLight 
+{
+	color 0.282 0.239 0.545
+	size 60
+	secondarySize 75
+	Interval 1.0
+	Offset 0 16 0
+}
+
+pulselight DeflectLight 
+{
+	color 0.565 0.933 0.565
+	size 60
+	secondarySize 75
+	Interval 1.0
+	Offset 0 16 0
+}
+
+pulselight ElectAuraLight 
+{
+	color 0.282 0.463 1.0
+	size 60
+	secondarySize 75
+	Interval 1.0
+	Offset 0 16 0
+}
+
+pulselight InvulTaintedLight 
+{
+	color 0.933 0.910 0.667
+	size 60
+	secondarySize 75
+	Interval 1.0
+	Offset 0 16 0
+}
+
+
+// Vanilla PowerUps
 pulselight BuddhaLight 
 {
 	color 1.0 0.549 0.0

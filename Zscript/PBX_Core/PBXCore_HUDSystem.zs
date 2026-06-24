@@ -41,8 +41,12 @@ class PBXCore_HUDHandler : EventHandler
     ui bool ServicesLoaded;
 
     // Others
+    ui PlayerInfo plr;
+    ui PlayerPawn mo;
+    ui PB_Hud_ZS phud;
     ui bool isAkimbo;
     ui vector2 akimboPosition;
+    ui vector2 powerupPosition;
 
 
     enum PBXHud_DrawImageSettings{
@@ -52,6 +56,10 @@ class PBXCore_HUDHandler : EventHandler
         DRAW_ARMOR_ICON,
         DRAW_ARMOR_BG
     }
+
+    // Powerup Position
+    const POWERUP_POSITION_X = 16;
+    const POWERUP_POSITION_Y = -76;
 
     // How many steps the whole icon should move
     const AKIMBO_POSITION_WHOLE = -15;
@@ -68,27 +76,24 @@ class PBXCore_HUDHandler : EventHandler
         if(CheckFlag(DisablePBX_WeaponHud) && CheckFlag(DisablePBX_ArmorHud))
             return;
 
-        // Get a pointer to the player
-        let plr = players[consoleplayer];
-        if (!plr) return;
-
         // Dont draw if the player is not in a leve or if the automap is active
         if (gamestate != GS_LEVEL || automapactive)
             return;
 
         // Get a pointer to the PB Hud so we can access it
-        let phud = PB_Hud_ZS(StatusBar);
-        if (!phud) return;
+        phud = PB_Hud_ZS(StatusBar);
+        if (!phud) 
+            return;
 
         // Dont draw if the player is dead
         if (phud.hudState == BaseStatusBar.HUD_None || phud.PlayerWasDead) 
             return;
 
-        // Get a pointer to the weapon
-        let weap = plr.ReadyWeapon;
-        if (!weap) return;
-        let pbWeap = PB_WeaponBase(weap);
-        if (!pbWeap) return;
+        // Get a pointer to the player
+        plr = players[consoleplayer];
+        mo = plr.mo;
+        if (!plr || !mo) 
+            return;
 
         // If the menu is active or the console is up
         if (!menuactive || consolestate == c_up)
@@ -96,9 +101,9 @@ class PBXCore_HUDHandler : EventHandler
 
         // Begin drawing the HUD
         phud.BeginHUD();                // Initialize
-        DrawEveryWeapon(phud,pbweap);
-        DrawArmors(plr,phud);
-        DrawPowerups(plr,phud,(16, -76));
+        DrawEveryWeapon();
+        DrawArmors();
+        DrawPowerups(powerupPosition);
         
 
     }
@@ -133,7 +138,8 @@ class PBXCore_HUDHandler : EventHandler
                 return null;
 
             let svc = PBX_HUDServices[i];
-            if (!svc) continue;
+            if (!svc) 
+                continue;
 
             let data = PBXHUDData(svc.GetObjectUI("PBX_HUD", objectArg: weapon));
             if (data && data.Handled){
@@ -144,65 +150,66 @@ class PBXCore_HUDHandler : EventHandler
     }
 
     // Get the user CVARs
-    protected
+    private
     ui void gatherHUDCVARs(PlayerInfo plr, PB_Hud_ZS phud)
     {
         // Weapon Pickup Sprites
-        pbx_weapon_PosX = CVar.GetCVar("pbxweapons_Weaponhud_x", plr).GetInt();
-        pbx_weapon_PosY = CVar.GetCVar("pbxweapons_Weaponhud_y", plr).GetInt();
-        pbx_weapon_hudscale = CVar.GetCVar("pbxweapons_Weaponhud_scale", plr).GetFloat();
-        pbx_weapon_alpha = CVar.GetCVar("pbxweapons_Weaponhud_alpha", plr).GetFloat();
-        pbx_weapon_boxW = CVar.GetCVar("pbxweapons_Weaponhud_boxW", plr).GetInt();
-        pbx_weapon_boxH = CVar.GetCVar("pbxweapons_Weaponhud_boxH", plr).GetInt();
+        pbx_weapon_PosX         = CVar.GetCVar("pbxweapons_Weaponhud_x", plr).GetInt();
+        pbx_weapon_PosY         = CVar.GetCVar("pbxweapons_Weaponhud_y", plr).GetInt();
+        pbx_weapon_hudscale     = CVar.GetCVar("pbxweapons_Weaponhud_scale", plr).GetFloat();
+        pbx_weapon_alpha        = CVar.GetCVar("pbxweapons_Weaponhud_alpha", plr).GetFloat();
+        pbx_weapon_boxW         = CVar.GetCVar("pbxweapons_Weaponhud_boxW", plr).GetInt();
+        pbx_weapon_boxH         = CVar.GetCVar("pbxweapons_Weaponhud_boxH", plr).GetInt();
 
-        pbx_weapon_pos = (pbx_weapon_PosX, pbx_weapon_PosY);
-        pbx_weapon_truescale = (pbx_weapon_hudscale, pbx_weapon_hudscale);
-        pbx_weapon_box1 = (pbx_weapon_boxW, pbx_weapon_boxH);
+        pbx_weapon_pos          = (pbx_weapon_PosX, pbx_weapon_PosY);
+        pbx_weapon_truescale    = (pbx_weapon_hudscale, pbx_weapon_hudscale);
+        pbx_weapon_box1         = (pbx_weapon_boxW, pbx_weapon_boxH);
 
         // Weapon Modes
-        pbx_weaponmode_PosX = CVar.GetCVar("pbxweapons_WeaponModehud_x", plr).GetInt();
-        pbx_weaponmode_PosY = CVar.GetCVar("pbxweapons_WeaponModehud_y", plr).GetInt();
+        pbx_weaponmode_PosX     = CVar.GetCVar("pbxweapons_WeaponModehud_x", plr).GetInt();
+        pbx_weaponmode_PosY     = CVar.GetCVar("pbxweapons_WeaponModehud_y", plr).GetInt();
         pbx_weaponmode_hudscale = CVar.GetCVar("pbxweapons_WeaponModehud_scale", plr).GetFloat();
-        pbx_weaponmode_alpha = CVar.GetCVar("pbxweapons_WeaponModehud_alpha", plr).GetFloat();
-        pbx_weaponmode_boxW = CVar.GetCVar("pbxweapons_WeaponModehud_boxW", plr).GetInt();
-        pbx_weaponmode_boxH = CVar.GetCVar("pbxweapons_WeaponModehud_boxH", plr).GetInt();
+        pbx_weaponmode_alpha    = CVar.GetCVar("pbxweapons_WeaponModehud_alpha", plr).GetFloat();
+        pbx_weaponmode_boxW     = CVar.GetCVar("pbxweapons_WeaponModehud_boxW", plr).GetInt();
+        pbx_weaponmode_boxH     = CVar.GetCVar("pbxweapons_WeaponModehud_boxH", plr).GetInt();
 
-        pbx_weapon_pos2 = (pbx_weaponmode_PosX, pbx_weaponmode_PosY);
-        pbx_weapon_truescale2 = (pbx_weaponmode_hudscale, pbx_weaponmode_hudscale);
-        pbx_weapon_box2 = (pbx_weaponmode_boxW, pbx_weaponmode_boxH);
+        pbx_weapon_pos2         = (pbx_weaponmode_PosX, pbx_weaponmode_PosY);
+        pbx_weapon_truescale2   = (pbx_weaponmode_hudscale, pbx_weaponmode_hudscale);
+        pbx_weapon_box2         = (pbx_weaponmode_boxW, pbx_weaponmode_boxH);
 
         // Armor
-        pbx_armor_PosX = CVar.GetCVar("PBXWeapons_Armorhud_x", plr).GetInt();
-        pbx_armor_PosY = CVar.GetCVar("PBXWeapons_Armorhud_y", plr).GetInt();
-        pbx_armor_hudscale = CVar.GetCVar("PBXWeapons_Armorhud_scale", plr).GetFloat();
-        pbx_armor_alpha = CVar.GetCVar("PBXWeapons_Armorhud_alpha", plr).GetFloat();
-        pbx_armor_boxW = CVar.GetCVar("PBXWeapons_Armorhud_boxW", plr).GetInt();
-        pbx_armor_boxH = CVar.GetCVar("PBXWeapons_Armorhud_boxH", plr).GetInt();
+        pbx_armor_PosX          = CVar.GetCVar("PBXWeapons_Armorhud_x", plr).GetInt();
+        pbx_armor_PosY          = CVar.GetCVar("PBXWeapons_Armorhud_y", plr).GetInt();
+        pbx_armor_hudscale      = CVar.GetCVar("PBXWeapons_Armorhud_scale", plr).GetFloat();
+        pbx_armor_alpha         = CVar.GetCVar("PBXWeapons_Armorhud_alpha", plr).GetFloat();
+        pbx_armor_boxW          = CVar.GetCVar("PBXWeapons_Armorhud_boxW", plr).GetInt();
+        pbx_armor_boxH          = CVar.GetCVar("PBXWeapons_Armorhud_boxH", plr).GetInt();
 
-        pbx_armor_pos = (pbx_armor_PosX, pbx_armor_PosY);
-        pbx_armor_truescale = (pbx_armor_hudscale, pbx_armor_hudscale);
-        pbx_armor_box = (pbx_armor_boxW, pbx_armor_boxH);
+        pbx_armor_pos           = (pbx_armor_PosX, pbx_armor_PosY);
+        pbx_armor_truescale     = (pbx_armor_hudscale, pbx_armor_hudscale);
+        pbx_armor_box           = (pbx_armor_boxW, pbx_armor_boxH);
 
         // Special cases where weapons uses two modes at the same time
-        pbx_weapon_pos3 = pbx_weapon_pos2 + (0,-10);
-        pbx_weapon_truescale3 = pbx_weapon_truescale2;
-        pbx_weapon_box3 = (pbx_weaponmode_boxW, pbx_weaponmode_boxH);
+        pbx_weapon_pos3         = pbx_weapon_pos2 + (0,-10);
+        pbx_weapon_truescale3   = pbx_weapon_truescale2;
+        pbx_weapon_box3         = (pbx_weaponmode_boxW, pbx_weaponmode_boxH);
 
         // Flags
-        flagsright = BaseStatusBar.DI_SCREEN_RIGHT_BOTTOM | BaseStatusBar.DI_ITEM_RIGHT_BOTTOM;
-        flagssTextAlignRight = BaseStatusBar.DI_TEXT_ALIGN_RIGHT;
-        flagsleft = BaseStatusBar.DI_SCREEN_LEFT_BOTTOM | BaseStatusBar.DI_ITEM_LEFT_BOTTOM;
-        flagsLeftCenter = BaseStatusBar.DI_SCREEN_LEFT_BOTTOM | BaseStatusBar.DI_ITEM_CENTER;
+        flagsright              = BaseStatusBar.DI_SCREEN_RIGHT_BOTTOM | BaseStatusBar.DI_ITEM_RIGHT_BOTTOM;
+        flagssTextAlignRight    = BaseStatusBar.DI_TEXT_ALIGN_RIGHT;
+        flagsleft               = BaseStatusBar.DI_SCREEN_LEFT_BOTTOM | BaseStatusBar.DI_ITEM_LEFT_BOTTOM;
+        flagsLeftCenter         = BaseStatusBar.DI_SCREEN_LEFT_BOTTOM | BaseStatusBar.DI_ITEM_CENTER;
 
         // Others
-        akimboPosition = (AKIMBO_POSITION_X,AKIMBO_POSITION_Y);
-
+        akimboPosition          = (AKIMBO_POSITION_X,AKIMBO_POSITION_Y);
+        powerupPosition         = (POWERUP_POSITION_X,POWERUP_POSITION_Y);
+        
     }
 
 
 //////////////////////////// WEAPONS ////////////////////////////////////////////////////////////////////////////////////
     // Automatically get weapon icons
-    protected
+    private
     ui void GetWeaponDataAuto(PB_WeaponBase pbWeap)
     {
         // Dont draw if SkipAutoDraw is true
@@ -222,7 +229,7 @@ class PBXCore_HUDHandler : EventHandler
             // Slot 7
             "PB_M2Plasma",
             // Slot 8
-            "PB_Flamethrower",
+            "PB_Flamethrower","PB_CryoRifle",
             // Slot 9
             "PB_BFG9000","PB_Unmaker"
         };
@@ -241,7 +248,7 @@ class PBXCore_HUDHandler : EventHandler
     }
 
     // Get data from any PBXHUDData
-    protected
+    private
     ui void GetPBXData(PB_WeaponBase pbWeap)
     {
         let ext = GetExternalHUD(pbWeap);
@@ -264,10 +271,15 @@ class PBXCore_HUDHandler : EventHandler
 
     // Draw Function
     private
-    ui void DrawEveryWeapon(PB_Hud_ZS phud,PB_WeaponBase pbWeap)
+    ui void DrawEveryWeapon()
     {
         // Dont draw if its disabled
         if(CheckFlag(DisablePBX_WeaponHud)) return;
+
+        let weap = plr.ReadyWeapon;
+        if (!weap) return;
+        let pbWeap = PB_WeaponBase(weap);
+        if (!pbWeap) return;
 
         FindHUDServices();              // Find other mods that uses PBX HUD
         GetPBWeaponData(pbWeap);        // Get the Weapon Data for PB Weapons
@@ -276,21 +288,21 @@ class PBXCore_HUDHandler : EventHandler
 
         // Draw Function
         if(pbweap.akimboMode) 
-            PBX_DrawImage(phud,DRAW_WEAPON_ICON,true); // Draw an extra icon behind the weapon if in dual wield
-        PBX_DrawImage(phud, DRAW_WEAPON_ICON);
+            PBX_DrawImage(DRAW_WEAPON_ICON,true); // Draw an extra icon behind the weapon if in dual wield
+        PBX_DrawImage(DRAW_WEAPON_ICON);
 
         // Dont draw the Weapon Mode if its disabled
         if(CheckFlag(DisablePBX_WeaponModeHud)) return;
         if(pbx_image2 != "") 
-                PBX_DrawImage(phud, DRAW_MODE_ICON);
+                PBX_DrawImage(DRAW_MODE_ICON);
         if(pbx_image3 != "") 
-            PBX_DrawImage(phud,DRAW_MODE2_ICON);
+            PBX_DrawImage(DRAW_MODE2_ICON);
     }
 
 //////////////////////////// ARMORS ////////////////////////////////////////////////////////////////////////////////////
     // Get Armor Icon and Draw Function 
     private
-    ui void DrawArmors(PlayerInfo plr,PB_Hud_ZS phud)
+    ui void DrawArmors()
     {
         // Dont draw if its disabled
         if(CheckFlag(DisablePBX_ArmorHud)) return;
@@ -298,10 +310,10 @@ class PBXCore_HUDHandler : EventHandler
 
         // Draw the Armor Box if Enabled
         if(!CheckFlag(DisablePBX_ArmorHudBG))
-            PBX_DrawImage(phud,DRAW_ARMOR_BG);
+            PBX_DrawImage(DRAW_ARMOR_BG);
 
         // Get the data for the armors
-        let barmor = BasicArmor(plr.mo.FindInventory("BasicArmor", true));
+        let barmor = BasicArmor(mo.FindInventory("BasicArmor", true));
         if(!barmor) return;
 
         if (barmor.Amount > 0)
@@ -347,7 +359,7 @@ class PBXCore_HUDHandler : EventHandler
         }
 
         // Draw
-        PBX_DrawImage(phud,DRAW_ARMOR_ICON);
+        PBX_DrawImage(DRAW_ARMOR_ICON);
     }
 
 //////////////////////////// POWERUPS ////////////////////////////////////////////////////////////////////////////////////
@@ -355,10 +367,30 @@ class PBXCore_HUDHandler : EventHandler
     private 
     ui bool IsPBXPowerup(name powerName)
     {
-        return powerName == 'PBX_PowerRegeneration'
-            || powerName == 'PBX_PowerFrightener'
-            || powerName == 'PBX_PowerTimeFreezer'
-            || powerName == 'PBX_PowerInfiniteAmmo';
+        static const name PBXPowerups[] =
+        {
+            // Special Powerups
+            'PBX_PowerInvisTainted',
+            'PBX_PowerDeflect',
+            'PBX_PowerElectAura',
+            'PBX_PowerInvulTainted',
+            // Vanilla Powerups
+            'PBX_PowerBuddha',
+            'PBX_PowerDrain',
+            'PBX_PowerFlight',
+            'PBX_PowerFrightener',
+            'PBX_PowerHighJump',
+            'PBX_PowerInfiniteAmmo',
+            'PBX_PowerProtection',
+            'PBX_PowerReflection',
+            'PBX_PowerRegeneration',
+            'PBX_PowerTimeFreezer'
+        };
+
+        for (int i = 0; i < PBXPowerups.Size(); i++)
+            if (PBXPowerups[i] == powerName) return true;
+
+        return false;
     }
 
     // Set what icon to use here
@@ -369,28 +401,37 @@ class PBXCore_HUDHandler : EventHandler
         switch (powerName)
         {
             // PB Powerups
-            case 'PB_PowerInvul':         return "PWRINVUL";
-            case 'PB_PowerIronFeet':      return "PWRRADSU";
-            case 'PB_PowerInvis':         return "PWRINVIS";
-            case 'PB_PowerLightAmp':      return "PWRINFRA";
-            case 'PB_PowerDoomDamage':    return "PWRQUADD";
-            case 'PB_PowerSpeed':         return "PWRHASTE";
+            case 'PB_PowerInvul':           return "PWRINVUL";
+            case 'PB_PowerIronFeet':        return "PWRRADSU";
+            case 'PB_PowerInvis':           return "PWRINVIS";
+            case 'PB_PowerLightAmp':        return "PWRINFRA";
+            case 'PB_PowerDoomDamage':      return "PWRQUADD";
+            case 'PB_PowerSpeed':           return "PWRHASTE";
             // PBX Powerups
-            case 'PBX_PowerRegeneration': return "PWRREGEN";
-            case 'PBX_PowerFrightener':   return "PWRFRGHT";
-            case 'PBX_PowerTimeFreezer':  return "PWRTMFRZ";
-            case 'PBX_PowerInfiniteAmmo': return "PWRINFAM";
-            default:                      return "";
+            // Special Powerups
+            case 'PBX_PowerInvisTainted':   return "PWRVISTN";
+            case 'PBX_PowerDeflect':        return "PWRDEFLE";
+            case 'PBX_PowerElectAura':      return "PWRELECT";
+            case 'PBX_PowerInvulTainted':   return "PWRVULTN";
+            // Vanilla Powerups
+            case 'PBX_PowerBuddha':         return "PWRBUDHA";
+            case 'PBX_PowerDrain':          return "PWRDRAIN";
+            case 'PBX_PowerFlight':         return "PWRFLIGH";
+            case 'PBX_PowerFrightener':     return "PWRFRGHT";
+            case 'PBX_PowerHighJump':       return "PWRHIJMP";
+            case 'PBX_PowerInfiniteAmmo':   return "PWRINFAM";
+            case 'PBX_PowerProtection':        return "PWRPRTCK";
+            case 'PBX_PowerReflection':        return "PWRRFLCT";
+            case 'PBX_PowerRegeneration':   return "PWRREGEN";
+            case 'PBX_PowerTimeFreezer':    return "PWRTMFRZ";
+            default:                        return "";
         }
     }
 
     // Draw Function
-    protected 
-    ui void DrawPowerups(PlayerInfo plr, PB_Hud_ZS phud, vector2 initialpos, int step = 22)
+    private 
+    ui void DrawPowerups(vector2 initialpos, int step = 22)
     {
-        let mo = plr.mo;
-        if (!mo) return;
-
         string image;
 		string powerTime;
 		name powerName;
@@ -430,8 +471,8 @@ class PBXCore_HUDHandler : EventHandler
     }
 
 //////////////////////////// HELPER FUNCTIONS ////////////////////////////////////////////////////////////////////////////////////
-    protected
-    ui void PBX_DrawImage(PB_Hud_ZS phud, PBXHud_DrawImageSettings whatimage, bool drawAkimbo = false)
+    private
+    ui void PBX_DrawImage(PBXHud_DrawImageSettings whatimage, bool drawAkimbo = false)
     {
         int flags;
         string image; 
@@ -501,7 +542,7 @@ class PBXCore_HUDHandler : EventHandler
 
     // Just a non verbose way to check flags
     // will always check PBXWeapons_hudsetting_filter
-    protected 
+    private 
     ui bool CheckFlag(int tipFlag)
     {
         let check = CVar.FindCVar("PBXWeapons_hudsetting_filter");
