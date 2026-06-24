@@ -7,7 +7,7 @@ Credits:
 3. vortex_planetzdoom - For showing me how to automatically get the icons for the armors
 4. Cat's Frozen Addon for Brutal Doom - The Coffee icon that is used for the power freeze timer is from this mod
 
-The Powerups is from Unless You Got Powa! by Ltnumbnutsthesecond 
+The Powerups is from Unless You Got Powah! by Ltnumbnutsthesecond 
 (https://forum.zdoom.org/viewtopic.php?t=80895)
 
 Here is the full credit list:
