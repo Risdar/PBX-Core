@@ -17,18 +17,18 @@ PBX_PowerElectAura
 
 PBX_PowerInvulTainted
 {
-	#d1c332 #EEE8AA
+	#696647 #d1c332
 }
 
 // Vanilla Powerups
 PBX_PowerBuddha
 {
-	#bb9361 #FF8C00
+	#423a31 #FF8C00
 }
  
 PBX_PowerDrain
 {
-	#542f2f #B22222
+	#1a1919 #B22222
 }
  
 PBX_PowerFlight
@@ -48,7 +48,7 @@ PBX_PowerHighJump
 
 PBX_PowerInfiniteAmmo
 {
-	#E8A030 #F0C060
+	#8a7655 #F0C060
 }
 
 PBX_PowerProtection
