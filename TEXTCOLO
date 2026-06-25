@@ -71,4 +71,8 @@ PBX_PowerTimeFreezer
 	#9e5a1b #f09533
 }
 
+PBX_TaintedRegen
+{
+	#3a3348 #9370db
+}
 

@@ -127,3 +127,11 @@ pulselight TimeFreezeLight
 	Offset 0 16 0
 }
 
+pulselight RegenTnLight
+{
+	color 0.5765 0.4392 0.8588
+	size 60
+	secondarySize 75
+	Interval 1.0
+	Offset 0 16 0
+}

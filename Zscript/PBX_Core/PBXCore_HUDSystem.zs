@@ -103,7 +103,7 @@ class PBXCore_HUDHandler : EventHandler
         phud.BeginHUD();                // Initialize
         DrawEveryWeapon();
         DrawArmors();
-        DrawPowerups(powerupPosition);
+        DrawPowerups();
         
 
     }
@@ -384,7 +384,8 @@ class PBXCore_HUDHandler : EventHandler
             'PBX_PowerProtection',
             'PBX_PowerReflection',
             'PBX_PowerRegeneration',
-            'PBX_PowerTimeFreezer'
+            'PBX_PowerTimeFreezer',
+            'PBX_TaintedRegen'
         };
 
         for (int i = 0; i < PBXPowerups.Size(); i++)
@@ -420,22 +421,25 @@ class PBXCore_HUDHandler : EventHandler
             case 'PBX_PowerFrightener':     return "PWRFRGHT";
             case 'PBX_PowerHighJump':       return "PWRHIJMP";
             case 'PBX_PowerInfiniteAmmo':   return "PWRINFAM";
-            case 'PBX_PowerProtection':        return "PWRPRTCK";
-            case 'PBX_PowerReflection':        return "PWRRFLCT";
+            case 'PBX_PowerProtection':     return "PWRPRTCK";
+            case 'PBX_PowerReflection':     return "PWRRFLCT";
             case 'PBX_PowerRegeneration':   return "PWRREGEN";
             case 'PBX_PowerTimeFreezer':    return "PWRTMFRZ";
+            case 'PBX_TaintedRegen':        return "PWRRGNTN";
             default:                        return "";
         }
     }
 
     // Draw Function
     private 
-    ui void DrawPowerups(vector2 initialpos, int step = 22)
+    ui void DrawPowerups()
     {
+        vector2 initialpos = powerupPosition;
         string image;
 		string powerTime;
 		name powerName;
 		int fontCol;
+        int step = 22;
 
         // Count PB powerups first so we can start above them
         int baseCount = 0;

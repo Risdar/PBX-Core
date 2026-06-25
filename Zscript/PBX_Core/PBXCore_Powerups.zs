@@ -350,7 +350,7 @@ class PBX_ElectricAuraBeam : Actor
 
 // --- GoldInv ---
 class PBX_InvulTaintedGiver : PB_PowerupGiver { Default { Powerup.Type "PBX_PowerInvulTainted"; } }
-Class PBX_PowerInvulTainted : PB_PowerInvul
+Class PBX_PowerInvulTainted : PowerInvulnerable
 {
 	mixin PBX_PowerupTimer;
 	Default
@@ -364,12 +364,22 @@ Class PBX_PowerInvulTainted : PB_PowerInvul
 		if(!Owner) return;
 		owner.bREFLECTIVE = TRUE;
 		owner.bAIMREFLECT = TRUE;
+		owner.bNOBLOOD = true;
 		owner.A_AttachLightDef("InvulTaintedLight","InvulTaintedLight");
 	}
 
 	override void DoEffect()
 	{
 		Super.DoEffect();
+		if(CVar.GetCVar("pb_powerup_shaders",Owner.Player).GetBool())
+		{
+			Shader.SetEnabled(Owner.Player,"Invulnerability",true);
+			PPShader.SetUniform1f("Invulnerability","intensity",1.0);
+		}
+		else
+		{
+			Shader.SetEnabled(Owner.Player,"Invulnerability",false);
+		}
 		PowerupTimer("PaleGoldenrod");
 	}
 	
@@ -378,7 +388,9 @@ Class PBX_PowerInvulTainted : PB_PowerInvul
 		if(!Owner) return;
 		owner.bREFLECTIVE = FALSE;
 		owner.bAIMREFLECT = FALSE;
-		EndBlend("PaleGoldenrod");
+		owner.bNOBLOOD = false;
+		Shader.SetEnabled(Owner.Player,"Invulnerability",false);
+		EndBlend("PaleGoldenrod");	
 		owner.A_RemoveLight("InvulTaintedLight");
 		super.EndEffect();
 	}
@@ -401,11 +413,21 @@ class PBX_PowerBuddha : PowerBuddha
 		Super.InitEffect();
 		if(!Owner) return;
 		owner.A_AttachLightDef("BuddhaLight","BuddhaLight");
+		owner.bNOBLOOD = true;
 	}
 
 	override void DoEffect()
 	{
 		Super.DoEffect();
+		if(CVar.GetCVar("pb_powerup_shaders",Owner.Player).GetBool())
+		{
+			Shader.SetEnabled(Owner.Player,"Invulnerability",true);
+			PPShader.SetUniform1f("Invulnerability","intensity",1.0);
+		}
+		else
+		{
+			Shader.SetEnabled(Owner.Player,"Invulnerability",false);
+		}
 		PowerupTimer("DarkOrange");
 	}
 
@@ -413,39 +435,41 @@ class PBX_PowerBuddha : PowerBuddha
 	{
 		Super.EndEffect();
 		if(!Owner) return;
+		Shader.SetEnabled(Owner.Player,"Invulnerability",false);
 		EndBlend("DarkOrange");
 		owner.A_RemoveLight("BuddhaLight");
+		owner.bNOBLOOD = false;
 	}
 }
 
 // --- PowerDoubleFiringSpeed --- (This is bugged)
-class PBX_DoubleFiringSpeedGiver : PB_PowerupGiver { Default { Powerup.Type "PBX_PowerDoubleFiringSpeed"; } }
-class PBX_PowerDoubleFiringSpeed : PowerDoubleFiringSpeed
-{
-	mixin PBX_PowerupTimer;
-	Default { Powerup.Duration BUDDHA_DEFAULT_DURATION; }
+// class PBX_DoubleFiringSpeedGiver : PB_PowerupGiver { Default { Powerup.Type "PBX_PowerDoubleFiringSpeed"; } }
+// class PBX_PowerDoubleFiringSpeed : PowerDoubleFiringSpeed
+// {
+// 	mixin PBX_PowerupTimer;
+// 	Default { Powerup.Duration BUDDHA_DEFAULT_DURATION; }
 
-	override void InitEffect()
-	{
-		Super.InitEffect();
-		if(!Owner) return;
-		owner.A_AttachLightDef("DoubleFiringSpeedLight","DoubleFiringSpeedLight");
-	}
+// 	override void InitEffect()
+// 	{
+// 		Super.InitEffect();
+// 		if(!Owner) return;
+// 		owner.A_AttachLightDef("DoubleFiringSpeedLight","DoubleFiringSpeedLight");
+// 	}
 
-	override void DoEffect()
-	{
-		Super.DoEffect();
-		PowerupTimer("DoubleFiringSpeed");
-	}
+// 	override void DoEffect()
+// 	{
+// 		Super.DoEffect();
+// 		PowerupTimer("peru");
+// 	}
 
-	override void EndEffect()
-	{
-		Super.EndEffect();
-		if(!Owner) return;
-		EndBlend("DoubleFiringSpeed");
-		owner.A_RemoveLight("DoubleFiringSpeedLight");
-	}
-}
+// 	override void EndEffect()
+// 	{
+// 		Super.EndEffect();
+// 		if(!Owner) return;
+// 		EndBlend("peru");
+// 		owner.A_RemoveLight("DoubleFiringSpeedLight");
+// 	}
+// }
 
 // --- PowerDrain ---
 class PBX_DrainGiver : PB_PowerupGiver { Default { Powerup.Type "PBX_PowerDrain"; } }
@@ -705,5 +729,36 @@ class PBX_PowerTimeFreezer : PowerTimeFreezer
 		if(!Owner) return;
 		EndBlend("Orange");
 		owner.A_RemoveLight("TimeFreezeLight");
+	}
+}
+
+// --- TaintedRegen ---
+class PBX_TaintedRegenGiver : PB_PowerupGiver { Default { Powerup.Type "PBX_TaintedRegen"; } }
+class PBX_TaintedRegen : Powerup
+{
+	mixin PBX_PowerupTimer;
+	Default { Powerup.Duration TAINTREGEN_DEFAULT_DURATION; /*Powerup.Color "Cyan";*/}
+
+	override void InitEffect()
+	{
+		Super.InitEffect();
+		if(!Owner) return;
+		owner.A_AttachLightDef("RegenTnLight","RegenTnLight");
+	}
+	
+	override void DoEffect()
+	{
+		Super.DoEffect();
+		if(owner && owner.health < 200 && GetAge() % 3 == 0)
+			owner.GiveBody(1,200);
+		PowerupTimer("MediumPurple");
+	}
+
+	override void EndEffect()
+	{
+		Super.EndEffect();
+		if(!Owner) return;
+		EndBlend("MediumPurple");
+		owner.A_RemoveLight("RegenTnLight");
 	}
 }
