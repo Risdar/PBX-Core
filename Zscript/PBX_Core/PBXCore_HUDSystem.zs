@@ -322,31 +322,28 @@ class PBXCore_HUDHandler : EventHandler
             class<Inventory> armorClass = (class<Inventory>)(barmor.ArmorType);
             if (armorClass)
             {
+                // Look for the Default Icons
                 name armorType = armorClass.GetClassName();
-                if (armorType == 'PB_GreenArmor') 
+                let def = GetDefaultByType(armorClass);
+                iconID = def.AltHUDIcon.IsValid() ? def.AltHUDIcon : def.Icon;
+
+                // Do exceptions
+                switch(armorType)
                 {
-                    iconID = TexMan.CheckForTexture("4RM1A0", TexMan.Type_Any);
-                    pbx_armor_truescale *= 5.0;
+                    case 'PB_GreenArmor':
+                        iconID = TexMan.CheckForTexture("4RM1A0", TexMan.Type_Any);
+                        pbx_armor_truescale *= 5.0;
+                        break;
+
+                    case 'PB_BlueArmor':
+                        iconID = TexMan.CheckForTexture("4RM2A0", TexMan.Type_Any);
+                        pbx_armor_truescale *= 5.0;
+                        break;
+
+                    case 'PBX_SuperArmor': case 'PBX_HyperArmor': case 'PBX_MiniArmor':
+                        pbx_armor_truescale *= 5.0;
+                        break;
                 }
-                else if (armorType == 'PB_BlueArmor')  
-                {
-                    iconID = TexMan.CheckForTexture("4RM2A0", TexMan.Type_Any);
-                    pbx_armor_truescale *= 5.0;
-                }
-                else
-                {
-                    let def = GetDefaultByType(armorClass);
-                    iconID = def.AltHUDIcon.IsValid() ? def.AltHUDIcon : def.Icon;
-                }
-                // Uncomment this when Vampy's Build has been merged
-                // // Hardcoded scale stuff because PB's Icons doesnt have the same scale
-                // // as the rest of the PBX - Armors
-                // if (armorType == 'PB_GreenArmor' || armorType == 'PB_BlueArmor') 
-                // {
-                //     pbx_armor_truescale *= 5.0;
-                // }
-                // let def = GetDefaultByType(armorClass);
-                // iconID = def.AltHUDIcon.IsValid() ? def.AltHUDIcon : def.Icon;
             }
             pbx_image4 = TexMan.GetName(iconID);
         }
