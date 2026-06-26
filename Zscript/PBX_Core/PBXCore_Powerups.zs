@@ -69,8 +69,16 @@ class PBX_PowerDeflect : Powerup
 
 		while (ob = Actor(iter.Next()))
 		{
-			if (!ob || !ob.bMissile || ob.bSeekermissile || ob.target == Owner) continue;
+			bool shouldTrack = (!ob 
+				|| !ob.bMissile 
+				|| ob.bSeekermissile 
+				|| ob.target == Owner 
+				|| !(ob is "PB_Monster_Projectile")
+			);
+
+			if (shouldTrack) continue;
 			
+			// console.printf("projectile tracked");
 			double v = ob.vel.Length();	// speed of projectile
 			double ang = VectorAngle(ob.vel.x, ob.vel.y);	// direction of projectile
 			double dist = ob.Distance3D(Owner);	// distance from player
