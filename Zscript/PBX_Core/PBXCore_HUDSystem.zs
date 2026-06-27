@@ -6,6 +6,25 @@ enum PBX_eHudSettingFlags{
     DisablePBX_ArmorHudBG		= 1 << 4
 }
 
+class PBXHUDData : Object
+{
+    bool Handled;
+
+    bool SkipAutoDraw;
+
+    String Image1;
+    String Image2;
+    String Image3;
+
+    Vector2 Offset1;
+    Vector2 Offset2;
+    Vector2 Offset3;
+
+    double Scale1;
+    double Scale2;
+    double Scale3;
+}
+
 // HUD System
 class PBXCore_HUDHandler : EventHandler
 {
@@ -331,18 +350,21 @@ class PBXCore_HUDHandler : EventHandler
                 switch(armorType)
                 {
                     case 'PB_GreenArmor':
-                        iconID = TexMan.CheckForTexture("4RM1A0", TexMan.Type_Any);
-                        pbx_armor_truescale *= 5.0;
+                        iconID = TexMan.CheckForTexture("GARM1", TexMan.Type_Any);
                         break;
 
                     case 'PB_BlueArmor':
-                        iconID = TexMan.CheckForTexture("4RM2A0", TexMan.Type_Any);
-                        pbx_armor_truescale *= 5.0;
+                        iconID = TexMan.CheckForTexture("BARM1", TexMan.Type_Any);
                         break;
 
                     case 'PBX_SuperArmor': case 'PBX_HyperArmor': case 'PBX_MiniArmor':
                         pbx_armor_truescale *= 5.0;
                         break;
+
+                    case 'PB_ArmorBonus':
+                        pbx_armor_truescale *= 7.0;
+                        break;
+                    
                 }
             }
             pbx_image4 = TexMan.GetName(iconID);

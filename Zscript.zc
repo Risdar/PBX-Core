@@ -9,43 +9,20 @@ Version 4.13
 // Big thanks to EmeraldCoastt and the BDP team for this
 #include "Zscript/PBX_Core/MathsNMixins/Include.zsc"
 
-enum PBXCore_PowerupValues
+class PBXCore_Handler : EventHandler
 {
-    // Default Values
-    // Special Powerups
-    INVISTAINT_DEFAULT_DURATION     = -75,
-    DEFLECT_DEFAULT_DURATION        = -60,
-    ELECTAURA_DEFAULT_DURATION      = -60,
-    INVULTAINT_DEFAULT_DURATION     = -30,
-    // Vanilla Powerups
-    BUDDHA_DEFAULT_DURATION         = -60,
-    DRAIN_DEFAULT_DURATION          = -60,
-    FLIGHT_DEFAULT_DURATION         = -60,
-    FRIGHTENER_DEFAULT_DURATION     = -60,
-    HIGHJUMP_DEFAULT_DURATION       = -60,
-    INFAMMO_DEFAULT_DURATION        = -12,
-    PROTECT_DEFAULT_DURATION        = -25,
-    REFLECT_DEFAULT_DURATION        = -60,
-    REGEN_DEFAULT_DURATION          = -60,
-    TIMEFREEZE_DEFAULT_DURATION     = -12,
-    TAINTREGEN_DEFAULT_DURATION     = -30
-}
+	PlayerPawn pm;
 
-class PBXHUDData : Object
-{
-    bool Handled;
+    Override void PlayerEntered(PlayerEvent e)
+    {
+		// Get player pointer
+        pm = players[e.PlayerNumber].mo;
+		if(!pm) return;
 
-    bool SkipAutoDraw;
+		// Dont continue if its the titlemap
+        if (level.MapName == "TITLEMAP") return;
 
-    String Image1;
-    String Image2;
-    String Image3;
+        PB_HelpNotificationsHandler.PB_SendTip("$PBXCore_Version", "PBXCore_ThrowawayFlag", 0 << 0);
+    }
 
-    Vector2 Offset1;
-    Vector2 Offset2;
-    Vector2 Offset3;
-
-    double Scale1;
-    double Scale2;
-    double Scale3;
 }

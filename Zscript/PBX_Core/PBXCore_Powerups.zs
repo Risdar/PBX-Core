@@ -1,3 +1,25 @@
+enum PBXCore_PowerupValues
+{
+    // Default Values
+    // Special Powerups
+    INVISTAINT_DEFAULT_DURATION     = -75,
+    DEFLECT_DEFAULT_DURATION        = -60,
+    ELECTAURA_DEFAULT_DURATION      = -60,
+    INVULTAINT_DEFAULT_DURATION     = -30,
+    // Vanilla Powerups
+    BUDDHA_DEFAULT_DURATION         = -60,
+    DRAIN_DEFAULT_DURATION          = -60,
+    FLIGHT_DEFAULT_DURATION         = -60,
+    FRIGHTENER_DEFAULT_DURATION     = -60,
+    HIGHJUMP_DEFAULT_DURATION       = -60,
+    INFAMMO_DEFAULT_DURATION        = -12,
+    PROTECT_DEFAULT_DURATION        = -25,
+    REFLECT_DEFAULT_DURATION        = -60,
+    REGEN_DEFAULT_DURATION          = -60,
+    TIMEFREEZE_DEFAULT_DURATION     = -12,
+    TAINTREGEN_DEFAULT_DURATION     = -30
+}
+
 // ============================================================
 // PBX Powerups - Special Powerups from Unless You Got Powah
 // ============================================================
