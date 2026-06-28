@@ -40,6 +40,7 @@ ListMenu "MainMenu"
 
 AddOptionMenu "PB_AddonOptions"
 {
+    Option  "Print PBX Versions", "PBXCore_PrintVersion", "OnOff"
     Submenu "$PBXHud_Settings", "PBXHud_Menu"
 }
 OptionMenu "PBXHud_Menu"

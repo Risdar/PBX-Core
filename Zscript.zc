@@ -1,6 +1,7 @@
 Version 4.13
 
 // General
+#include "Zscript/PBX_Core/PBXCore_System.zs"
 #include "Zscript/PBX_Core/PBXCore_HUDSystem.zs"
 #include "Zscript/PBX_Core/PBXCore_HUDData.zs"
 #include "Zscript/PBX_Core/PBXCore_Powerups.zs"
@@ -8,21 +9,3 @@ Version 4.13
 
 // Big thanks to EmeraldCoastt and the BDP team for this
 #include "Zscript/PBX_Core/MathsNMixins/Include.zsc"
-
-class PBXCore_Handler : EventHandler
-{
-	PlayerPawn pm;
-
-    Override void PlayerEntered(PlayerEvent e)
-    {
-		// Get player pointer
-        pm = players[e.PlayerNumber].mo;
-		if(!pm) return;
-
-		// Dont continue if its the titlemap
-        if (level.MapName == "TITLEMAP") return;
-
-        PB_HelpNotificationsHandler.PB_SendTip("$PBXCore_Version", "PBXCore_ThrowawayFlag", 0 << 0);
-    }
-
-}

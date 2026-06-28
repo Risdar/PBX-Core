@@ -362,7 +362,7 @@ class PBXCore_HUDHandler : EventHandler
                         break;
 
                     case 'PB_ArmorBonus':
-                        pbx_armor_truescale *= 7.0;
+                        pbx_armor_truescale *= 6.0;
                         break;
                     
                 }
@@ -572,6 +572,8 @@ class PBXCore_HUDHandler : EventHandler
         return (check.GetInt() & tipflag) == tipflag;
     }
 
+
+    // Im not sure if this can be called from the play scope lol
     static clearscope bool PBX_PlayerHasInventory(name inv)
     {
         return PlayerPawn(players[consoleplayer].mo).CountInv(inv) > 0;
