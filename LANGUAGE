@@ -1,5 +1,6 @@
 [enu default]
 //////////////////////////// GENERAL ///////////////////////////////////////////////////////////////////////////////
 PBXCore_Settings                    = "\cr♛\c- PBX Options";
-PBXCore_Version                     = "\cvPBX - Core Version: 1.2";
-PBXHud_Settings                     = "\cj⍟\c- PBX - HUD Settings";
+PBXCore_Version                     = "\cvPBX - Core Version: 1.3";
+PBXHud_Settings                     = "\cv⍟\c- PBX - HUD Settings";
+PBXCore_ArmorPickup                 = "%s \n(+%d%% Protection/%d Amount)";
