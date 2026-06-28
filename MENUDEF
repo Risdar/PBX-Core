@@ -40,9 +40,26 @@ ListMenu "MainMenu"
 
 AddOptionMenu "PB_AddonOptions"
 {
-    Option  "Print PBX Versions", "PBXCore_PrintVersion", "OnOff"
+    Submenu "$PBXCore_Settings", "PBXCore_Menu"
     Submenu "$PBXHud_Settings", "PBXHud_Menu"
 }
+
+OptionMenu "PBXCore_Menu"
+{
+    Title "$PBXCore_Settings"
+	Class "PB_OptionMenu"
+    Position	-48
+    StaticText	"--------- PBX Core Settings ---------", 1
+    Option  "Print PBX Versions", "PBXCore_PrintVersion", "OnOff"
+    StaticText " "
+    StaticText	"--------- PBX HUD Settings ---------", 1
+    SafeCommand  "Reset Weapon HUD to Default", "resetcvar PBXWeapons_Weaponhud_x; resetcvar PBXWeapons_Weaponhud_y; resetcvar PBXWeapons_Weaponhud_scale; resetcvar PBXWeapons_Weaponhud_alpha; resetcvar PBXWeapons_Weaponhud_boxW; resetcvar PBXWeapons_Weaponhud_boxH"
+    SafeCommand  "Reset Weapon Mode HUD to Default", "resetcvar PBXWeapons_WeaponModehud_x; resetcvar PBXWeapons_WeaponModehud_y; resetcvar PBXWeapons_WeaponModehud_scale; resetcvar PBXWeapons_WeaponModehud_alpha; resetcvar PBXWeapons_WeaponModehud_boxW; resetcvar PBXWeapons_WeaponModehud_boxH"
+    SafeCommand  "Reset Armor HUD to Default", "resetcvar PBXWeapons_Armorhud_x; resetcvar PBXWeapons_Armorhud_y; resetcvar PBXWeapons_Armorhud_scale; resetcvar PBXWeapons_Armorhud_alpha; resetcvar PBXWeapons_Armorhud_boxW; resetcvar PBXWeapons_Armorhud_boxH"
+    StaticText "$PBXCore_Version",cyan
+    StaticText " "
+}
+
 OptionMenu "PBXHud_Menu"
 {
     Title "$PBXHud_Settings"
