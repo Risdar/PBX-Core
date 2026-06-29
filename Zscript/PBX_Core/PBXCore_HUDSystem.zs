@@ -50,14 +50,14 @@ class PBXCore_HUDHandler : EventHandler
     ui Vector2 pbx_armor_pos, pbx_armor_truescale, pbx_armor_box;
 
     // Flags
-    ui int flagsleft, flagsright, flagssTextAlignRight, flagsManualVisor1, flagsManualVisor2, flagsLeftCenter;
+    ui int flagsleft, flagsright, flagsLeftCenter;
 
     // Icons
     ui string pbx_image, pbx_image2, pbx_image3, pbx_image4;
 
     // Services
     ui Array<Service> PBX_HUDServices;
-    ui bool ServicesLoaded;
+        ui bool ServicesLoaded;
 
     // Others
     ui PlayerInfo plr;
@@ -66,7 +66,7 @@ class PBXCore_HUDHandler : EventHandler
     ui bool isAkimbo;
     ui vector2 akimboPosition;
     ui vector2 powerupPosition;
-
+    bool isGearboxOpened;
 
     enum PBXHud_DrawImageSettings{
         DRAW_WEAPON_ICON,
@@ -75,6 +75,26 @@ class PBXCore_HUDHandler : EventHandler
         DRAW_ARMOR_ICON,
         DRAW_ARMOR_BG
     }
+
+    enum PBXHud_DrawBarSettings{
+        DRAW_SECOND_BAR,
+        DRAW_THIRD_BAR
+    }
+
+    // Ammo Bar Position
+    const AMMO2BG_POSITION_X    = -73;
+    const AMMO2BG_POSITION_Y    = -49;
+    const AMMO2BAR_POSITION_X   = -111;
+    const AMMO2BAR_POSITION_Y   = -52;
+    const AMMO2STR_POSITION_X   = -205;
+    const AMMO2STR_POSITION_Y   = -68.75;
+
+    const AMMO3BG_POSITION_X    = -90;
+    const AMMO3BG_POSITION_Y    = -71;
+    const AMMO3BAR_POSITION_X   = -100;
+    const AMMO3BAR_POSITION_Y   = -72;
+    const AMMO3STR_POSITION_X   = -207;
+    const AMMO3STR_POSITION_Y   = -90;
 
     // Powerup Position
     const POWERUP_POSITION_X = 16;
@@ -108,6 +128,14 @@ class PBXCore_HUDHandler : EventHandler
         if (phud.hudState == BaseStatusBar.HUD_None || phud.PlayerWasDead) 
             return;
 
+        // let handler = GB_EventHandler(EventHandler.Find("GB_EventHandler"));
+        // if(handler && isGearboxOpened)
+        // {
+        //     let alpha = clamp(0.0 + 0.2, 0.0, 1.0);
+        //     let gbColor = CVar.GetCVar('gb_dim_color',plr).GetInt();
+        //     Screen.Dim(gbColor, alpha * 0.4, 0, 0, Screen.getWidth(), Screen.getHeight());
+        // }
+
         // Get a pointer to the player
         plr = players[consoleplayer];
         mo = plr.mo;
@@ -119,12 +147,20 @@ class PBXCore_HUDHandler : EventHandler
             gatherHUDCVARs(plr,phud); // Gather the CVARs
 
         // Begin drawing the HUD
-        phud.BeginHUD();                // Initialize
+        phud.BeginHUD();       // Initialize
         DrawEveryWeapon();
         DrawArmors();
         DrawPowerups();
         
+    }
 
+    override void WorldTick()
+    {
+        isGearboxOpened = false;
+
+        let handler = GB_EventHandler(EventHandler.Find("GB_EventHandler"));
+        if (handler && handler.isOpened())
+            isGearboxOpened = true;
     }
 
 //////////////////////////// GATHER DATA ////////////////////////////////////////////////////////////////////////////////////
@@ -215,7 +251,6 @@ class PBXCore_HUDHandler : EventHandler
 
         // Flags
         flagsright              = BaseStatusBar.DI_SCREEN_RIGHT_BOTTOM | BaseStatusBar.DI_ITEM_RIGHT_BOTTOM;
-        flagssTextAlignRight    = BaseStatusBar.DI_TEXT_ALIGN_RIGHT;
         flagsleft               = BaseStatusBar.DI_SCREEN_LEFT_BOTTOM | BaseStatusBar.DI_ITEM_LEFT_BOTTOM;
         flagsLeftCenter         = BaseStatusBar.DI_SCREEN_LEFT_BOTTOM | BaseStatusBar.DI_ITEM_CENTER;
 
@@ -242,7 +277,7 @@ class PBXCore_HUDHandler : EventHandler
             // Slot 3
             "PB_Shotgun", "PB_Autoshotgun", "PB_QuadSG",
             // Slot 4
-            "PB_DMR", "PB_LMG", "PB_ChexRifle"
+            "PB_DMR", "PB_LMG", "PB_ChexRifle",
             // Slot 5
             "PB_Minigun",
             // Slot 7
@@ -553,6 +588,10 @@ class PBXCore_HUDHandler : EventHandler
                 break;
 
         }
+
+        // Dim stuff if any gearbox wheel is open
+        if(isGearboxOpened) transparency *= 0.4;
+
         phud.PBHud_DrawImage(
             image, 
             drawAkimbo ? pos + akimboPosition : pos,
@@ -572,6 +611,31 @@ class PBXCore_HUDHandler : EventHandler
         return (check.GetInt() & tipflag) == tipflag;
     }
 
+    // Used to draw ammo bars (pbx weapons uses this)
+    static ui void PBX_DrawAmmoBar(
+        PB_Hud_ZS phud,     // Pointer to the PB Hud
+        bool whatBar,       // What Bar to Draw
+        String bgimg,       // Background Image
+        String ongfx,       // Ammo Bar
+        String ammoName,    // What Ammo to Count
+        int fontTranslation // Font Color
+    )
+    {
+        if(!phud) return;
+
+        let transparency = phud.playerBoxAlpha;
+        let handler = PBXCore_HUDHandler(EventHandler.Find("PBXCore_HUDHandler"));
+        if(handler && handler.isGearboxOpened)
+            transparency *= 0.4;
+
+        vector2 bgpos       = whatBar ? (-90,-71)   : (-73,-49);
+        vector2 barpos      = whatBar ? (-100,-72)  : (-111,-52);
+        vector2 stringpos   = whatBar ? (-207,-90)  : (-205,-68.75);
+
+        phud.PBHud_DrawImage(bgimg, bgpos,  BaseStatusBar.DI_SCREEN_RIGHT_BOTTOM | BaseStatusBar.DI_ITEM_RIGHT_BOTTOM, transparency);
+        phud.PBHud_DrawBar(ongfx, "BGBARL", phud.GetAmount(ammoName), phud.GetMaxAmount(ammoName), barpos, 0, 1,  BaseStatusBar.DI_SCREEN_RIGHT_BOTTOM | BaseStatusBar.DI_ITEM_RIGHT_BOTTOM,transparency);
+        phud.PBHud_DrawString(phud.mDefaultFont, phud.Formatnumber(phud.GetAmount(ammoName)), stringpos, BaseStatusBar.DI_TEXT_ALIGN_RIGHT, fontTranslation,transparency);
+    }
 
     // Im not sure if this can be called from the play scope lol
     static clearscope bool PBX_PlayerHasInventory(name inv)

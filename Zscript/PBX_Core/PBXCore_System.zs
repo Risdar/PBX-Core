@@ -1,7 +1,8 @@
-class PBXCore_Handler : EventHandler
+class PBXCore_Handler : StaticEventHandler
 {
-    // Parallel arrays: These three Arrays are basically paired
+    bool hasPrintedVersion;
 
+    // Parallel arrays: These three Arrays are basically paired
     // Contains the name of classes to check
     static const string CHECKED_CLASSES[] =
     {
@@ -10,7 +11,6 @@ class PBXCore_Handler : EventHandler
         "PBX_PinkArmor",
         "PBX_Blackblur"
     };
-
     // Contains the name of the CVar that should be set
     static const name LOADED_CVARS[] =
     {
@@ -19,7 +19,6 @@ class PBXCore_Handler : EventHandler
         'PBXCore_ArmorsLoaded',
         'PBXCore_ItemsLoaded'
     };
-
     // What will be printed
     static const string VERSION_STRINGS[] =
     {
@@ -29,10 +28,17 @@ class PBXCore_Handler : EventHandler
         "$PBXItems_Version"
     };
 
+    // So it only prints the version once per session
+    override void OnRegister()
+    {
+        hasPrintedVersion = false;
+    }
+
     // When the world has been loaded (basically on the titlemap)
     // Check the existing classes and if they exist and set the CVars accordingly
     override void WorldLoaded(WorldEvent e)
     {
+        if(hasPrintedVersion || e.IsSaveGame || e.IsReopen) return;
         for (int i = 0; i < CHECKED_CLASSES.Size(); i++)
         {
             bool loaded = (class<Actor>)(CHECKED_CLASSES[i]) != null;
@@ -43,6 +49,7 @@ class PBXCore_Handler : EventHandler
     // When the player entered a map
     override void PlayerEntered(PlayerEvent e)
     {
+        if(hasPrintedVersion) return;
         if (level.MapName == "TITLEMAP") return;
 
         let plr = players[consoleplayer];
@@ -58,6 +65,8 @@ class PBXCore_Handler : EventHandler
             if (CVar.FindCVar(LOADED_CVARS[i]).GetBool())
                 PB_HelpNotificationsHandler.PB_SendTip(VERSION_STRINGS[i], "PBXCore_ThrowawayFlag", 0);
         }
+
+        hasPrintedVersion = true;
     }
 
     // Used to give the player an inventory when they dont have them yet
