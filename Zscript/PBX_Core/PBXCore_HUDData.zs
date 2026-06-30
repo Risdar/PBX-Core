@@ -140,7 +140,7 @@ extend class PBXCore_HUDHandler
                 if(asgUpgraded) 
                 {
                     pbx_image = "A9SCA0";
-                    adjustPos.y -= -10;
+                    adjustPos.y -= isAkimbo ? 6 : 1;
                 }
                 break;
 
@@ -349,7 +349,7 @@ extend class PBXCore_HUDHandler
                 bool cryoSpear   = cryorifle.cryoSecondary == cryorifle.SEC_SPEAR;
 
                 pbx_image  = "FRPKA0";
-                pbx_image2 = cryoSpear ? "graphics/pywheel/CryoRifle_Spear.png" : "graphics/pywheel/CryoRifle_Flak.png";
+                pbx_image2 = cryoSpear   ? "graphics/pywheel/CryoRifle_Spear.png"   : "graphics/pywheel/CryoRifle_Flak.png";
                 pbx_image3 = cryoMissile ? "graphics/pywheel/CryoRifle_Missile.png" : "graphics/pywheel/CryoRifle_Beam.png";
 
                 adjustPos = (-5, 15);
