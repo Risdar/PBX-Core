@@ -140,7 +140,7 @@ extend class PBXCore_HUDHandler
                 if(asgUpgraded) 
                 {
                     pbx_image = "A9SCA0";
-                    adjustPos.y -= -5;
+                    adjustPos.y -= -10;
                 }
                 break;
 

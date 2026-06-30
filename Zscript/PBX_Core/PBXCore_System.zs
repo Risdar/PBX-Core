@@ -124,7 +124,7 @@ class PBXCore_ArmorBase : PB_Armor
 
     override string PickupMessage()
     {
-        return String.Format(StringTable.Localize("$PBXCore_ArmorPickup"), StringTable.Localize(pickupMsg),self.SavePercent,self.SaveAmount);
+        return String.Format(StringTable.Localize("$PBXCore_ArmorPickup"), StringTable.Localize(pickupMsg),int(self.SavePercent),int(self.SaveAmount));
     }
 
 }
