@@ -61,7 +61,7 @@ extend class PBXCore_HUDHandler
                 if(smg.hasSilencer) 
                 {
                     pbx_image = "ATFLA0";
-                    adjustPos = (-13,14);
+                    adjustPos.x -= 23;
                 }
 
                 break;
@@ -74,13 +74,13 @@ extend class PBXCore_HUDHandler
                 pbx_image2 = ""; //its empty for now
                 pbx_image3 = ""; //its empty for now
 
-                adjustPos = (18,18); // Single ? Silenced : Not Silenced
+                adjustPos = (18,18);
                 adjustScale = 1.1;
 
                 if(pistol.hasSilencer) 
                 {
                     pbx_image = "graphics/pywheel/PISTOL_1.png";
-                    adjustPos = (-2,18);
+                    adjustPos.x -= 20;
                 }
 
                 break;
@@ -104,6 +104,7 @@ extend class PBXCore_HUDHandler
             case 'PB_Shotgun':
                 let shotgun = PB_Shotgun(pbWeap);
                 if(!shotgun) return;
+
                 bool shotgunUpgraded = PBX_PlayerHasInventory("PumpshotgunMagazine");
 
                 switch(shotgun.shellsmode)
@@ -258,17 +259,20 @@ extend class PBXCore_HUDHandler
 
 //////////////// SLOT 6 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             case 'PB_RocketLauncher':
+                name rocketmode;
                 // WHY IS THE ROCKETLAUNCHER MODE SWITCH SO JANK
                 // WHAT DO YOU MEAN ITS A STRING
                 if(pbweap)
                 {
                     if(pbweap.rocketLauncherMode == "Standard")
-                        pbx_image2 = "graphics/pywheel/rocket_standard.png";
+                        rocketmode = "graphics/pywheel/rocket_standard.png";
                     else if (pbweap.rocketLauncherMode == "Homing")
-                        pbx_image2 = "graphics/pywheel/rocket_homing.png";
+                        rocketmode = "graphics/pywheel/rocket_homing.png";
                     else if (pbweap.rocketLauncherMode == "Laser")
-                        pbx_image2 = "graphics/pywheel/rocket_laser.png";
+                        rocketmode = "graphics/pywheel/rocket_laser.png";
                 }
+
+                pbx_image2 = rocketmode;
                 pbx_image3 = ""; //its empty for now
 
                 adjustPos = (-8 , 15);
@@ -320,6 +324,9 @@ extend class PBXCore_HUDHandler
                 break;
 
             case 'PB_DTechRifle':
+                pbx_image2 = ""; //its empty for now
+                pbx_image3 = ""; //its empty for now
+
                 adjustPos = (-5, 15);
                 adjustScale = 0.9;
                 break;
@@ -372,6 +379,9 @@ extend class PBXCore_HUDHandler
                 break;
 
             case 'PB_Railgun':
+                pbx_image2 = ""; //its empty for now
+                pbx_image3 = ""; //its empty for now
+
                 adjustPos = (-5,15);
                 adjustScale = 0.8;
                 break;

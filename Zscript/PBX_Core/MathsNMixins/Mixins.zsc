@@ -1,4 +1,24 @@
 // Copied from PB since mixins cant be used across translation units
+mixin class PBX_BetterPickupSound
+{
+	override void PlayPickupSound(actor toucher)
+	{
+		let hnd  = PB_EventHandler(EventHandler.Find("PB_EventHandler"));
+		if(hnd)
+		{
+			if(hnd.pickuptic[toucher.PlayerNumber()]==gametic) return;
+			hnd.pickuptic[toucher.PlayerNumber()] = gametic;
+		}
+		double atten;
+		int flags = CHANF_OVERLAP|CHANF_MAYBE_LOCAL;
+		if(bNoAttenPickupSound) atten = ATTN_NONE;
+		else atten = ATTN_NORM;
+		if(toucher && toucher.CheckLocalView()) flags |= CHANF_NOPAUSE;
+		toucher.A_StartSound(PickupSound,1002,flags,1.0,atten);
+	}
+}
+
+
 mixin class PBX_PowerupTimer
 {
 	int time;

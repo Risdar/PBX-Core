@@ -384,20 +384,9 @@ class PBXCore_HUDHandler : EventHandler
                 // Do exceptions
                 switch(armorType)
                 {
-                    case 'PB_GreenArmor':
-                        iconID = TexMan.CheckForTexture("GARM1", TexMan.Type_Any);
-                        break;
-
-                    case 'PB_BlueArmor':
-                        iconID = TexMan.CheckForTexture("BARM1", TexMan.Type_Any);
-                        break;
-
                     case 'PBX_SuperArmor': case 'PBX_HyperArmor': case 'PBX_MiniArmor':
+                    case 'PB_GreenArmor':  case 'PB_BlueArmor':   case 'PB_ArmorBonus':
                         pbx_armor_truescale *= 5.0;
-                        break;
-
-                    case 'PB_ArmorBonus':
-                        pbx_armor_truescale *= 6.0;
                         break;
                     
                 }

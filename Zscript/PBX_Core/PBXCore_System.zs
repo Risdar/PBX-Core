@@ -119,6 +119,7 @@ class PBXCore_ArmorBase : PB_Armor
         bool pickup = Super.TryPickup(toucher);
         if (pickup && armortoken != '')
             toucher.GiveInventory(armortoken, 1);
+
         return pickup;
     }
 
@@ -127,4 +128,55 @@ class PBXCore_ArmorBase : PB_Armor
         return String.Format(StringTable.Localize("$PBXCore_ArmorPickup"), StringTable.Localize(pickupMsg),int(self.SavePercent),int(self.SaveAmount));
     }
 
+}
+
+class PBXCore_UpgradeBase : inventory
+{
+    name upgradetoken, upgradetype, s;
+    property UpgradeToken : upgradetoken;
+	property Sprite : upgradetype;
+	mixin PBX_BetterPickupSound;
+
+	Default
+	{
+        PBXCore_UpgradeBase.upgradetoken '';
+        PBXCore_UpgradeBase.Sprite '';
+		+inventory.alwayspickup;
+	}
+
+	override void PostBeginPlay()
+	{
+		Super.PostBeginPlay();
+		PBX_SetUpgradeSprite();
+	}
+
+    override bool TryPickup(in out Actor toucher)
+    {
+        bool pickup = Super.TryPickup(toucher);
+        if (pickup && upgradetoken != '')
+            toucher.GiveInventory(upgradetoken, 1);
+
+        return pickup;
+    }
+
+	virtual void PBX_SetUpgradeSprite()
+	{
+		switch(upgradetype)
+		{
+            default: s = "TNT1"; break;
+		}
+
+        if(upgradetype != "TNT1")
+		    sprite = GetSpriteIndex(s);
+	}
+
+	States
+	{
+		Spawn:
+			TNT1 A -1 bright light("WeaponUpgradeSpawner");
+			stop;
+
+		LoadSprites:
+			TNT1 A 0;
+	}
 }
