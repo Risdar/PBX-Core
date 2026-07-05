@@ -57,9 +57,11 @@ class PBXCore_Handler : StaticEventHandler
 
         // Dont print the versiongs if the option is disabled
         if (!CVar.GetCVar('PBXCore_PrintVersion', plr).GetBool()) return;
+
+        // Print the Core version
         PB_HelpNotificationsHandler.PB_SendTip("$PBXCore_Version", "PBXCore_ThrowawayFlag", 0);
 
-        // Print the other PBX Versions
+        // Print the other PBX Modules
         for (int i = 0; i < LOADED_CVARS.Size(); i++)
         {
             if (CVar.FindCVar(LOADED_CVARS[i]).GetBool())
@@ -81,7 +83,7 @@ class PBXCore_Handler : StaticEventHandler
 }
 
 // Inventory item given to the player that handles every Tooltips
-class PBXCore_TipsManager : inventory
+class PBXCore_TipsManager : inventory abstract
 {
     Default
 	{
@@ -102,7 +104,7 @@ class PBXCore_TipsManager : inventory
 	}
 }
 
-class PBXCore_ArmorBase : PB_Armor
+class PBXCore_ArmorBase : PB_Armor abstract
 {
     name armortoken;
     property ArmorToken : armortoken;
@@ -130,7 +132,7 @@ class PBXCore_ArmorBase : PB_Armor
 
 }
 
-class PBXCore_UpgradeBase : inventory
+class PBXCore_UpgradeBase : inventory abstract
 {
     name upgradetoken, upgradetype, s;
     property UpgradeToken : upgradetoken;
