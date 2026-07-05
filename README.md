@@ -32,6 +32,9 @@ A couple of things to note:
 1. You do not need to change the format of the file (.Zip) to PK3, you can just load the file as is
 2. *Always* load PBX - Core first *before* any other modules, the rest of the order does not matter as long as PBX - Core is loaded first
 
+## Credits and Acknowledgements
+This series of mods is not made by me alone, it is a compilation of various mods from many authors that I have integrated with Projecti Brutality systems, every module has a credit file that contains every authors and people that helped me with making that specific module
+
 ## Feedback and Bug Reporting
 Any suggestions, opinions, or questions should be posted on the [Discord server](https://discord.gg/2hJxXPc "Come join us :)"). Don't forget to check the rules and faq channels, as well as each channel's pins and description.
 
