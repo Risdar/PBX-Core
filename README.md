@@ -22,7 +22,7 @@ Currently there are 5 Modules each adding different things to the game, you can 
 - [PBX - Items](https://github.com/Risdar/PBX-Items)
 
 ## How to Download
-1. First you will need the latest version of [UZDoom/LZDoom](https://zdoom.org/downloads) for PC, [Delta Touch](https://play.google.com/store/apps/details?id=com.opentouchgaming.deltatouch&hl=en_US&gl=US "Delta Touch") for Android, or [GenZD](https://apps.apple.com/us/app/genzd/id6503916449 "GenZD") for iOS (as of July 7th 2026 the latest version is 4.14.3)
+1. First you will need the latest version of [UZDoom/LZDoom](https://zdoom.org/downloads) for PC, [Delta Touch](https://play.google.com/store/apps/details?id=com.opentouchgaming.deltatouch&hl=en_US&gl=US "Delta Touch") for Android, or [GenZD](https://apps.apple.com/us/app/genzd/id6503916449 "GenZD") for iOS (as of July 5th 2026 the latest version is 4.14.3)
 2. Next you will need to obtain a copy of  either a copy of the one of the official IWADs <sup>[(1)][1] [(2)][2]</sup> or [Freedoom Phase 1+2](https://freedoom.github.io/download.html "Freedoom").
 3. Then grab a copy of [Project Brutality](https://github.com/pa1nki113r/Project_Brutality/tree/PB_Staging) by opening the link, scroll up to the top and click the green button labeled __Code__ then click [Download Zip](https://github.com/pa1nki113r/Project_Brutality/archive/refs/heads/PB_Staging.zip "You can also click here to download."). If you are on mobile and do not see a button, you will need to turn on desktop view.
 4. After that you will need to download PBX itself by doing the same thing with PB by scrolling up and clicking the green button labeled __Code__ then click Download Zip
