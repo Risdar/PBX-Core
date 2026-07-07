@@ -4,3 +4,5 @@ PBXCore_Settings                    = "\cr♛\c- PBX Options";
 PBXCore_Version                     = "\cvPBX - Core Version: 1.3";
 PBXHud_Settings                     = "\cv⍟\c- PBX - HUD Settings";
 PBXCore_ArmorPickup                 = "%s \n(+%d%% Protection/%d Amount)";
+
+TIP_PBXCore_SendTip                 = "Enable tooltips, this the Master Override for all tooltips in PBX. If this is disabled, no tooltips will be shown.";

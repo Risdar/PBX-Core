@@ -51,6 +51,7 @@ OptionMenu "PBXCore_Menu"
     Position	-48
     StaticText	"--------- PBX Core Settings ---------", 1
     Option  "Print PBX Versions", "PBXCore_PrintVersion", "OnOff"
+    Option  "Enable Tooltips", "PBXCore_SendTip", "OnOff"
     StaticText " "
     StaticText	"--------- PBX HUD Settings ---------", 1
     SafeCommand  "Reset Weapon HUD to Default", "resetcvar PBXWeapons_Weaponhud_x; resetcvar PBXWeapons_Weaponhud_y; resetcvar PBXWeapons_Weaponhud_scale; resetcvar PBXWeapons_Weaponhud_alpha; resetcvar PBXWeapons_Weaponhud_boxW; resetcvar PBXWeapons_Weaponhud_boxH"

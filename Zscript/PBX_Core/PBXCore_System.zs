@@ -95,9 +95,17 @@ class PBXCore_TipsManager : inventory abstract
 		+INVENTORY.PERSISTENTPOWER
 	}
 
-    static void SendTipArrayIfNeeded(Array<String> tipStrings, string cvarName, int tipFlag)
+    static clearscope void SendTipArrayIfNeeded(Array<String> tipStrings, string cvarName, int tipFlag)
 	{
-		if(!PB_HelpNotificationsHandler.CheckTipEvent(tipFlag, CVar.GetCvar(cvarName)))
+        CVAR shouldSend = CVar.GetCVar("PBXCore_SendTip");
+        if(!shouldSend) return;
+        bool send = shouldSend.GetBool();
+        if(!send) return;
+
+        CVar name = CVar.GetCvar(cvarName);
+        if(!name) return;
+
+		if(!PB_HelpNotificationsHandler.CheckTipEvent(tipFlag, name))
 		{
 			PB_HelpNotificationsHandler.PB_SendTipArray(tipStrings, cvarName, tipFlag);
 		}

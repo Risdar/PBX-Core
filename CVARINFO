@@ -2,6 +2,7 @@
 server int PBXCore_ThrowawayFlag = 0;
 server int PBXCore_VersionFlag = 0;
 server bool PBXCore_PrintVersion = true;
+server bool PBXCore_SendTip = true;
 server bool PBXCore_WeaponsLoaded = false;
 server bool PBXCore_AddonsLoaded = false;
 server bool PBXCore_ArmorsLoaded = false;
