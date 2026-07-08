@@ -4,7 +4,7 @@ enum PBXCore_PowerupDuration
     // Special Powerups
     INVISTAINT_DEFAULT_DURATION     = -75,
     DEFLECT_DEFAULT_DURATION        = -60,
-    ELECTAURA_DEFAULT_DURATION      = -60,
+    ELECTAURA_DEFAULT_DURATION      = -45,
     INVULTAINT_DEFAULT_DURATION     = -30,
     // Vanilla Powerups
     BUDDHA_DEFAULT_DURATION         = -60,
@@ -19,8 +19,8 @@ enum PBXCore_PowerupDuration
     TIMEFREEZE_DEFAULT_DURATION     = -12,
     TAINTREGEN_DEFAULT_DURATION     = -30,
     // New Powerups
-    FROSTAURA_DEFAULT_DURATION     	= -60,
-    FIREAURA_DEFAULT_DURATION     	= -60
+    FROSTAURA_DEFAULT_DURATION     	= -45,
+    FIREAURA_DEFAULT_DURATION     	= -30
 }
 
 // ============================================================
@@ -148,6 +148,8 @@ class PBX_PowerElectAura : Powerup
 	mixin PBX_PowerupTimer;
 	actor AL;
 	double arad;
+	const AURA_RADIUS = 384;
+	const ELECTRIC_DAMAGE = 15;
 
 	Default
 	{
@@ -161,7 +163,7 @@ class PBX_PowerElectAura : Powerup
 		if(!Owner) return;
 		owner.A_AttachLightDef("ElectAuraLight","ElectAuraLight");
 //==============================================================================
-		arad = 384;	//Aura Radius
+		arad = AURA_RADIUS;	//Aura Radius
 //==============================================================================
 		owner.A_Startsound("ElectricAura/aura",22243,CHANF_LOOPING|ATTN_NONE);
 		owner.A_AttachLight(
@@ -265,7 +267,7 @@ class PBX_PowerElectAura : Powerup
 				}
 			}
 		}
-		AuraParticle();
+		ElectricAuraParticle();
 	}
 
 	override void DoEffect()
@@ -300,7 +302,7 @@ class PBX_PowerElectAura : Powerup
 		startalphaf:1.0,fadestepf:-1);
 	}
 
-	void AuraParticle()
+	void ElectricAuraParticle()
 	{
 		int rnd = random(1,4);
 		TextureID ptx;
@@ -361,7 +363,7 @@ class PBX_ElectricAuraBeam : Actor
 		+BLOODLESSIMPACT;
 		+FORCEPAIN;
 //==============================================================================
-		DamageFunction 15; //Aura Damage
+		DamageFunction PBX_PowerElectAura.ELECTRIC_DAMAGE; //Aura Damage
 //==============================================================================
 		DamageType "Stun";
 		RenderStyle "Add";
@@ -820,6 +822,8 @@ class PBX_PowerFrostAura : Powerup
 {
 	mixin PBX_PowerupTimer;
 	int arad;
+	const FROST_DAMAGE = 15;
+	const AURA_RADIUS = 448;
 
 	Default
 	{
@@ -833,7 +837,7 @@ class PBX_PowerFrostAura : Powerup
 		if(!Owner) return;
 		owner.A_AttachLightDef("FrostAuraLight","FrostAuraLight");
 //==============================================================================
-		arad = 448;	//Aura Radius
+		arad = AURA_RADIUS;	//Aura Radius
 //==============================================================================
 		owner.A_StartSound("FrostAura/aura", 3, CHANF_LOOPING | ATTN_NONE);
 		owner.A_AttachLight(
@@ -921,9 +925,16 @@ class PBX_PowerFrostAura : Powerup
 		static const String smokeColors[] = {"FFFFFF", "F0F0EF", "E0E0DF", "D0D0CF", "C0C0BF"};
 		for (int i = 0; i < smokeColors.Size(); i++)
 		{
-			owner.A_SpawnParticle(smokeColors[i], lifetime: 280, size: random(1, 3),
-				xoff: random(-arad, arad), yoff: random(-arad, arad), zoff: 128,
-				velx: frandom(-0.3, 0.3), vely: frandom(-0.3, 0.3), velz: frandom(-4.0, -2.0),
+			owner.A_SpawnParticle(
+				smokeColors[i], 
+				lifetime: 280, 
+				size: random(1, 3),
+				xoff: random(-arad, arad), 
+				yoff: random(-arad, arad), 
+				zoff: 128,
+				velx: frandom(-0.3, 0.3), 
+				vely: frandom(-0.3, 0.3), 
+				velz: frandom(-4.0, -2.0),
 				startalphaf: 0.5
 			);
 		}
@@ -962,7 +973,7 @@ class FrostAuraFreeze : Actor
 		+NOGRAVITY;
 		+PAINLESS;
 		+BLOODLESSIMPACT;
-		DamageFunction 5;
+		DamageFunction PBX_PowerFrostAura.FROST_DAMAGE;
 		DamageType "Ice";
 	}
 
@@ -1023,6 +1034,8 @@ class PBX_PowerFireAura : Powerup
 {
 	mixin PBX_PowerupTimer;
 	int arad;
+	const FIRE_DAMAGE = 15;
+	const AURA_RADIUS = 160;
 
 	Default
 	{
@@ -1036,7 +1049,7 @@ class PBX_PowerFireAura : Powerup
 		if(!Owner) return;
 		owner.A_AttachLightDef("FireAuraLight","FireAuraLight");
 //==============================================================================
-		arad = 160; //Aura Radius
+		arad = AURA_RADIUS; //Aura Radius
 //==============================================================================
 		owner.A_StartSound("FireAura/aura", 2, CHANF_LOOPING | ATTN_NONE);
 		owner.A_AttachLight(
@@ -1122,7 +1135,7 @@ class PBX_PowerFireAura : Powerup
 
 				if (mon.health > 6)
 				{
-					actor firedmg = Spawn("PBX_FireAuraFire", mon.pos);
+					actor firedmg = Spawn("FlamethrowerMissileNew", mon.pos);
 					if (firedmg)
 					{
 						firedmg.target = owner;
@@ -1131,39 +1144,7 @@ class PBX_PowerFireAura : Powerup
 						firedmg.DoMissileDamage(mon);
 					}
 				}
-				if (mon.health <= 6)
-				{
-					int stxW = 0, stxH = 0;
-					TextureID stx;
-					if (mon.CurState != null)
-					{
-						stx = mon.CurState.GetSpriteTexture(0);
-						if (stx.IsValid()) [stxW, stxH] = TexMan.GetSize(stx);
-					}
-					let monScale = mon.scale;
-					let monSprite = mon.sprite;
-					let monFrame = mon.frame;
-
-					mon.A_Die();
-					if (mon.bBossDeath || mon.bBoss) mon.A_BossDeath();
-					actor burned;
-					if (!mon.bNOICEDEATH) burned = Spawn("PBX_FireAuraVictim", mon.pos);
-					if (burned)
-					{
-						burned.scale = monScale;
-						burned.sprite = monSprite;
-						burned.frame = monFrame;
-						if (stxW > 0 && stxH > 0)
-						{
-							burned.A_SetSize(stxW / 3 * monScale.x, stxH / 1.2 * monScale.y);
-						}
-						double ptch = 1 - (stxW * 0.002 * monScale.x);
-						burned.A_StartSound("FireAura/firedeath", pitch: ptch);
-						mon.destroy();
-					}
-				}
 			}
-			AuraParticle();
 		}
 	}
 
@@ -1199,173 +1180,5 @@ class PBX_PowerFireAura : Powerup
 			velz: random(-5, 5),
 			startalphaf: 1.0, fadestepf: -1
 		);
-	}
-
-	void AuraParticle()
-	{
-		int rnd = random(1, 4);
-		TextureID ptx;
-		if (rnd == 1)      ptx = TexMan.CheckForTexture("VFIRD0");
-		else if (rnd == 2) ptx = TexMan.CheckForTexture("VFIRE0");
-		else if (rnd == 3) ptx = TexMan.CheckForTexture("VFIRF0");
-		else               ptx = TexMan.CheckForTexture("VFIRG0");
-
-		owner.A_SpawnParticleEx("FFA060", ptx,
-			style: STYLE_Add,
-			flags: SPF_FULLBRIGHT,
-			lifetime: 4,
-			size: random(5, 30),
-			xoff: random(-arad, arad),
-			yoff: random(-arad, arad),
-			zoff: 0,
-			startalphaf: 0.8, fadestepf: 0
-		);
-	}
-}
-
-class PBX_FireAuraFire : Actor
-{
-	Default
-	{
-		+NOBLOCKMAP;
-		+NOGRAVITY;
-		+BLOODLESSIMPACT;
-		DamageFunction random(2, 12);
-		DamageType "Fire";
-		RenderStyle "Add";
-		Alpha 0.8;
-		Translation "0:255=%[0,0,0]:[2.0,0.8,0.4]";
-	}
-
-	States
-	{
-		Spawn:
-			TNT1 A 0 NoDelay {
-				if (!random(0, 1)) 
-					bXFLIP = !bXFLIP;
-				A_StartSound("FireAura/fire");
-			}
-			VFIR ABCDEFGH 3 bright;
-			Stop;
-	}
-}
-
-class PBX_FireAuraVictim : Actor
-{
-	actor fadecopy;
-
-	Default
-	{
-		+NOBLOCKMAP;
-		+NOINTERACTION;
-		Renderstyle "Stencil";
-		Alpha 0.0;
-	}
-
-	States
-	{
-		Spawn:
-			#### # 0 NoDelay {
-				fadecopy = Spawn("PBX_FireAuraVictimFade", pos);
-				if (fadecopy)
-				{
-					fadecopy.scale  = scale;
-					fadecopy.sprite = sprite;
-					fadecopy.frame  = frame;
-				}
-			}
-		Fadein:
-			#### # 1 {
-				A_Smoke();
-				A_FadeIn(0.075);
-				if (alpha >= 1.0)
-				{
-					if (fadecopy) fadecopy.destroy();
-					destroy();
-				}
-			}
-			Loop;
-	}
-
-	void A_Smoke()
-	{
-		int ht = random(int(height / 2), int(height));
-		int loops = int(radius / 10);
-		for (int i = 0; i < loops; i += 1)
-		{
-			A_SpawnParticle("Black",
-				lifetime: 280,
-				size: random(2, 4),
-				xoff: random(int(-radius), int(radius)),
-				yoff: random(int(-radius), int(radius)),
-				zoff: ht,
-				velx: frandom(-1.0, 1.0),
-				vely: frandom(-1.0, 1.0),
-				velz: frandom(3.0, 5.0),
-				startalphaf: 0.4,
-				fadestepf: -1,
-				sizestep: 1.0
-			);
-			actor ashes = Spawn("PBX_FireAuraAshes", pos + (random(int(-radius), int(radius)), random(int(-radius), int(radius)), ht));
-		}
-	}
-}
-
-class PBX_FireAuraVictimFade : Actor
-{
-	Default
-	{
-		+NOBLOCKMAP;
-		+NOINTERACTION;
-		Renderstyle("Translucent");
-		Alpha 1.0;
-	}
-
-	States
-	{
-		Spawn:
-			#### # 1 {
-				A_FadeOut(0.075);
-			}
-			Loop;
-	}
-}
-
-class PBX_FireAuraAshes : Actor
-{
-	Default
-	{
-		+NOBLOCKMAP;
-		RenderStyle "Translucent";
-		Alpha 0.4;
-	}
-
-	States
-	{
-		Spawn:
-			TNT1 A 0 NoDelay {
-				if (!random(0, 1)) 
-					bXFLIP = !bXFLIP;
-				if (!random(0, 1)) 
-					bYFLIP = !bYFLIP;
-				vel.x = frandom(-1.0, 1.0);
-				vel.y = frandom(-1.0, 1.0);
-				vel.z = frandom(0.0, 0.5);
-			}
-			VASH A 5;
-		See:
-			VASH B 5 {
-				if (pos.z == floorz) 
-					SetStateLabel("Death");
-			}
-			Loop;
-		Death:
-			VASH CDE 5;
-		Fadeout:
-			VASH F 1 {
-				if (!random(0, 4)) 
-					A_FadeOut(0.001);
-			}
-			Loop;
 	}
 }
