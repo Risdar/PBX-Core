@@ -76,3 +76,13 @@ PBX_TaintedRegen
 	#3a3348 #9370db
 }
 
+PBX_PowerFrostAura
+{
+	#3737CA #a4a4d9
+}
+
+PBX_PowerFireAura
+{
+	#8b0000 #bb2d2d
+}
+

@@ -428,7 +428,10 @@ class PBXCore_HUDHandler : EventHandler
             'PBX_PowerReflection',
             'PBX_PowerRegeneration',
             'PBX_PowerTimeFreezer',
-            'PBX_TaintedRegen'
+            'PBX_TaintedRegen',
+            // New Powerups
+            'PBX_PowerFrostAura',
+            'PBX_PowerFireAura'
         };
 
         for (int i = 0; i < PBXPowerups.Size(); i++)
@@ -469,6 +472,9 @@ class PBXCore_HUDHandler : EventHandler
             case 'PBX_PowerRegeneration':   return "PWRREGEN";
             case 'PBX_PowerTimeFreezer':    return "PWRTMFRZ";
             case 'PBX_TaintedRegen':        return "PWRRGNTN";
+            // New Powerups
+            case 'PBX_PowerFrostAura':      return "PWRFRZAU";
+            case 'PBX_PowerFireAura':       return "PWRFRAUR";
             default:                        return "";
         }
     }

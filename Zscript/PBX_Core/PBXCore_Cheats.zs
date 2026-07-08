@@ -31,6 +31,9 @@ Class PBXCore_CheatsHandler : Eventhandler
 			pm.giveinventory("PBX_PowerRegeneration",1);
 			pm.giveinventory("PBX_PowerTimeFreezer",1);
 			pm.giveinventory("PBX_TaintedRegen",1);
+
+			pm.giveinventory("PBX_PowerFrostAura",1);
+			pm.giveinventory("PBX_PowerFireAura",1);
 		}
 		
 	}
