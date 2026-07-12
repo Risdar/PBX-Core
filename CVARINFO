@@ -3,10 +3,13 @@ server int PBXCore_ThrowawayFlag = 0;
 server int PBXCore_VersionFlag = 0;
 server bool PBXCore_PrintVersion = true;
 server bool PBXCore_SendTip = true;
+
+// Compatiblity
 server bool PBXCore_WeaponsLoaded = false;
 server bool PBXCore_AddonsLoaded = false;
 server bool PBXCore_ArmorsLoaded = false;
 server bool PBXCore_ItemsLoaded = false;
+server bool PBXCore_GlorykillLoaded = false;
 
 // This is so we can grey out the options if a module is not loaded
 server bool PBWXWeapons_Loaded = false;
