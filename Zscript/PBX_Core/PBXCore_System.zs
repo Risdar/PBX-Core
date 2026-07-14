@@ -117,9 +117,6 @@ class PBXCore_TipsManager : inventory abstract
 
 class PBXCore_ArmorBase : PB_Armor abstract
 {
-    name armortoken;
-    property ArmorToken : armortoken;
-
     Default
     {
         PBXCore_ArmorBase.ArmorToken '';
@@ -127,11 +124,37 @@ class PBXCore_ArmorBase : PB_Armor abstract
         Scale 0.2; 
     }
 
+    name armortoken;
+    property ArmorToken : armortoken;
+
+    static const name ArmorTokens[] = {
+        'ReactiveArmorToken',
+        'MagneticToken',
+        'AquaticToken',
+        'SecondChanceToken',
+        'RepulsorToken'
+    };
+
+    void giveArmorTokens(Actor toucher)
+    {
+        // Clear the armor tokens first
+        for (int i = 0; i < ArmorTokens.Size(); i++)
+        {
+            bool have = toucher.FindInventory(ArmorTokens[i]);
+            if (have)
+                toucher.TakeInventory(ArmorTokens[i], have);
+        }
+
+        // Then give it
+        if (armortoken != '')
+            toucher.GiveInventory(armortoken, 1);
+    }
+
     override bool TryPickup(in out Actor toucher)
     {
         bool pickup = Super.TryPickup(toucher);
-        if (pickup && armortoken != '')
-            toucher.GiveInventory(armortoken, 1);
+        if (pickup)
+            giveArmorTokens(toucher);
 
         return pickup;
     }
