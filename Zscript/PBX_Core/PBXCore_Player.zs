@@ -275,7 +275,7 @@ Class Hook : Actor
 	//Hook is traveling through space
 	Spawn:
 		OCLW A 0 NoDelay {
-			console.printf("Hook Spawned");
+			// console.printf("Hook Spawned");
 			Let HookOwner = PBXCore_Player(Target);
 			A_AlertMonsters();
 			
@@ -289,7 +289,7 @@ Class Hook : Actor
 	Looper:
 		OCLW A 1 {
 			Let HookOwner = PBXCore_Player(Target);
-			console.printf("Hook is Flying");
+			// console.printf("Hook is Flying");
 		}
 		Goto despawnhook;
 	
@@ -297,7 +297,7 @@ Class Hook : Actor
 	//Hook hit a wall or ceiling
 	TillDeathDoesUsApart:
 		OCLW A 1 {
-			console.printf("Hook hit a wall");
+			// console.printf("Hook hit a wall");
 			Let HookOwner = PBXCore_Player(Target);
 			if(!HookOwner.GrappleVel.Length() || !HookOwner)
 			{
@@ -316,7 +316,7 @@ Class Hook : Actor
 		Loop;
 	XDeath:
 		OCLW A 1 {
-			console.printf("Hook XDeath");
+			// console.printf("Hook XDeath");
 			Let HookOwner = PBXCore_Player(Target);
 			//SpawnTrail();
 			Let Monster = Actor(Master);
@@ -353,7 +353,7 @@ Class Hook : Actor
 	//Die Monster! You don't belong in this world
 	Death:
 		OCLW AAA 0 {
-			console.printf("Hook Death");
+			// console.printf("Hook Death");
 			Let HookOwner = PBXCore_Player(Target);
 			a_stopsound(194);
 			Let Monster = Actor(Master);
@@ -363,7 +363,7 @@ Class Hook : Actor
 		
 	DespawnHook:
 		OCLW A 0 {
-			console.printf("Hook Despawned");
+			// console.printf("Hook Despawned");
 			Let HookOwner = PBXCore_Player(Target);
 			if(HookOwner)
 			{
