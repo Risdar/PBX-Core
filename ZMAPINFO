@@ -1,5 +1,7 @@
 Gameinfo
 {
+	PlayerClasses = "PBXCore_Player"
+
 	addeventhandlers = "PBXCore_Handler"
 	addeventhandlers = "PBXCore_HUDHandler"
 	addeventhandlers = "PBXCore_CheatsHandler"

@@ -216,3 +216,15 @@ class PBXCore_UpgradeBase : inventory abstract
 			TNT1 A 0;
 	}
 }
+
+// Used in PBX_Weapons
+class HookTracer : LineTracer
+{
+	override ETraceStatus TraceCallback()
+	{
+		if(results.HitType == TRACE_HitActor && (results.hitActor.bIsMonster && results.hitActor.bshootable && !results.hitActor.bfriendly || results.hitActor is "PBXCore_Player"))
+			return TRACE_Stop;
+		else
+			return TRACE_Skip;
+	}
+}
