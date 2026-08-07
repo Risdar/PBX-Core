@@ -1,5 +1,6 @@
 // This is so the meathook work
 // All credits goes to EmeraldCoasttt and the BDP Team
+class meathook : Inventory {Default {Inventory.MaxAmount 1;}}
 class PBXCore_Player : PB_PlayerPrawn
 {
 	Actor aimActor;

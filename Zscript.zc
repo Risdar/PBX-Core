@@ -10,6 +10,3 @@ Version 4.13
 
 // Big thanks to EmeraldCoastt and the BDP team for this
 #include "Zscript/PBX_Core/MathsNMixins/Include.zsc"
-
-// This is for the meathook to work
-class meathook : Inventory {Default {Inventory.MaxAmount 1;}}
