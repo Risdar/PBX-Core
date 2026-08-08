@@ -188,7 +188,8 @@ pointlight FrostAuraSphereLight5
     offset 0 16 0
 	attenuate 1
 }
-object FrostAuraSphere
+
+object PBX_FrostAuraSphere
 {
     frame VFRA { light FrostAuraSphereLight0 }
     frame VFRAA { light FrostAuraSphereLight1 }
@@ -244,7 +245,7 @@ flickerlight2 FireAuraSphereLight
     offset 0 16 0
 	attenuate 1
 }
-object FireAuraSphere
+object PBX_FireAuraSphere
 {
     frame VFIA { light FireAuraSphereLight }
 }
@@ -328,7 +329,8 @@ flickerlight FireAuraFireLight8
     offset 0 80 0
 	attenuate 1
 }
-object FireAuraFire
+
+/* object FireAuraFire
 {
     frame VFIRA { light FireAuraFireLight1 }
     frame VFIRB { light FireAuraFireLight2 }
@@ -338,4 +340,4 @@ object FireAuraFire
     frame VFIRF { light FireAuraFireLight6 }
     frame VFIRG { light FireAuraFireLight7 }
     frame VFIRH { light FireAuraFireLight8 }
-}
+} */
