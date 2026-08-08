@@ -628,8 +628,8 @@ class PBXCore_HUDHandler : EventHandler
         vector2 stringpos   = whatBar ? (-207,-90)  : (-205,-68.75);
 
         phud.PBHud_DrawImage(bgimg, bgpos,  BaseStatusBar.DI_SCREEN_RIGHT_BOTTOM | BaseStatusBar.DI_ITEM_RIGHT_BOTTOM, transparency);
-        phud.PBHud_DrawBar(ongfx, "BGBARL", phud.GetAmount(ammoName), phud.GetMaxAmount(ammoName), barpos, 0, 1,  BaseStatusBar.DI_SCREEN_RIGHT_BOTTOM | BaseStatusBar.DI_ITEM_RIGHT_BOTTOM,transparency);
-        phud.PBHud_DrawString(phud.mDefaultFont, phud.Formatnumber(phud.GetAmount(ammoName)), stringpos, BaseStatusBar.DI_TEXT_ALIGN_RIGHT, fontTranslation,transparency);
+        phud.PBHud_DrawBar(ongfx, "BGBARL", phud.GetAmount(ammoName), phud.GetMaxAmount(ammoName), barpos, 0, 1,  BaseStatusBar.DI_SCREEN_RIGHT_BOTTOM | BaseStatusBar.DI_ITEM_RIGHT_BOTTOM);
+        phud.PBHud_DrawString(phud.mDefaultFont, phud.Formatnumber(phud.GetAmount(ammoName)), stringpos, BaseStatusBar.DI_TEXT_ALIGN_RIGHT, fontTranslation);
     }
 
     // Im not sure if this can be called from the play scope lol
