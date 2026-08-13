@@ -1,28 +1,3 @@
-enum PBXCore_PowerupDuration
-{
-    // Default Duration
-    // Special Powerups
-    INVISTAINT_DEFAULT_DURATION     = -75,
-    DEFLECT_DEFAULT_DURATION        = -60,
-    ELECTAURA_DEFAULT_DURATION      = -45,
-    INVULTAINT_DEFAULT_DURATION     = -30,
-    // Vanilla Powerups
-    BUDDHA_DEFAULT_DURATION         = -60,
-    DRAIN_DEFAULT_DURATION          = -60,
-    FLIGHT_DEFAULT_DURATION         = -60,
-    FRIGHTENER_DEFAULT_DURATION     = -60,
-    HIGHJUMP_DEFAULT_DURATION       = -60,
-    INFAMMO_DEFAULT_DURATION        = -12,
-    PROTECT_DEFAULT_DURATION        = -25,
-    REFLECT_DEFAULT_DURATION        = -60,
-    REGEN_DEFAULT_DURATION          = -60,
-    TIMEFREEZE_DEFAULT_DURATION     = -12,
-    TAINTREGEN_DEFAULT_DURATION     = -30,
-    // New Powerups
-    FROSTAURA_DEFAULT_DURATION     	= -45,
-    FIREAURA_DEFAULT_DURATION     	= -30
-}
-
 // ============================================================
 // PBX Powerups - Special Powerups from Unless You Got Powah
 // ============================================================
@@ -35,7 +10,6 @@ Class PBX_PowerInvisTainted : PB_PowerInvis
 	{
 		+SHADOW;
 		+REFLECTIVE;
-		Powerup.Duration INVISTAINT_DEFAULT_DURATION;
 		Powerup.Strength 100;
 		Powerup.Mode "Translucent";
 	}
@@ -73,7 +47,6 @@ class PBX_PowerDeflect : Powerup
 	
 	Default
 	{
-		Powerup.Duration DEFLECT_DEFAULT_DURATION;
 		Powerup.Color "LightGreen", 0.2;
 	}
 	
@@ -153,7 +126,6 @@ class PBX_PowerElectAura : Powerup
 
 	Default
 	{
-		Powerup.Duration ELECTAURA_DEFAULT_DURATION;
 		Powerup.Color "RoyalBlue1", 0.075;
 	}
 
@@ -406,10 +378,6 @@ class PBX_InvulTaintedGiver : PB_PowerupGiver { Default { Powerup.Type "PBX_Powe
 Class PBX_PowerInvulTainted : PowerInvulnerable
 {
 	mixin PBX_PowerupTimer;
-	Default
-	{	
-		Powerup.Duration INVULTAINT_DEFAULT_DURATION;
-	}
 	
 	override void InitEffect()
 	{
@@ -459,7 +427,6 @@ class PBX_BuddhaGiver : PB_PowerupGiver { Default { Powerup.Type "PBX_PowerBuddh
 class PBX_PowerBuddha : PowerBuddha
 {
 	mixin PBX_PowerupTimer;
-	Default { Powerup.Duration BUDDHA_DEFAULT_DURATION; }
 
 	override void InitEffect()
 	{
@@ -529,7 +496,6 @@ class PBX_DrainGiver : PB_PowerupGiver { Default { Powerup.Type "PBX_PowerDrain"
 class PBX_PowerDrain : PowerDrain
 {
 	mixin PBX_PowerupTimer;
-	Default { Powerup.Duration DRAIN_DEFAULT_DURATION;}
 
 	override void InitEffect()
 	{
@@ -558,7 +524,6 @@ class PBX_FlightGiver : PB_PowerupGiver { Default { Powerup.Type "PBX_PowerFligh
 class PBX_PowerFlight : PowerFlight
 {
 	mixin PBX_PowerupTimer;
-	Default { Powerup.Duration FLIGHT_DEFAULT_DURATION; }
 
 	override void InitEffect()
 	{
@@ -587,7 +552,6 @@ class PBX_FrightenerGiver : PB_PowerupGiver { Default { Powerup.Type "PBX_PowerF
 class PBX_PowerFrightener : PowerFrightener
 {
 	mixin PBX_PowerupTimer;
-	Default { Powerup.Duration FRIGHTENER_DEFAULT_DURATION; }
 
 	override void InitEffect()
 	{
@@ -616,7 +580,6 @@ class PBX_HighJumpGiver : PB_PowerupGiver { Default { Powerup.Type "PBX_PowerHig
 class PBX_PowerHighJump : PowerHighJump
 {
 	mixin PBX_PowerupTimer;
-	Default { Powerup.Duration HIGHJUMP_DEFAULT_DURATION;}
 
 	override void InitEffect()
 	{
@@ -645,7 +608,6 @@ class PBX_InfiniteAmmoGiver : PB_PowerupGiver { Default { Powerup.Type "PBX_Powe
 class PBX_PowerInfiniteAmmo : PowerInfiniteAmmo
 {
 	mixin PBX_PowerupTimer;
-	Default { Powerup.Duration INFAMMO_DEFAULT_DURATION; }
 
 	override void InitEffect()
 	{
@@ -674,7 +636,6 @@ class PBX_ProtectionGiver : PB_PowerupGiver { Default { Powerup.Type "PBX_PowerP
 class PBX_PowerProtection : PowerProtection
 {
 	mixin PBX_PowerupTimer;
-	Default { Powerup.Duration PROTECT_DEFAULT_DURATION; }
 
 	override void InitEffect()
 	{
@@ -703,7 +664,6 @@ class PBX_ReflectionGiver : PB_PowerupGiver { Default { Powerup.Type "PBX_PowerR
 class PBX_PowerReflection : PowerReflection
 {
 	mixin PBX_PowerupTimer;
-	Default { Powerup.Duration REFLECT_DEFAULT_DURATION;}
 
 	override void InitEffect()
 	{
@@ -732,7 +692,6 @@ class PBX_RegenerationGiver : PB_PowerupGiver { Default { Powerup.Type "PBX_Powe
 class PBX_PowerRegeneration : PowerRegeneration
 {
 	mixin PBX_PowerupTimer;
-	Default { Powerup.Duration REGEN_DEFAULT_DURATION;}
 
 	override void InitEffect()
 	{
@@ -761,7 +720,6 @@ class PBX_TimeFreezeGiver : PB_PowerupGiver { Default { Powerup.Type "PBX_PowerT
 class PBX_PowerTimeFreezer : PowerTimeFreezer
 {
 	mixin PBX_PowerupTimer;
-	Default { Powerup.Duration TIMEFREEZE_DEFAULT_DURATION; }
 
 	override void InitEffect()
 	{
@@ -786,11 +744,11 @@ class PBX_PowerTimeFreezer : PowerTimeFreezer
 }
 
 // --- TaintedRegen ---
-class PBX_TaintedRegenGiver : PB_PowerupGiver { Default { Powerup.Type "PBX_TaintedRegen"; } }
-class PBX_TaintedRegen : Powerup
+class PBX_TaintedRegenGiver : PB_PowerupGiver { Default { Powerup.Type "PBX_PowerTaintedRegen"; } }
+class PBX_PowerTaintedRegen : Powerup
 {
 	mixin PBX_PowerupTimer;
-	Default { Powerup.Duration TAINTREGEN_DEFAULT_DURATION; /*Powerup.Color "Cyan";*/}
+	// Default { Powerup.Color "Cyan";}
 
 	override void InitEffect()
 	{
@@ -827,7 +785,6 @@ class PBX_PowerFrostAura : Powerup
 
 	Default
 	{
-		Powerup.Duration FROSTAURA_DEFAULT_DURATION;
 		Powerup.Color "LightCyan", 0.075;
 	}
 
@@ -1039,7 +996,6 @@ class PBX_PowerFireAura : Powerup
 
 	Default
 	{
-		Powerup.Duration FIREAURA_DEFAULT_DURATION;
 		Powerup.Color "firebrick4", 0.075;
 	}
 

@@ -57,6 +57,26 @@ OptionMenu "PBXCore_Menu"
     SafeCommand  "Reset Weapon HUD to Default", "resetcvar PBXWeapons_Weaponhud_x; resetcvar PBXWeapons_Weaponhud_y; resetcvar PBXWeapons_Weaponhud_scale; resetcvar PBXWeapons_Weaponhud_alpha; resetcvar PBXWeapons_Weaponhud_boxW; resetcvar PBXWeapons_Weaponhud_boxH"
     SafeCommand  "Reset Weapon Mode HUD to Default", "resetcvar PBXWeapons_WeaponModehud_x; resetcvar PBXWeapons_WeaponModehud_y; resetcvar PBXWeapons_WeaponModehud_scale; resetcvar PBXWeapons_WeaponModehud_alpha; resetcvar PBXWeapons_WeaponModehud_boxW; resetcvar PBXWeapons_WeaponModehud_boxH"
     SafeCommand  "Reset Armor HUD to Default", "resetcvar PBXWeapons_Armorhud_x; resetcvar PBXWeapons_Armorhud_y; resetcvar PBXWeapons_Armorhud_scale; resetcvar PBXWeapons_Armorhud_alpha; resetcvar PBXWeapons_Armorhud_boxW; resetcvar PBXWeapons_Armorhud_boxH"
+    StaticText " "
+    StaticText	"--------- PBX Powerups Settings ---------", 1
+    Slider "Tainted Invisibility",      "pbx_invistaint_duration",  1, 500, 1
+    Slider "Deflect",                   "pbx_deflect_duration",     1, 500, 1
+    Slider "Electric Aura",             "pbx_electaura_duration",   1, 500, 1
+    Slider "Tainted Invulnerability",   "pbx_invultaint_duration",  1, 500, 1
+    Slider "Buddha",                    "pbx_buddha_duration",      1, 500, 1
+    Slider "Drain",                     "pbx_drain_duration",       1, 500, 1
+    Slider "Flight",                    "pbx_flight_duration",      1, 500, 1
+    Slider "Frightener",                "pbx_frightener_duration",  1, 500, 1
+    Slider "High Jump",                 "pbx_highjump_duration",    1, 500, 1
+    Slider "Infinite Ammo",             "pbx_infammo_duration",     1, 500, 1
+    Slider "Protection",                "pbx_protect_duration",     1, 500, 1
+    Slider "Reflection",                "pbx_reflect_duration",     1, 500, 1
+    Slider "Regeneration",              "pbx_regen_duration",       1, 500, 1
+    Slider "Time Freeze",               "pbx_timefreeze_duration",  1, 500, 1
+    Slider "Tainted Regeneration",      "pbx_taintregen_duration",  1, 500, 1
+    Slider "Frost Aura",                "pbx_frostaura_duration",   1, 500, 1
+    Slider "Fire Aura",                 "pbx_fireaura_duration",    1, 500, 1
+    SafeCommand "Reset Powerup Durations to Default", "resetcvar pbx_invistaint_duration; resetcvar pbx_deflect_duration; resetcvar pbx_electaura_duration; resetcvar pbx_invultaint_duration; resetcvar pbx_buddha_duration; resetcvar pbx_drain_duration; resetcvar pbx_flight_duration; resetcvar pbx_frightener_duration; resetcvar pbx_highjump_duration; resetcvar pbx_infammo_duration; resetcvar pbx_protect_duration; resetcvar pbx_reflect_duration; resetcvar pbx_regen_duration; resetcvar pbx_timefreeze_duration; resetcvar pbx_taintregen_duration; resetcvar pbx_frostaura_duration; resetcvar pbx_fireaura_duration"
     StaticText "$PBXCore_Version",cyan
     StaticText " "
 }

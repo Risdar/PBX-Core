@@ -39,3 +39,25 @@ user float PBXWeapons_Armorhud_scale = 0.25 ;
 user float PBXWeapons_Armorhud_alpha = 1.0;
 user int PBXWeapons_Armorhud_boxW = 50;
 user int PBXWeapons_Armorhud_boxH = 50;
+
+// Powerup Values
+// Special Powerups
+server int pbx_invistaint_duration = 75;
+server int pbx_deflect_duration    = 60;
+server int pbx_electaura_duration  = 45;
+server int pbx_invultaint_duration = 30;
+// Vanilla Powerups
+server int pbx_buddha_duration     = 60;
+server int pbx_drain_duration      = 60;
+server int pbx_flight_duration     = 60;
+server int pbx_frightener_duration = 60;
+server int pbx_highjump_duration   = 60;
+server int pbx_infammo_duration    = 12;
+server int pbx_protect_duration    = 25;
+server int pbx_reflect_duration    = 60;
+server int pbx_regen_duration      = 60;
+server int pbx_timefreeze_duration = 12;
+server int pbx_taintregen_duration = 30;
+// New Powerups
+server int pbx_frostaura_duration  = 45;
+server int pbx_fireaura_duration   = 30;
