@@ -577,7 +577,7 @@ class PBXCore_HUDHandler : EventHandler
                 image           = "ARMRBO";   
                 pos             = pbx_armor_pos;   
                 scale           = armorBGScale; 
-                transparency    = pbx_armor_alpha;      
+                transparency    = phud.playerBoxAlpha;      
                 box             = pbx_armor_box;     
                 flags           = flagsLeftCenter;
                 break;

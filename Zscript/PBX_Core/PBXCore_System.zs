@@ -85,6 +85,50 @@ class PBXCore_Handler : StaticEventHandler
     }
 }
 
+// Holds all the powerup duration, you can manual check by passing the powerup name
+// or by passing the actor itself
+// Call in BeginPlay()
+struct PBXCore_Duration
+{
+	// Just in case
+	static int GetByCVar(name cvr)
+    {
+        let c = CVar.FindCVar(cvr);
+        return c ? c.GetInt() * Object.TICRATE : 1; // So its always in seconds
+    }
+
+	static name GetPBXPowerupDuration(actor mActor = null, name manualName = '')
+	{
+        name mToCheck = manualName;
+        if(mActor) mToCheck = mActor.getClassName();
+
+		switch(mToCheck)
+		{
+			// Special Powerups
+			case 'PBX_PowerInvisTainted': 	 return 'pbx_invistaint_duration';
+			case 'PBX_PowerDeflect': 		 return 'pbx_deflect_duration';
+			case 'PBX_PowerElectAura': 	 	 return 'pbx_electaura_duration';
+			case 'PBX_PowerInvulTainted': 	 return 'pbx_invultaint_duration';
+			// Vanilla Powerups
+			case 'PBX_PowerBuddha': 		 return 'pbx_buddha_duration';
+			case 'PBX_PowerDrain': 		 	 return 'pbx_drain_duration';
+			case 'PBX_PowerFlight': 		 return 'pbx_flight_duration';
+			case 'PBX_PowerFrightener': 	 return 'pbx_frightener_duration';
+			case 'PBX_PowerHighJump': 		 return 'pbx_highjump_duration';
+			case 'PBX_PowerInfiniteAmmo': 	 return 'pbx_infammo_duration';
+			case 'PBX_PowerProtection': 	 return 'pbx_protect_duration';
+			case 'PBX_PowerReflection': 	 return 'pbx_reflect_duration';
+			case 'PBX_PowerRegeneration': 	 return 'pbx_regen_duration';
+			case 'PBX_PowerTimeFreezer': 	 return 'pbx_timefreeze_duration';
+			case 'PBX_PowerTaintedRegen': 	 return 'pbx_taintregen_duration';
+			// New Powerups
+			case 'PBX_PowerFrostAura': 	 	 return 'pbx_frostaura_duration';
+			case 'PBX_PowerFireAura': 		 return 'pbx_fireaura_duration';
+		}
+		return '';
+	}
+}
+
 // Inventory item given to the player that handles every Tooltips
 class PBXCore_TipsManager : inventory abstract
 {
