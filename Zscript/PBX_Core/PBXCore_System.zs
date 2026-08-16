@@ -94,7 +94,17 @@ struct PBXCore_Duration
 	static int GetByCVar(name cvr)
     {
         let c = CVar.FindCVar(cvr);
-        return c ? c.GetInt() * Object.TICRATE : 1; // So its always in seconds
+        int mResult = c ? c.GetInt() * Object.TICRATE : 1;  // So its always in seconds
+        if(PBXCore_Debug) console.printf("Getting CVar %d",mResult);
+        return mResult;
+    }
+
+    static int GetByCVarInSeconds(name cvr)
+    {
+        let c = CVar.FindCVar(cvr);
+        int mResult = c ? c.GetInt() : 1; // If the cvar is already in seconds
+        if(PBXCore_Debug) console.printf("Getting CVar in seconds %d",mResult);
+        return mResult; 
     }
 
 	static name GetPBXPowerupDuration(actor mActor = null, name manualName = '')

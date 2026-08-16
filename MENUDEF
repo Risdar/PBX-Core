@@ -51,6 +51,7 @@ OptionMenu "PBXCore_Menu"
     Position	-48
     StaticText	"--------- PBX Core Settings ---------", 1
     Option  "Print PBX Versions", "PBXCore_PrintVersion", "OnOff"
+    Option  "Debug Mode", "PBXCore_Debug", "OnOff"
     Option  "Enable Tooltips", "PBXCore_SendTip", "OnOff"
     StaticText " "
     StaticText	"--------- PBX HUD Settings ---------", 1
