@@ -13,6 +13,7 @@ ListMenu "MainMenu"
 	Position	85, 66
 	TextItem	"New Game",	"n",	"PlayerclassMenu"
 	Selector	"M_SKULL1",	-30, -8
+    
 	ifOption(SwapMenu)
 	{
 		TextItem "Load Game",			"l",	"LoadGameMenu"
@@ -50,34 +51,34 @@ OptionMenu "PBXCore_Menu"
 	Class "PB_OptionMenu"
     Position	-48
     StaticText	"--------- PBX Core Settings ---------", 1
-    Option  "Print PBX Versions", "PBXCore_PrintVersion", "OnOff"
-    Option  "Debug Mode", "PBXCore_Debug", "OnOff"
-    Option  "Enable Tooltips", "PBXCore_SendTip", "OnOff"
+    Option  "$PBXCORE_PRINT_VERSION", "PBXCore_PrintVersion", "OnOff"
+    Option  "$PBXCORE_DEBUG_MODE", "PBXCore_DebugCVAR", "OnOff"
+    Option  "$PBXCORE_ENABLE_TOOLTIP", "PBXCore_SendTip", "OnOff"
     StaticText " "
     StaticText	"--------- PBX HUD Settings ---------", 1
-    SafeCommand  "Reset Weapon HUD to Default", "resetcvar PBXWeapons_Weaponhud_x; resetcvar PBXWeapons_Weaponhud_y; resetcvar PBXWeapons_Weaponhud_scale; resetcvar PBXWeapons_Weaponhud_alpha; resetcvar PBXWeapons_Weaponhud_boxW; resetcvar PBXWeapons_Weaponhud_boxH"
-    SafeCommand  "Reset Weapon Mode HUD to Default", "resetcvar PBXWeapons_WeaponModehud_x; resetcvar PBXWeapons_WeaponModehud_y; resetcvar PBXWeapons_WeaponModehud_scale; resetcvar PBXWeapons_WeaponModehud_alpha; resetcvar PBXWeapons_WeaponModehud_boxW; resetcvar PBXWeapons_WeaponModehud_boxH"
-    SafeCommand  "Reset Armor HUD to Default", "resetcvar PBXWeapons_Armorhud_x; resetcvar PBXWeapons_Armorhud_y; resetcvar PBXWeapons_Armorhud_scale; resetcvar PBXWeapons_Armorhud_alpha; resetcvar PBXWeapons_Armorhud_boxW; resetcvar PBXWeapons_Armorhud_boxH"
+    SafeCommand  "$PBXCORE_WEAPONHUD_RESET", "resetcvar PBXWeapons_Weaponhud_x; resetcvar PBXWeapons_Weaponhud_y; resetcvar PBXWeapons_Weaponhud_scale; resetcvar PBXWeapons_Weaponhud_alpha; resetcvar PBXWeapons_Weaponhud_boxW; resetcvar PBXWeapons_Weaponhud_boxH"
+    SafeCommand  "$PBXCORE_WEAPONMODEHUD_RESET", "resetcvar PBXWeapons_WeaponModehud_x; resetcvar PBXWeapons_WeaponModehud_y; resetcvar PBXWeapons_WeaponModehud_scale; resetcvar PBXWeapons_WeaponModehud_alpha; resetcvar PBXWeapons_WeaponModehud_boxW; resetcvar PBXWeapons_WeaponModehud_boxH"
+    SafeCommand  "$PBXCORE_ARMORHUD_RESET", "resetcvar PBXWeapons_Armorhud_x; resetcvar PBXWeapons_Armorhud_y; resetcvar PBXWeapons_Armorhud_scale; resetcvar PBXWeapons_Armorhud_alpha; resetcvar PBXWeapons_Armorhud_boxW; resetcvar PBXWeapons_Armorhud_boxH"
     StaticText " "
     StaticText	"--------- PBX Powerups Settings ---------", 1
-    Slider "Tainted Invisibility",      "pbx_invistaint_duration",  1, 500, 1
-    Slider "Deflect",                   "pbx_deflect_duration",     1, 500, 1
-    Slider "Electric Aura",             "pbx_electaura_duration",   1, 500, 1
-    Slider "Tainted Invulnerability",   "pbx_invultaint_duration",  1, 500, 1
-    Slider "Buddha",                    "pbx_buddha_duration",      1, 500, 1
-    Slider "Drain",                     "pbx_drain_duration",       1, 500, 1
-    Slider "Flight",                    "pbx_flight_duration",      1, 500, 1
-    Slider "Frightener",                "pbx_frightener_duration",  1, 500, 1
-    Slider "High Jump",                 "pbx_highjump_duration",    1, 500, 1
-    Slider "Infinite Ammo",             "pbx_infammo_duration",     1, 500, 1
-    Slider "Protection",                "pbx_protect_duration",     1, 500, 1
-    Slider "Reflection",                "pbx_reflect_duration",     1, 500, 1
-    Slider "Regeneration",              "pbx_regen_duration",       1, 500, 1
-    Slider "Time Freeze",               "pbx_timefreeze_duration",  1, 500, 1
-    Slider "Tainted Regeneration",      "pbx_taintregen_duration",  1, 500, 1
-    Slider "Frost Aura",                "pbx_frostaura_duration",   1, 500, 1
-    Slider "Fire Aura",                 "pbx_fireaura_duration",    1, 500, 1
-    SafeCommand "Reset Powerup Durations to Default", "resetcvar pbx_invistaint_duration; resetcvar pbx_deflect_duration; resetcvar pbx_electaura_duration; resetcvar pbx_invultaint_duration; resetcvar pbx_buddha_duration; resetcvar pbx_drain_duration; resetcvar pbx_flight_duration; resetcvar pbx_frightener_duration; resetcvar pbx_highjump_duration; resetcvar pbx_infammo_duration; resetcvar pbx_protect_duration; resetcvar pbx_reflect_duration; resetcvar pbx_regen_duration; resetcvar pbx_timefreeze_duration; resetcvar pbx_taintregen_duration; resetcvar pbx_frostaura_duration; resetcvar pbx_fireaura_duration"
+    Slider "$PBXCORE_POWERUP_TAINTED_INVISIBILITY",      "pbx_invistaint_duration",  1, 500, 1
+    Slider "$PBXCORE_POWERUP_DEFLECT",                   "pbx_deflect_duration",     1, 500, 1
+    Slider "$PBXCORE_POWERUP_ELECTRIC_AURA",             "pbx_electaura_duration",   1, 500, 1
+    Slider "$PBXCORE_POWERUP_TAINTED_INVULNERABILITY",   "pbx_invultaint_duration",  1, 500, 1
+    Slider "$PBXCORE_POWERUP_BUDDHA",                    "pbx_buddha_duration",      1, 500, 1
+    Slider "$PBXCORE_POWERUP_DRAIN",                     "pbx_drain_duration",       1, 500, 1
+    Slider "$PBXCORE_POWERUP_FLIGHT",                    "pbx_flight_duration",      1, 500, 1
+    Slider "$PBXCORE_POWERUP_FRIGHTENER",                "pbx_frightener_duration",  1, 500, 1
+    Slider "$PBXCORE_POWERUP_HIGH_JUMP",                 "pbx_highjump_duration",    1, 500, 1
+    Slider "$PBXCORE_POWERUP_INFINITE_AMMO",             "pbx_infammo_duration",     1, 500, 1
+    Slider "$PBXCORE_POWERUP_PROTECTION",                "pbx_protect_duration",     1, 500, 1
+    Slider "$PBXCORE_POWERUP_REFLECTION",                "pbx_reflect_duration",     1, 500, 1
+    Slider "$PBXCORE_POWERUP_REGENERATION",              "pbx_regen_duration",       1, 500, 1
+    Slider "$PBXCORE_POWERUP_TIME_FREEZE",               "pbx_timefreeze_duration",  1, 500, 1
+    Slider "$PBXCORE_POWERUP_TAINTED_REGENERATION",      "pbx_taintregen_duration",  1, 500, 1
+    Slider "$PBXCORE_POWERUP_FROST_AURA",                "pbx_frostaura_duration",   1, 500, 1
+    Slider "$PBXCORE_POWERUP_FIRE_AURA",                 "pbx_fireaura_duration",    1, 500, 1
+    SafeCommand "$PBXCORE_RESET_POWERUPS", "resetcvar pbx_invistaint_duration; resetcvar pbx_deflect_duration; resetcvar pbx_electaura_duration; resetcvar pbx_invultaint_duration; resetcvar pbx_buddha_duration; resetcvar pbx_drain_duration; resetcvar pbx_flight_duration; resetcvar pbx_frightener_duration; resetcvar pbx_highjump_duration; resetcvar pbx_infammo_duration; resetcvar pbx_protect_duration; resetcvar pbx_reflect_duration; resetcvar pbx_regen_duration; resetcvar pbx_timefreeze_duration; resetcvar pbx_taintregen_duration; resetcvar pbx_frostaura_duration; resetcvar pbx_fireaura_duration"
     StaticText "$PBXCore_Version",cyan
     StaticText " "
 }
@@ -88,36 +89,36 @@ OptionMenu "PBXHud_Menu"
 	Class "PB_OptionMenu"
     Position	-48
     StaticText	"--------- Weapon HUD Settings ---------", 1
-    FlagOption "Weapon HUD",            "PBXWeapons_hudsetting_filter",    "OffOn", 0
-    Slider     "Horizontal (X)",        "PBXWeapons_Weaponhud_x",          -700, 700, 1
-    Slider     "Vertical (Y)",          "PBXWeapons_Weaponhud_y",          -700, 700, 1
-    Slider     "Scale",                 "PBXWeapons_Weaponhud_scale",      0.1, 10, 0.1
-    Slider     "Transparency",	        "PBXWeapons_Weaponhud_alpha",      0, 1, 0.02, 2
+    FlagOption "$PBXCORE_MENU_WEAPONHUD",            "PBXWeapons_hudsetting_filter",    "OffOn", 0
+    Slider     "$PBXCORE_MENU_HORIZONTAL",        "PBXWeapons_Weaponhud_x",          -700, 700, 1
+    Slider     "$PBXCORE_MENU_VERTICAL",          "PBXWeapons_Weaponhud_y",          -700, 700, 1
+    Slider     "$PBXCORE_MENU_SCALE",                 "PBXWeapons_Weaponhud_scale",      0.1, 10, 0.1
+    Slider     "$PBXCORE_MENU_TRANSPARENCY",	        "PBXWeapons_Weaponhud_alpha",      0, 1, 0.02, 2
     /* Slider     "Scale Cut-Off (X)",     "PBXWeapons_Weaponhud_boxW",       1, 250, 1
     Slider     "Scale Cut-Off (Y)",     "PBXWeapons_Weaponhud_boxH",       1, 250, 1 */
     StaticText " "
-    FlagOption "Weapon Mode HUD",       "PBXWeapons_hudsetting_filter",    "OffOn", 1
-    Slider     "Horizontal (X)",        "PBXWeapons_WeaponModehud_x",      -700, 700, 1
-    Slider     "Vertical (Y)",          "PBXWeapons_WeaponModehud_y",      -700, 700, 1
-    Slider     "Scale",                 "PBXWeapons_WeaponModehud_scale",  0.1, 10, 0.1
-    Slider     "Transparency",	        "PBXWeapons_WeaponModehud_alpha",  0, 1, 0.02, 2
+    FlagOption "$PBXCORE_MENU_WEAPONMODEHUD",       "PBXWeapons_hudsetting_filter",    "OffOn", 1
+    Slider     "$PBXCORE_MENU_HORIZONTAL",        "PBXWeapons_WeaponModehud_x",      -700, 700, 1
+    Slider     "$PBXCORE_MENU_VERTICAL",          "PBXWeapons_WeaponModehud_y",      -700, 700, 1
+    Slider     "$PBXCORE_MENU_SCALE",                 "PBXWeapons_WeaponModehud_scale",  0.1, 10, 0.1
+    Slider     "$PBXCORE_MENU_TRANSPARENCY",	        "PBXWeapons_WeaponModehud_alpha",  0, 1, 0.02, 2
     /* Slider     "Scale Cut-Off (X)",     "PBXWeapons_WeaponModehud_boxW",   1, 250, 1
     Slider     "Scale Cut-Off (Y)",     "PBXWeapons_WeaponModehud_boxH",   1, 250, 1 */
     StaticText " "
     StaticText	"--------- Armor HUD Settings ---------", 1
-    FlagOption "Armor HUD",             "PBXWeapons_hudsetting_filter",    "OffOn", 3
-    FlagOption "Armor HUD Background",  "PBXWeapons_hudsetting_filter",    "OffOn", 4
-    Slider     "Horizontal (X)",        "PBXWeapons_Armorhud_x",      -700, 700, 1
-    Slider     "Vertical (Y)",          "PBXWeapons_Armorhud_y",      -700, 700, 1
-    Slider     "Scale",                 "PBXWeapons_Armorhud_scale",  0.1, 10, 0.1
-    Slider     "Transparency",	        "PBXWeapons_Armorhud_alpha",  0, 1, 0.02, 2
+    FlagOption "$PBXCORE_MENU_ARMORHUD",             "PBXWeapons_hudsetting_filter",    "OffOn", 3
+    FlagOption "$PBXCORE_MENU_ARMORHUD_BACKGROUND",  "PBXWeapons_hudsetting_filter",    "OffOn", 4
+    Slider     "$PBXCORE_MENU_HORIZONTAL",        "PBXWeapons_Armorhud_x",      -700, 700, 1
+    Slider     "$PBXCORE_MENU_VERTICAL",          "PBXWeapons_Armorhud_y",      -700, 700, 1
+    Slider     "$PBXCORE_MENU_SCALE",                 "PBXWeapons_Armorhud_scale",  0.1, 10, 0.1
+    Slider     "$PBXCORE_MENU_TRANSPARENCY",	        "PBXWeapons_Armorhud_alpha",  0, 1, 0.02, 2
     /* Slider     "Scale Cut-Off (X)",     "PBXWeapons_Armorhud_boxW",   1, 250, 1
     Slider     "Scale Cut-Off (Y)",     "PBXWeapons_Armorhud_boxH",   1, 250, 1 */
     StaticText " "
     // Reset
-    SafeCommand  "Reset Weapon HUD to Default", "resetcvar PBXWeapons_Weaponhud_x; resetcvar PBXWeapons_Weaponhud_y; resetcvar PBXWeapons_Weaponhud_scale; resetcvar PBXWeapons_Weaponhud_alpha; resetcvar PBXWeapons_Weaponhud_boxW; resetcvar PBXWeapons_Weaponhud_boxH"
-    SafeCommand  "Reset Weapon Mode HUD to Default", "resetcvar PBXWeapons_WeaponModehud_x; resetcvar PBXWeapons_WeaponModehud_y; resetcvar PBXWeapons_WeaponModehud_scale; resetcvar PBXWeapons_WeaponModehud_alpha; resetcvar PBXWeapons_WeaponModehud_boxW; resetcvar PBXWeapons_WeaponModehud_boxH"
-    SafeCommand  "Reset Armor HUD to Default", "resetcvar PBXWeapons_Armorhud_x; resetcvar PBXWeapons_Armorhud_y; resetcvar PBXWeapons_Armorhud_scale; resetcvar PBXWeapons_Armorhud_alpha; resetcvar PBXWeapons_Armorhud_boxW; resetcvar PBXWeapons_Armorhud_boxH"
+    SafeCommand  "$PBXCORE_WEAPONHUD_RESET", "resetcvar PBXWeapons_Weaponhud_x; resetcvar PBXWeapons_Weaponhud_y; resetcvar PBXWeapons_Weaponhud_scale; resetcvar PBXWeapons_Weaponhud_alpha; resetcvar PBXWeapons_Weaponhud_boxW; resetcvar PBXWeapons_Weaponhud_boxH"
+    SafeCommand  "$PBXCORE_WEAPONMODEHUD_RESET", "resetcvar PBXWeapons_WeaponModehud_x; resetcvar PBXWeapons_WeaponModehud_y; resetcvar PBXWeapons_WeaponModehud_scale; resetcvar PBXWeapons_WeaponModehud_alpha; resetcvar PBXWeapons_WeaponModehud_boxW; resetcvar PBXWeapons_WeaponModehud_boxH"
+    SafeCommand  "$PBXCORE_ARMORHUD_RESET", "resetcvar PBXWeapons_Armorhud_x; resetcvar PBXWeapons_Armorhud_y; resetcvar PBXWeapons_Armorhud_scale; resetcvar PBXWeapons_Armorhud_alpha; resetcvar PBXWeapons_Armorhud_boxW; resetcvar PBXWeapons_Armorhud_boxH"
     StaticText " "
     StaticText "$PBXCore_Version",cyan
 }

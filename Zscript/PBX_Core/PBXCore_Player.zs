@@ -196,16 +196,22 @@ Class Hook : Actor
 	Override void Tick()
 	{
 		//bool isflaming = false;
+		Super.Tick();
+		UpdateTrail();
+		
 		Let HookOwner = PBXCore_Player(Target);
 		if(HookOwner)
 		{
 			Vector3 WaistPos = (HookOwner.Pos.X, HookOwner.Pos.Y, HookOwner.Pos.Z + HookOwner.Height / 2.f); // player position
 			HookToPlayer = Pos - WaistPos; //hook-to-player vector
-			
+		}
+
+		if(HookOwner && !(HookOwner.player.readyweapon is "PBX_CSSG"))
+		{
+			destroy();
+			return;
 		}
 		
-		Super.Tick();
-		UpdateTrail();
 	}
 	
 	void UpdateTrail()
@@ -275,7 +281,7 @@ Class Hook : Actor
 	//Hook is traveling through space
 	Spawn:
 		OCLW A 0 NoDelay {
-			// console.printf("Hook Spawned");
+        	PBXCore_Debug.Print("Hook Spawned");
 			Let HookOwner = PBXCore_Player(Target);
 			A_AlertMonsters();
 			
@@ -289,7 +295,7 @@ Class Hook : Actor
 	Looper:
 		OCLW A 1 {
 			Let HookOwner = PBXCore_Player(Target);
-			// console.printf("Hook is Flying");
+        	PBXCore_Debug.Print("Hook is Flying");
 		}
 		Goto despawnhook;
 	
@@ -297,7 +303,7 @@ Class Hook : Actor
 	//Hook hit a wall or ceiling
 	TillDeathDoesUsApart:
 		OCLW A 1 {
-			// console.printf("Hook hit a wall");
+        	PBXCore_Debug.Print("Hook Hit a Wall");
 			Let HookOwner = PBXCore_Player(Target);
 			if(!HookOwner.GrappleVel.Length() || !HookOwner)
 			{
@@ -316,7 +322,7 @@ Class Hook : Actor
 		Loop;
 	XDeath:
 		OCLW A 1 {
-			// console.printf("Hook XDeath");
+        	PBXCore_Debug.Print("Hook XDeath");
 			Let HookOwner = PBXCore_Player(Target);
 			//SpawnTrail();
 			Let Monster = Actor(Master);
@@ -353,7 +359,7 @@ Class Hook : Actor
 	//Die Monster! You don't belong in this world
 	Death:
 		OCLW AAA 0 {
-			// console.printf("Hook Death");
+        	PBXCore_Debug.Print("Hook Death");
 			Let HookOwner = PBXCore_Player(Target);
 			a_stopsound(194);
 			Let Monster = Actor(Master);
@@ -363,7 +369,7 @@ Class Hook : Actor
 		
 	DespawnHook:
 		OCLW A 0 {
-			// console.printf("Hook Despawned");
+        	PBXCore_Debug.Print("Hook Despawned");
 			Let HookOwner = PBXCore_Player(Target);
 			if(HookOwner)
 			{

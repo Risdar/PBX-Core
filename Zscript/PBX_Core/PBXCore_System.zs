@@ -85,8 +85,7 @@ class PBXCore_Handler : StaticEventHandler
     }
 }
 
-// Holds all the powerup duration, you can manual check by passing the powerup name
-// or by passing the actor itself
+// Holds all the powerup duration, you can also check any cvar
 // Call in BeginPlay()
 struct PBXCore_Duration
 {
@@ -95,7 +94,7 @@ struct PBXCore_Duration
     {
         let c = CVar.FindCVar(cvr);
         int mResult = c ? c.GetInt() * Object.TICRATE : 1;  // So its always in seconds
-        if(PBXCore_Debug) console.printf("Getting CVar %d",mResult);
+        PBXCore_Debug.PrintInt("Getting CVar %d",mResult);
         return mResult;
     }
 
@@ -103,7 +102,7 @@ struct PBXCore_Duration
     {
         let c = CVar.FindCVar(cvr);
         int mResult = c ? c.GetInt() : 1; // If the cvar is already in seconds
-        if(PBXCore_Debug) console.printf("Getting CVar in seconds %d",mResult);
+        PBXCore_Debug.PrintInt("Getting CVar in seconds %d",mResult);
         return mResult; 
     }
 
@@ -137,6 +136,28 @@ struct PBXCore_Duration
 		}
 		return '';
 	}
+}
+
+// Debuging
+struct PBXCore_Debug
+{
+    static void Print(string st)
+    {
+        if(!PBXCore_DebugCVAR) return;
+        console.printf(st);
+    }
+
+    static void PrintInt(string st, int mArg)
+    {
+        if(!PBXCore_DebugCVAR) return;
+        console.printf(st,mArg);
+    }
+
+    static void PrintString(string st, string mArg)
+    {
+        if(!PBXCore_DebugCVAR) return;
+        console.printf(st,mArg);
+    }
 }
 
 // Inventory item given to the player that handles every Tooltips

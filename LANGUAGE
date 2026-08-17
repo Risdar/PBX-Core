@@ -7,3 +7,42 @@ PBXCore_ArmorPickup                 = "%s \n(+%d%% Protection/%d Amount)";
 PBXCore_Glorykill                   = "Glorykills Loaded";
 
 TIP_PBXCore_SendTip                 = "Enable tooltips, this the Master Override for all tooltips in PBX. If this is disabled, no tooltips will be shown.";
+
+//////////////////////////// MENUS ///////////////////////////////////////////////////////////////////////////////
+PBXCORE_PRINT_VERSION = "Print PBX Versions";
+PBXCORE_DEBUG_MODE = "Debug Mode";
+PBXCORE_ENABLE_TOOLTIP = "Enable Tooltips";
+
+PBXCORE_WEAPONHUD_RESET = "Reset Weapon HUD to Default";
+PBXCORE_WEAPONMODEHUD_RESET = "Reset Weapon Mode HUD to Default";
+PBXCORE_ARMORHUD_RESET = "Reset Armor HUD to Default";
+
+PBXCORE_POWERUP_TAINTED_INVISIBILITY = "Tainted Invisibility Duration";
+PBXCORE_POWERUP_DEFLECT = "Deflect Duration";
+PBXCORE_POWERUP_ELECTRIC_AURA = "Electric Aura Duration";
+PBXCORE_POWERUP_TAINTED_INVULNERABILITY = "Tainted Invulnerability Duration";
+PBXCORE_POWERUP_BUDDHA = "Buddha Duration";
+PBXCORE_POWERUP_DRAIN = "Drain Duration";
+PBXCORE_POWERUP_FLIGHT = "Flight Duration";
+PBXCORE_POWERUP_FRIGHTENER = "Frightener Duration";
+PBXCORE_POWERUP_HIGH_JUMP = "High Jump Duration";
+PBXCORE_POWERUP_INFINITE_AMMO = "Infinite Ammo Duration";
+PBXCORE_POWERUP_PROTECTION = "Protection Duration";
+PBXCORE_POWERUP_REFLECTION = "Reflection Duration";
+PBXCORE_POWERUP_REGENERATION = "Regeneration Duration";
+PBXCORE_POWERUP_TIME_FREEZE = "Time Freeze Duration";
+PBXCORE_POWERUP_TAINTED_REGENERATION = "Tainted Regeneration Duration";
+PBXCORE_POWERUP_FROST_AURA = "Frost Aura Duration";
+PBXCORE_POWERUP_FIRE_AURA = "Fire Aura Duration";
+
+PBXCORE_RESET_POWERUPS = "Reset Powerup Durations to Default";
+
+PBXCORE_MENU_WEAPONHUD = "Enable Weapon HUD";
+PBXCORE_MENU_WEAPONMODEHUD = "Enable Weapon Mode HUD";
+PBXCORE_MENU_ARMORHUD = "Enable Armor HUD";
+PBXCORE_MENU_ARMORHUD_BACKGROUND = "Enable Armor HUD Background";
+
+PBXCORE_MENU_HORIZONTAL = "Horizontal (X)";
+PBXCORE_MENU_VERTICAL = "Vertical (Y)";
+PBXCORE_MENU_SCALE = "Scale";
+PBXCORE_MENU_TRANSPARENCY = "Transparency";
