@@ -58,7 +58,7 @@ class PBXCore_Handler : StaticEventHandler
         let plr = players[consoleplayer];
         if (!plr) return;
 
-        // Dont print the versiongs if the option is disabled
+        // Dont print the versiong if the option is disabled
         if (!CVar.GetCVar('PBXCore_PrintVersion', plr).GetBool()) return;
 
         // Print the Core version
