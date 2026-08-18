@@ -10,3 +10,6 @@ Version 4.13
 
 // Big thanks to EmeraldCoastt and the BDP team for this
 #include "Zscript/PBX_Core/MathsNMixins/Include.zsc"
+
+// Lighttning API by jekyllgrim & BEAMZ by Lewis3k
+#include "Zscript/PBX_Core/PBXCore_Lightning.zs"
