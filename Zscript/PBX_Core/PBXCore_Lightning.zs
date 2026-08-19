@@ -368,6 +368,7 @@ class PBXCore_ArcSplitController : Inventory
 	// Called by this controller continuously to find more valid victims:
 	void FindVictimsAround()
 	{
+		if(!owner) return;
 		let bti = BlockThingsIterator.Create(owner, ac_maxDistance);
 		Actor thing;
 		double distanceSq = ac_maxDistance**2;

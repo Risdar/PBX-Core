@@ -115,8 +115,8 @@ class PBXCore_HUDHandler : EventHandler
         if(CheckFlag(DisablePBX_WeaponHud) && CheckFlag(DisablePBX_ArmorHud))
             return;
 
-        // Dont draw if the player is not in a leve or if the automap is active
-        if (gamestate != GS_LEVEL || automapactive)
+        // Dont draw if the player is not in a level
+        if (gamestate != GS_LEVEL)
             return;
 
         // Get a pointer to the PB Hud so we can access it
