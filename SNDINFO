@@ -33,3 +33,7 @@ firef4 VFIREF4
 $pitchset FireAura/fire 1.0 1.2
 $limit FireAura/fire 4
 $limit FireAura/firedeath 4
+
+// Lightning
+lightnin/loop	"sounds/PBXCore_Lightning/lightning_loop.ogg"
+lightnin/blast	"sounds/PBXCore_Lightning/lightning_blast.ogg"

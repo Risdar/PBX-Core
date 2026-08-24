@@ -196,8 +196,6 @@ Class Hook : Actor
 	Override void Tick()
 	{
 		//bool isflaming = false;
-		Super.Tick();
-		UpdateTrail();
 		
 		Let HookOwner = PBXCore_Player(Target);
 		if(HookOwner)
@@ -205,13 +203,9 @@ Class Hook : Actor
 			Vector3 WaistPos = (HookOwner.Pos.X, HookOwner.Pos.Y, HookOwner.Pos.Z + HookOwner.Height / 2.f); // player position
 			HookToPlayer = Pos - WaistPos; //hook-to-player vector
 		}
-
-		if(HookOwner && !(HookOwner.player.readyweapon is "PBX_CSSG"))
-		{
-			destroy();
-			return;
-		}
 		
+		Super.Tick();
+		UpdateTrail();
 	}
 	
 	void UpdateTrail()
