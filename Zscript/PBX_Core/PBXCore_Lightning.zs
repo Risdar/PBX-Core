@@ -411,7 +411,9 @@ class PBXCore_LightningController : Thinker
 
 	override void Tick()
 	{
-		if (!ac_lightningOrigin || !ac_damageSource)
+		if (!ac_lightningOrigin || ac_lightningOrigin.bDestroyed || 
+			ac_lightningOrigin.bNoSector || !ac_damageSource || 
+			ac_damageSource.bDestroyed || ac_damageSource.bNosector)
 		{
 			Destroy();
 			return;
