@@ -382,6 +382,7 @@ class PBXCore_LightningController : Thinker
 
 	static void L_AddValidVictimsToArr(Actor damageSource, Actor source, out array<Actor> victims, double dist = 0.0, int maxVictims = 0)
 	{
+		if(dist == 0.0 || !source || !damageSource) return;
 		double distSq = dist*dist;
 		foreach (thing : BlockThingsIterator.Create(source, dist))
 		{
@@ -457,7 +458,7 @@ class PBXCore_LightningController : Thinker
 			}
 		}
 
-		if (!ac_done)
+		if (!ac_done && ac_lightningOrigin)
 		{
 			if (ac_age <= 1 || ac_damageFrequency <= 1 || ac_age % ac_damageFrequency == 0)
 			{
