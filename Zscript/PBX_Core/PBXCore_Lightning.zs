@@ -41,6 +41,7 @@ class PBXCore_LightningController : Thinker
 	int     ac_damageFrequency; // per how many tics to deal damage
 	Actor   ac_damageSource;    // tracks the source actor responsible for the attack
 	double  ac_maxDistance;     // max distance an arc can cover (same for all arcs)
+	name	ac_DamageType;		// Damage Type
 
 	static PBXCore_LightningController L_Attach(Actor who)
 	{
@@ -144,7 +145,7 @@ class PBXCore_LightningController : Thinker
 	// maxChains    : maximum number of arcs that can be fired from a single victim
 	// maxlinks     : how many total victims can be hit by a single lightning chain
 	// parent       : set by L_ExtendChain(), creates new chain parented to the same controller
-	static PBXCore_LightningController L_StartChain(Actor damageSource, Actor victim, int damage, double range, int duration = 1, int delay = 0, int maxChains = 1, int maxLinks = 0, int damageFrequency = 1, PBXCore_LightningController parent = null)
+	static PBXCore_LightningController L_StartChain(Actor damageSource, Actor victim, int damage, double range, int duration = 1, int delay = 0, int maxChains = 1, int maxLinks = 0, int damageFrequency = 1, name damageType = 'plasma', PBXCore_LightningController parent = null)
 	{
 		if (!damageSource || !victim)
 		{
@@ -167,6 +168,7 @@ class PBXCore_LightningController : Thinker
 			c.ac_maxChains         = clamp(maxChains, 0, 100);
 			c.ac_maxLinks          = clamp(maxLinks, 0, 100);
 			c.ac_damageFrequency   = max(damageFrequency, 1);
+			c.ac_DamageType   	   = damageType;
 
 			let ac = c.L_GetParentController();
 			ac.ac_childControllers.Push(c);
@@ -183,7 +185,7 @@ class PBXCore_LightningController : Thinker
 		if (!nextVictim || !ac_damageSource)
 			return;
 
-		L_StartChain(ac_damagesource, nextVictim, ac_damagePerArc, ac_maxDistance, ac_duration_init, ac_delay_init, ac_maxChains, ac_maxLinks, ac_damageFrequency, self);
+		L_StartChain(ac_damagesource, nextVictim, ac_damagePerArc, ac_maxDistance, ac_duration_init, ac_delay_init, ac_maxChains, ac_maxLinks, ac_damageFrequency, ac_DamageType, self);
 	}
 
 	// Gets a bunch of randomly offset points from one position to a nother,
@@ -462,7 +464,12 @@ class PBXCore_LightningController : Thinker
 		{
 			if (ac_age <= 1 || ac_damageFrequency <= 1 || ac_age % ac_damageFrequency == 0)
 			{
-				ac_lightningOrigin.DamageMobj(ac_damageSource, ac_damageSource, ac_damagePerArc, 'Lightning', DMG_THRUSTLESS);
+				ac_lightningOrigin.DamageMobj(ac_damageSource, ac_damageSource, ac_damagePerArc, ac_DamageType, DMG_THRUSTLESS);
+				if (!ac_lightningOrigin || ac_lightningOrigin.bDestroyed)
+				{
+					Destroy();
+					return;
+				}
 			}
 
 			// draw circular lightning around the victim to signal
@@ -538,6 +545,7 @@ class PBXCore_LightningProjectile : PB_ProjectileAlt abstract
 	int ac_delay;
 	int ac_maxChains;
 	int ac_maxLinks;
+	name ac_DamageType;
 	array<Actor> ac_victims;
 
 	property DetectRange : ac_detectRange;
@@ -548,6 +556,7 @@ class PBXCore_LightningProjectile : PB_ProjectileAlt abstract
 	property Delay : ac_delay;
 	property maxChains : ac_maxChains;
 	property MaxLinks : ac_maxLinks;
+	property DamageType : ac_DamageType;
 
 	Default
 	{
@@ -560,6 +569,7 @@ class PBXCore_LightningProjectile : PB_ProjectileAlt abstract
 		PBXCore_LightningProjectile.Delay 0;
 		PBXCore_LightningProjectile.maxChains 0;
 		PBXCore_LightningProjectile.MaxLinks 0;
+		PBXCore_LightningProjectile.DamageType "Plasma";
 	}
 
 	virtual bool L_IsValidVictim(Actor victim, Actor damageSource, double distSquared)
@@ -604,7 +614,7 @@ class PBXCore_LightningProjectile : PB_ProjectileAlt abstract
 		// Attack victims and draw lightning towards them:
 		foreach (thing : ac_victims)
 		{
-			PBXCore_LightningController.L_StartChain(damageSource, thing, ac_damage, ac_range, ac_duration, ac_delay, ac_maxChains, ac_maxLinks);
+			PBXCore_LightningController.L_StartChain(damageSource, thing, ac_damage, ac_range, ac_duration, ac_delay, ac_maxChains, ac_maxLinks, damageType:ac_DamageType);
 			PBXCore_LightningController.L_DrawLightning(self.pos.PlusZ(self.height*0.5), thing.pos.PlusZ(thing.height*0.5));
 		}
 	}
