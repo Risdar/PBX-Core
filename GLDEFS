@@ -189,19 +189,6 @@ pointlight FrostAuraSphereLight5
 	attenuate 1
 }
 
-object PBX_FrostAuraSphere
-{
-    frame VFRA { light FrostAuraSphereLight0 }
-    frame VFRAA { light FrostAuraSphereLight1 }
-    frame VFRAB { light FrostAuraSphereLight1 }
-    frame VFRAC { light FrostAuraSphereLight1 }
-    frame VFRAD { light FrostAuraSphereLight1 }
-	frame VFRAE { light FrostAuraSphereLight2 }
-	frame VFRAF { light FrostAuraSphereLight3 }
-	frame VFRAG { light FrostAuraSphereLight4 }
-	frame VFRAH { light FrostAuraSphereLight5 }
-}
-
 pointlight FrostAuraFreezeLight
 {
     color 0.2 0.2 0.4
@@ -244,10 +231,6 @@ flickerlight2 FireAuraSphereLight
 	interval 0.05
     offset 0 16 0
 	attenuate 1
-}
-object PBX_FireAuraSphere
-{
-    frame VFIA { light FireAuraSphereLight }
 }
 
 flickerlight FireAuraFireLight1

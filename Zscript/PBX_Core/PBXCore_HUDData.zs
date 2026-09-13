@@ -226,28 +226,28 @@ extend class PBXCore_HUDHandler
                 break;
 
             case 'PB_Minigun':
-                bool tripleMode   = PBX_PlayerHasInventory("TripleBarrelMode");
-                bool chaingunMode = PBX_PlayerHasInventory("ChainGunMode");
+                let minigun = PB_Minigun(pbWeap);
+                if(!minigun) return;
 
-                pbx_image   = icon;
-                adjustPos   = (-15,32);
-                pbx_image3  = "";
-
-                // Weapon Mode
-                if(tripleMode)
+                switch(minigun.mode)
                 {
-                    pbx_image       = "8GUNA0";
-                    pbx_image2      = "graphics/WeaponIcons/EXTREMELYHIHGSPID.png";
-                    adjustPos       = (-20,32);
-                    adjustPos2      = (-3, 0);
-                    adjustScale2    = 0.5;
-                }
-                else
-                {
-                    pbx_image2      = !chaingunMode ? "graphics/WeaponIcons/HIGHSPEED.png" 
-                                                    : "graphics/WeaponIcons/NORMALSPEED.png";
-                    adjustPos2      = (0, 0);
-                    adjustScale2    = 0.9;
+                    case PB_Minigun.CHAINGUN_MODE:
+                    case PB_Minigun.GATLING_MODE:
+                        pbx_image       = icon;
+                        pbx_image2      = minigun.mode == PB_Minigun.CHAINGUN_MODE ? "graphics/WeaponIcons/NORMALSPEED.png" : "graphics/WeaponIcons/HIGHSPEED.png";
+                        pbx_image3      = "";
+                        adjustPos       = (-15,32);
+                        adjustPos2      = (0, 0);
+                        adjustScale2    = 0.9;
+                        break;
+                    case PB_Minigun.TRIPLE_MODE:
+                        pbx_image       = "8GUNA0";
+                        pbx_image2      = "graphics/WeaponIcons/EXTREMELYHIHGSPID.png";
+                        pbx_image3      = "";
+                        adjustPos       = (-20,32);
+                        adjustPos2      = (-3, 0);
+                        adjustScale2    = 0.5;
+                        break;
                 }
                 break;
 
