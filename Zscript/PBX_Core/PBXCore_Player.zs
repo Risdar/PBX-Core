@@ -54,36 +54,37 @@ class PBXCore_Player : PB_PlayerPrawn
 		lasttickrope = rope.length();
 		
 		Usercmd cmd = player.cmd;
-			GrappleVel = SafeUnit3(Rope) * GrappleVel.Length();
-			Vel = GrappleVel;
-			If(cmd.sidemove > 0)
-			{
-				grapplesidespeed = grapplesidespeed + 2;
-			}
-			else if(cmd.sidemove < 0)
-			{
-				grapplesidespeed = grapplesidespeed - 2;
-			}
-			Acceleration.XY = RotateVector((0, -grapplesidespeed), Angle);
-			//
-			double currentvel = vel.length();
-			vel.xy = (vel.xy + acceleration.xy);
-			
-			
-			//console.printf("%i",rope.length());
-			If(!cmd.sidemove && grapplesidespeed > 0)
-			{
-				grapplesidespeed = grapplesidespeed - 2;
-			}
-			Else if (!cmd.sidemove && grapplesidespeed < 0)
-			{
-				grapplesidespeed = grapplesidespeed + 2;
-			}
+		GrappleVel = SafeUnit3(Rope) * GrappleVel.Length();
+		Vel = GrappleVel;
+		If(cmd.sidemove > 0)
+		{
+			grapplesidespeed = grapplesidespeed + 2;
+		}
+		else if(cmd.sidemove < 0)
+		{
+			grapplesidespeed = grapplesidespeed - 2;
+		}
+		Acceleration.XY = RotateVector((0, -grapplesidespeed), Angle);
+		//
+		double currentvel = vel.length();
+		vel.xy = (vel.xy + acceleration.xy);
+		
+		
+		//console.printf("%i",rope.length());
+		If(!cmd.sidemove && grapplesidespeed > 0)
+		{
+			grapplesidespeed = grapplesidespeed - 2;
+		}
+		Else if (!cmd.sidemove && grapplesidespeed < 0)
+		{
+			grapplesidespeed = grapplesidespeed + 2;
+		}
 			
 	}
 	
     void StopHook(bool severed = false)
 	{
+		if(GrappledMonster) A_StartSound(severed ? "MHKRTRCT" : "MHKSTP", CHAN_AUTO);
 		if(severed) vel += GrappleVel;
 		Rope = GrappleVel = (0, 0, 0);
 		PendulumLength = 0;
