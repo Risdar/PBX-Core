@@ -241,7 +241,7 @@ class PBXCore_ArmorBase : PB_Armor abstract
 
 }
 
-class PBXCore_UpgradeBase : inventory abstract
+class PBXCore_UpgradeBase : PB_UpgradeItem abstract
 {
     name upgradetoken, upgradetype, s;
     property UpgradeToken : upgradetoken;
