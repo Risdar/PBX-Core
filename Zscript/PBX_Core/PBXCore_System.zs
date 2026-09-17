@@ -261,15 +261,6 @@ class PBXCore_UpgradeBase : PB_UpgradeItem abstract
 		PBX_SetUpgradeSprite();
 	}
 
-    override bool TryPickup(in out Actor toucher)
-    {
-        bool pickup = Super.TryPickup(toucher);
-        if (pickup && upgradetoken != '')
-            toucher.GiveInventory(upgradetoken, 1);
-
-        return pickup;
-    }
-
 	virtual void PBX_SetUpgradeSprite()
 	{
 		switch(upgradetype)
