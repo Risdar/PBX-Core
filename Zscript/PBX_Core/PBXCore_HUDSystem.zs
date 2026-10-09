@@ -619,16 +619,20 @@ class PBXCore_HUDHandler : EventHandler
         if(!phud) return;
 
         let transparency = phud.playerBoxAlpha;
+        let barAlpha = 1.0;
         let handler = PBXCore_HUDHandler(EventHandler.Find("PBXCore_HUDHandler"));
         if(handler && handler.isGearboxOpened)
+        {
             transparency *= 0.4;
+            barAlpha *= 0.4;
+        }
 
         vector2 bgpos       = whatBar ? (-90,-71)   : (-73,-49);
         vector2 barpos      = whatBar ? (-100,-72)  : (-111,-52);
         vector2 stringpos   = whatBar ? (-207,-90)  : (-205,-68.75);
 
         phud.PBHud_DrawImage(bgimg, bgpos,  BaseStatusBar.DI_SCREEN_RIGHT_BOTTOM | BaseStatusBar.DI_ITEM_RIGHT_BOTTOM, transparency);
-        phud.PBHud_DrawBar(ongfx, "BGBARL", phud.GetAmount(ammoName), phud.GetMaxAmount(ammoName), barpos, 0, 1,  BaseStatusBar.DI_SCREEN_RIGHT_BOTTOM | BaseStatusBar.DI_ITEM_RIGHT_BOTTOM);
+        phud.PBHud_DrawBar(ongfx, "BGBARL", phud.GetAmount(ammoName), phud.GetMaxAmount(ammoName), barpos, 0, 1,  BaseStatusBar.DI_SCREEN_RIGHT_BOTTOM | BaseStatusBar.DI_ITEM_RIGHT_BOTTOM,barAlpha);
         phud.PBHud_DrawString(phud.mDefaultFont, phud.Formatnumber(phud.GetAmount(ammoName)), stringpos, BaseStatusBar.DI_TEXT_ALIGN_RIGHT, fontTranslation);
     }
 
