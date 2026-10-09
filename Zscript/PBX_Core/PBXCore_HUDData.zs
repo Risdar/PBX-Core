@@ -90,6 +90,10 @@ extend class PBXCore_HUDHandler
                 pbx_image3 = ""; //its empty for now
 
                 adjustPos = (-20, 12); 
+                if(isAkimbo)
+                {
+                    adjustPos.y -= 6;
+                }
                 break;
 
             case 'PB_Deagle':
