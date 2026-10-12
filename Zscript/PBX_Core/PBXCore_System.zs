@@ -6,29 +6,29 @@ class PBXCore_Handler : StaticEventHandler
     // Contains the name of classes to check
     static const string CHECKED_CLASSES[] =
     {
-        "PBX_PlasmaBlaster",
-        "PBX_SGLEdited",
-        "PBX_PinkArmor",
-        "PBX_Blackblur",
-        "PB_Baron1GK"
+        "PBX_PlasmaBlaster"
+        ,"PBX_SGLEdited"
+        ,"PBX_PinkArmor"
+        ,"PBX_Blackblur"
+        ,"PB_Baron1GK"
     };
     // Contains the name of the CVar that should be set
     static const name LOADED_CVARS[] =
     {
-        'PBXCore_WeaponsLoaded',
-        'PBXCore_AddonsLoaded',
-        'PBXCore_ArmorsLoaded',
-        'PBXCore_ItemsLoaded',
-        'PBXCore_GlorykillLoaded'
+        'PBXCore_WeaponsLoaded'
+        ,'PBXCore_AddonsLoaded'
+        ,'PBXCore_ArmorsLoaded'
+        ,'PBXCore_ItemsLoaded'
+        ,'PBXCore_GlorykillLoaded'
     };
     // What will be printed
     static const string VERSION_STRINGS[] =
     {
-        "$PBXWeapons_Version",
-        "$PBXAddons_Version",
-        "$PBXArmors_Version",
-        "$PBXItems_Version",
-        "$PBXCore_Glorykill"
+        "$PBXWeapons_Version"
+        ,"$PBXAddons_Version"
+        ,"$PBXArmors_Version"
+        ,"$PBXItems_Version"
+        ,"$PBXCore_Glorykill"
     };
 
     // So it only prints the version once per session
@@ -188,56 +188,5 @@ class PBXCore_TipsManager : inventory abstract
 			PB_HelpNotificationsHandler.PB_SendTipArray(tipStrings, cvarName, tipFlag);
 		}
 	}
-}
-
-class PBXCore_ArmorBase : PB_Armor abstract
-{
-    Default
-    {
-        PBXCore_ArmorBase.ArmorToken '';
-        Inventory.PickupSound "ARMOR"; 
-        Scale 0.2; 
-    }
-
-    name armortoken;
-    property ArmorToken : armortoken;
-
-    static const name ArmorTokens[] = {
-        'ReactiveArmorToken',
-        'MagneticToken',
-        'AquaticToken',
-        'SecondChanceToken',
-        'RepulsorToken'
-    };
-
-    void giveArmorTokens(Actor toucher)
-    {
-        // Clear the armor tokens first
-        for (int i = 0; i < ArmorTokens.Size(); i++)
-        {
-            bool have = toucher.FindInventory(ArmorTokens[i]);
-            if (have)
-                toucher.TakeInventory(ArmorTokens[i], have);
-        }
-
-        // Then give it
-        if (armortoken != '')
-            toucher.GiveInventory(armortoken, 1);
-    }
-
-    override bool TryPickup(in out Actor toucher)
-    {
-        bool pickup = Super.TryPickup(toucher);
-        if (pickup)
-            giveArmorTokens(toucher);
-
-        return pickup;
-    }
-
-    override string PickupMessage()
-    {
-        return String.Format(StringTable.Localize("$PBXCore_ArmorPickup"), StringTable.Localize(pickupMsg),int(self.SavePercent),int(self.SaveAmount));
-    }
-
 }
 
