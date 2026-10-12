@@ -8,13 +8,11 @@ server bool PBXCore_DebugCVAR = false;
 // Compatiblity
 server bool PBXCore_WeaponsLoaded = false;
 server bool PBXCore_AddonsLoaded = false;
-server bool PBXCore_ArmorsLoaded = false;
 server bool PBXCore_ItemsLoaded = false;
 server bool PBXCore_GlorykillLoaded = false;
 
 // This is so we can grey out the options if a module is not loaded
 server bool PBWXWeapons_Loaded = false;
-server bool PBWXArmors_Loaded = false;
 
 // HUD
 server int PBXWeapons_hudsetting_filter = 0;

@@ -8,7 +8,6 @@ class PBXCore_Handler : StaticEventHandler
     {
         "PBX_PlasmaBlaster"
         ,"PBX_SGLEdited"
-        ,"PBX_PinkArmor"
         ,"PBX_Blackblur"
         ,"PB_Baron1GK"
     };
@@ -17,7 +16,6 @@ class PBXCore_Handler : StaticEventHandler
     {
         'PBXCore_WeaponsLoaded'
         ,'PBXCore_AddonsLoaded'
-        ,'PBXCore_ArmorsLoaded'
         ,'PBXCore_ItemsLoaded'
         ,'PBXCore_GlorykillLoaded'
     };
@@ -26,8 +24,7 @@ class PBXCore_Handler : StaticEventHandler
     {
         "$PBXWeapons_Version"
         ,"$PBXAddons_Version"
-        ,"$PBXArmors_Version"
-        ,"$PBXItems_Version"
+        ,"$PBX_Armory_Version"
         ,"$PBXCore_Glorykill"
     };
 
