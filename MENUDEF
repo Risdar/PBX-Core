@@ -56,9 +56,11 @@ OptionMenu "PBXCore_Menu"
     Option  "$PBXCORE_ENABLE_TOOLTIP", "PBXCore_SendTip", "OnOff"
     StaticText " "
     StaticText	"--------- PBX HUD Settings ---------", 1
-    SafeCommand  "$PBXCORE_WEAPONHUD_RESET", "resetcvar PBXWeapons_Weaponhud_x; resetcvar PBXWeapons_Weaponhud_y; resetcvar PBXWeapons_Weaponhud_scale; resetcvar PBXWeapons_Weaponhud_alpha; resetcvar PBXWeapons_Weaponhud_boxW; resetcvar PBXWeapons_Weaponhud_boxH"
-    SafeCommand  "$PBXCORE_WEAPONMODEHUD_RESET", "resetcvar PBXWeapons_WeaponModehud_x; resetcvar PBXWeapons_WeaponModehud_y; resetcvar PBXWeapons_WeaponModehud_scale; resetcvar PBXWeapons_WeaponModehud_alpha; resetcvar PBXWeapons_WeaponModehud_boxW; resetcvar PBXWeapons_WeaponModehud_boxH"
-    SafeCommand  "$PBXCORE_ARMORHUD_RESET", "resetcvar PBXWeapons_Armorhud_x; resetcvar PBXWeapons_Armorhud_y; resetcvar PBXWeapons_Armorhud_scale; resetcvar PBXWeapons_Armorhud_alpha; resetcvar PBXWeapons_Armorhud_boxW; resetcvar PBXWeapons_Armorhud_boxH"
+    Submenu "$PBXHud_Settings", "PBXHud_Menu"
+    SafeCommand  "$PBXCORE_HUD_RESET", "set PBXCore_HudFlags 0"
+    SafeCommand  "$PBXCORE_WEAPONHUD_RESET", "resetcvar PBXCORE_WEAPONHUD_X; resetcvar PBXCORE_WEAPONHUD_Y; resetcvar PBXCORE_WEAPONHUD_SCALE; resetcvar PBXCORE_WEAPONHUD_ALPHA; resetcvar PBXCORE_WEAPONHUD_BOX_W; resetcvar PBXCORE_WEAPONHUD_BOX_H"
+    SafeCommand  "$PBXCORE_WEAPONMODEHUD_RESET", "resetcvar PBXCORE_WEAPONMODE_HUD_X; resetcvar PBXCORE_WEAPONMODE_HUD_Y; resetcvar PBXCORE_WEAPONMODE_HUD_SCALE; resetcvar PBXCORE_WEAPONMODE_HUD_ALPHA; resetcvar PBXCORE_WEAPONMODE_HUD_BOX_W; resetcvar PBXCORE_WEAPONMODE_HUD_BOX_H"
+    SafeCommand  "$PBXCORE_ARMORHUD_RESET", "resetcvar PBXCORE_ARMORHUD_X; resetcvar PBXCORE_ARMORHUD_Y; resetcvar PBXCORE_ARMORHUD_SCALE; resetcvar PBXCORE_ARMORHUD_ALPHA; resetcvar PBXCORE_ARMORHUD_BOX_W; resetcvar PBXCORE_ARMORHUD_BOX_H"
     StaticText " "
     StaticText	"--------- PBX Powerups Settings ---------", 1
     Slider "$PBXCORE_POWERUP_TAINTED_INVISIBILITY",      "pbx_invistaint_duration",  1, 500, 1
@@ -83,42 +85,80 @@ OptionMenu "PBXCore_Menu"
     StaticText " "
 }
 
+optionvalue "D4DIndTypes"
+{
+	0,"MW2019"
+	1,"D4D"
+	2,"CODWW2"
+	3,"WD"
+}
+
+optionvalue "D4DAnimTypes"
+{
+	-1,"None"
+	0,"< Expand >(Subtle)"
+	1,">Shrink<(Fast)"
+	2,"< Expand >(Fast)"
+	3,">Shrink<(Subtle)"
+	4,"Blink"
+	5,"Float"
+	6,"Float & grow"
+}
+
 OptionMenu "PBXHud_Menu"
 {
     Title "$PBXHud_Settings"
 	Class "PB_OptionMenu"
     Position	-48
-    StaticText	"--------- Weapon HUD Settings ---------", 1
-    FlagOption "$PBXCORE_MENU_WEAPONHUD",            "PBXWeapons_hudsetting_filter",    "OffOn", 0
-    Slider     "$PBXCORE_MENU_HORIZONTAL",        "PBXWeapons_Weaponhud_x",          -700, 700, 1
-    Slider     "$PBXCORE_MENU_VERTICAL",          "PBXWeapons_Weaponhud_y",          -700, 700, 1
-    Slider     "$PBXCORE_MENU_SCALE",                 "PBXWeapons_Weaponhud_scale",      0.1, 10, 0.1
-    Slider     "$PBXCORE_MENU_TRANSPARENCY",	        "PBXWeapons_Weaponhud_alpha",      0, 1, 0.02, 2
-    /* Slider     "Scale Cut-Off (X)",     "PBXWeapons_Weaponhud_boxW",       1, 250, 1
-    Slider     "Scale Cut-Off (Y)",     "PBXWeapons_Weaponhud_boxH",       1, 250, 1 */
+    StaticText	"--------- Hit Feedback Settings ---------", 1
+    FlagOption "$PBXCORE_HF_ENABLE",            "PBXCore_HudFlags",    "OffOn", 5, "PBXCore_UltimateVisorLoaded",0,1
     StaticText " "
-    FlagOption "$PBXCORE_MENU_WEAPONMODEHUD",       "PBXWeapons_hudsetting_filter",    "OffOn", 1
-    Slider     "$PBXCORE_MENU_HORIZONTAL",        "PBXWeapons_WeaponModehud_x",      -700, 700, 1
-    Slider     "$PBXCORE_MENU_VERTICAL",          "PBXWeapons_WeaponModehud_y",      -700, 700, 1
-    Slider     "$PBXCORE_MENU_SCALE",                 "PBXWeapons_WeaponModehud_scale",  0.1, 10, 0.1
-    Slider     "$PBXCORE_MENU_TRANSPARENCY",	        "PBXWeapons_WeaponModehud_alpha",  0, 1, 0.02, 2
-    /* Slider     "Scale Cut-Off (X)",     "PBXWeapons_WeaponModehud_boxW",   1, 250, 1
-    Slider     "Scale Cut-Off (Y)",     "PBXWeapons_WeaponModehud_boxH",   1, 250, 1 */
+    StaticText	"--------- Weapon HUD Settings ---------", 1
+    FlagOption "$PBXCORE_MENU_WEAPONHUD",            "PBXCore_HudFlags",    "OffOn", 0
+    Slider     "$PBXCORE_MENU_HORIZONTAL",        "PBXCORE_WEAPONHUD_X",          -700, 700, 1
+    Slider     "$PBXCORE_MENU_VERTICAL",          "PBXCORE_WEAPONHUD_Y",          -700, 700, 1
+    Slider     "$PBXCORE_MENU_SCALE",                 "PBXCORE_WEAPONHUD_SCALE",      0.1, 10, 0.1
+    Slider     "$PBXCORE_MENU_TRANSPARENCY",	        "PBXCORE_WEAPONHUD_ALPHA",      0, 1, 0.02, 2
+    /* Slider     "Scale Cut-Off (X)",     "PBXCORE_WEAPONHUD_BOX_W",       1, 250, 1
+    Slider     "Scale Cut-Off (Y)",     "PBXCORE_WEAPONHUD_BOX_H",       1, 250, 1 */
+    StaticText " "
+    FlagOption "$PBXCORE_MENU_WEAPONMODEHUD",       "PBXCore_HudFlags",    "OffOn", 1
+    Slider     "$PBXCORE_MENU_HORIZONTAL",        "PBXCORE_WEAPONMODE_HUD_X",      -700, 700, 1
+    Slider     "$PBXCORE_MENU_VERTICAL",          "PBXCORE_WEAPONMODE_HUD_Y",      -700, 700, 1
+    Slider     "$PBXCORE_MENU_SCALE",                 "PBXCORE_WEAPONMODE_HUD_SCALE",  0.1, 10, 0.1
+    Slider     "$PBXCORE_MENU_TRANSPARENCY",	        "PBXCORE_WEAPONMODE_HUD_ALPHA",  0, 1, 0.02, 2
+    /* Slider     "Scale Cut-Off (X)",     "PBXCORE_WEAPONMODE_HUD_BOX_W",   1, 250, 1
+    Slider     "Scale Cut-Off (Y)",     "PBXCORE_WEAPONMODE_HUD_BOX_H",   1, 250, 1 */
     StaticText " "
     StaticText	"--------- Armor HUD Settings ---------", 1
-    FlagOption "$PBXCORE_MENU_ARMORHUD",             "PBXWeapons_hudsetting_filter",    "OffOn", 3
-    FlagOption "$PBXCORE_MENU_ARMORHUD_BACKGROUND",  "PBXWeapons_hudsetting_filter",    "OffOn", 4
-    Slider     "$PBXCORE_MENU_HORIZONTAL",        "PBXWeapons_Armorhud_x",      -700, 700, 1
-    Slider     "$PBXCORE_MENU_VERTICAL",          "PBXWeapons_Armorhud_y",      -700, 700, 1
-    Slider     "$PBXCORE_MENU_SCALE",                 "PBXWeapons_Armorhud_scale",  0.1, 10, 0.1
-    Slider     "$PBXCORE_MENU_TRANSPARENCY",	        "PBXWeapons_Armorhud_alpha",  0, 1, 0.02, 2
-    /* Slider     "Scale Cut-Off (X)",     "PBXWeapons_Armorhud_boxW",   1, 250, 1
-    Slider     "Scale Cut-Off (Y)",     "PBXWeapons_Armorhud_boxH",   1, 250, 1 */
+    FlagOption "$PBXCORE_MENU_ARMORHUD",             "PBXCore_HudFlags",    "OffOn", 2
+    FlagOption "$PBXCORE_MENU_ARMORHUD_BACKGROUND",  "PBXCore_HudFlags",    "OffOn", 3
+    Slider     "$PBXCORE_MENU_HORIZONTAL",        "PBXCORE_ARMORHUD_X",      -700, 700, 1
+    Slider     "$PBXCORE_MENU_VERTICAL",          "PBXCORE_ARMORHUD_Y",      -700, 700, 1
+    Slider     "$PBXCORE_MENU_SCALE",                 "PBXCORE_ARMORHUD_SCALE",  0.1, 10, 0.1
+    Slider     "$PBXCORE_MENU_TRANSPARENCY",	        "PBXCORE_ARMORHUD_ALPHA",  0, 1, 0.02, 2
+    /* Slider     "Scale Cut-Off (X)",     "PBXCORE_ARMORHUD_BOX_W",   1, 250, 1
+    Slider     "Scale Cut-Off (Y)",     "PBXCORE_ARMORHUD_BOX_H",   1, 250, 1 */
+    StaticText " "
+    StaticText	"--------- Damage Indicators Settings ---------", 1
+    FlagOption "$PBXCORE_DD_ENABLE",          	 "PBXCore_HudFlags",    "OffOn", 4
+    StaticText " "
+    option "$PBXCORE_DD_TYPE",                   "D4D_IndicatorType","D4DIndTypes"
+	option "$PBXCORE_DD_COLORED", 				 "D4D_NoColorType","NoYes"
+	slider "$PBXCORE_DD_SCALE",                  "D4D_DIScale",0.2,1.0,0.05
+	slider "$PBXCORE_DD_ALPHA",                  "D4D_DIAlpha",0.05,1.0,0.05
+	slider "$PBXCORE_DD_DURATION",               "D4D_DITimer",20,140,5
+	option "$PBXCORE_DD_ANIMATION",              "D4D_DIAnim","D4DAnimTypes"
+    StaticText " "
+    StaticText	"--------- Damage Indicator Default Color ---------", 1
+	colorpicker "$PBXCORE_DD_COLORPICKER",       "D4D_DefColor"
+	textfield "$PBXCORE_DD_HEX",                 "D4D_DefColor"
     StaticText " "
     // Reset
-    SafeCommand  "$PBXCORE_WEAPONHUD_RESET", "resetcvar PBXWeapons_Weaponhud_x; resetcvar PBXWeapons_Weaponhud_y; resetcvar PBXWeapons_Weaponhud_scale; resetcvar PBXWeapons_Weaponhud_alpha; resetcvar PBXWeapons_Weaponhud_boxW; resetcvar PBXWeapons_Weaponhud_boxH"
-    SafeCommand  "$PBXCORE_WEAPONMODEHUD_RESET", "resetcvar PBXWeapons_WeaponModehud_x; resetcvar PBXWeapons_WeaponModehud_y; resetcvar PBXWeapons_WeaponModehud_scale; resetcvar PBXWeapons_WeaponModehud_alpha; resetcvar PBXWeapons_WeaponModehud_boxW; resetcvar PBXWeapons_WeaponModehud_boxH"
-    SafeCommand  "$PBXCORE_ARMORHUD_RESET", "resetcvar PBXWeapons_Armorhud_x; resetcvar PBXWeapons_Armorhud_y; resetcvar PBXWeapons_Armorhud_scale; resetcvar PBXWeapons_Armorhud_alpha; resetcvar PBXWeapons_Armorhud_boxW; resetcvar PBXWeapons_Armorhud_boxH"
+    SafeCommand  "$PBXCORE_HUD_RESET", "set PBXCore_HudFlags 0"
+    SafeCommand  "$PBXCORE_WEAPONHUD_RESET", "resetcvar PBXCORE_WEAPONHUD_X; resetcvar PBXCORE_WEAPONHUD_Y; resetcvar PBXCORE_WEAPONHUD_SCALE; resetcvar PBXCORE_WEAPONHUD_ALPHA; resetcvar PBXCORE_WEAPONHUD_BOX_W; resetcvar PBXCORE_WEAPONHUD_BOX_H"
+    SafeCommand  "$PBXCORE_WEAPONMODEHUD_RESET", "resetcvar PBXCORE_WEAPONMODE_HUD_X; resetcvar PBXCORE_WEAPONMODE_HUD_Y; resetcvar PBXCORE_WEAPONMODE_HUD_SCALE; resetcvar PBXCORE_WEAPONMODE_HUD_ALPHA; resetcvar PBXCORE_WEAPONMODE_HUD_BOX_W; resetcvar PBXCORE_WEAPONMODE_HUD_BOX_H"
+    SafeCommand  "$PBXCORE_ARMORHUD_RESET", "resetcvar PBXCORE_ARMORHUD_X; resetcvar PBXCORE_ARMORHUD_Y; resetcvar PBXCORE_ARMORHUD_SCALE; resetcvar PBXCORE_ARMORHUD_ALPHA; resetcvar PBXCORE_ARMORHUD_BOX_W; resetcvar PBXCORE_ARMORHUD_BOX_H"
     StaticText " "
     StaticText "$PBXCore_Version",cyan
 }

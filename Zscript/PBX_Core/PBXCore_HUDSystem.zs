@@ -1,9 +1,10 @@
 enum PBX_eHudSettingFlags{
-    DisablePBX_WeaponHud        = 1 << 0,
-    DisablePBX_WeaponModeHud    = 1 << 1,
-    DisablePBX_WeaponModeBG     = 1 << 2,
-    DisablePBX_ArmorHud		    = 1 << 3,
-    DisablePBX_ArmorHudBG		= 1 << 4
+    DisablePBX_WeaponHud            = 1 << 0
+    ,DisablePBX_WeaponModeHud       = 1 << 1
+    ,DisablePBX_ArmorHud		    = 1 << 2
+    ,DisablePBX_ArmorHudBG		    = 1 << 3
+    ,DisablePBX_DamageIndicators    = 1 << 4
+    ,DisablePBX_HitFeedBack         = 1 << 5
 }
 
 class PBXHUDData : Object
@@ -209,36 +210,36 @@ class PBXCore_HUDHandler : EventHandler
     ui void gatherHUDCVARs(PlayerInfo plr, PB_Hud_ZS phud)
     {
         // Weapon Pickup Sprites
-        pbx_weapon_PosX         = CVar.GetCVar("pbxweapons_Weaponhud_x", plr).GetInt();
-        pbx_weapon_PosY         = CVar.GetCVar("pbxweapons_Weaponhud_y", plr).GetInt();
-        pbx_weapon_hudscale     = CVar.GetCVar("pbxweapons_Weaponhud_scale", plr).GetFloat();
-        pbx_weapon_alpha        = CVar.GetCVar("pbxweapons_Weaponhud_alpha", plr).GetFloat();
-        pbx_weapon_boxW         = CVar.GetCVar("pbxweapons_Weaponhud_boxW", plr).GetInt();
-        pbx_weapon_boxH         = CVar.GetCVar("pbxweapons_Weaponhud_boxH", plr).GetInt();
+        pbx_weapon_PosX         = CVar.GetCVar("PBXCORE_WEAPONHUD_X", plr).GetInt();
+        pbx_weapon_PosY         = CVar.GetCVar("PBXCORE_WEAPONHUD_Y", plr).GetInt();
+        pbx_weapon_hudscale     = CVar.GetCVar("PBXCORE_WEAPONHUD_SCALE", plr).GetFloat();
+        pbx_weapon_alpha        = CVar.GetCVar("PBXCORE_WEAPONHUD_ALPHA", plr).GetFloat();
+        pbx_weapon_boxW         = CVar.GetCVar("PBXCORE_WEAPONHUD_BOX_W", plr).GetInt();
+        pbx_weapon_boxH         = CVar.GetCVar("PBXCORE_WEAPONHUD_BOX_H", plr).GetInt();
 
         pbx_weapon_pos          = (pbx_weapon_PosX, pbx_weapon_PosY);
         pbx_weapon_truescale    = (pbx_weapon_hudscale, pbx_weapon_hudscale);
         pbx_weapon_box1         = (pbx_weapon_boxW, pbx_weapon_boxH);
 
         // Weapon Modes
-        pbx_weaponmode_PosX     = CVar.GetCVar("pbxweapons_WeaponModehud_x", plr).GetInt();
-        pbx_weaponmode_PosY     = CVar.GetCVar("pbxweapons_WeaponModehud_y", plr).GetInt();
-        pbx_weaponmode_hudscale = CVar.GetCVar("pbxweapons_WeaponModehud_scale", plr).GetFloat();
-        pbx_weaponmode_alpha    = CVar.GetCVar("pbxweapons_WeaponModehud_alpha", plr).GetFloat();
-        pbx_weaponmode_boxW     = CVar.GetCVar("pbxweapons_WeaponModehud_boxW", plr).GetInt();
-        pbx_weaponmode_boxH     = CVar.GetCVar("pbxweapons_WeaponModehud_boxH", plr).GetInt();
+        pbx_weaponmode_PosX     = CVar.GetCVar("PBXCORE_WEAPONMODE_HUD_X", plr).GetInt();
+        pbx_weaponmode_PosY     = CVar.GetCVar("PBXCORE_WEAPONMODE_HUD_Y", plr).GetInt();
+        pbx_weaponmode_hudscale = CVar.GetCVar("PBXCORE_WEAPONMODE_HUD_SCALE", plr).GetFloat();
+        pbx_weaponmode_alpha    = CVar.GetCVar("PBXCORE_WEAPONMODE_HUD_ALPHA", plr).GetFloat();
+        pbx_weaponmode_boxW     = CVar.GetCVar("PBXCORE_WEAPONMODE_HUD_BOX_W", plr).GetInt();
+        pbx_weaponmode_boxH     = CVar.GetCVar("PBXCORE_WEAPONMODE_HUD_BOX_H", plr).GetInt();
 
         pbx_weapon_pos2         = (pbx_weaponmode_PosX, pbx_weaponmode_PosY);
         pbx_weapon_truescale2   = (pbx_weaponmode_hudscale, pbx_weaponmode_hudscale);
         pbx_weapon_box2         = (pbx_weaponmode_boxW, pbx_weaponmode_boxH);
 
         // Armor
-        pbx_armor_PosX          = CVar.GetCVar("PBXWeapons_Armorhud_x", plr).GetInt();
-        pbx_armor_PosY          = CVar.GetCVar("PBXWeapons_Armorhud_y", plr).GetInt();
-        pbx_armor_hudscale      = CVar.GetCVar("PBXWeapons_Armorhud_scale", plr).GetFloat();
-        pbx_armor_alpha         = CVar.GetCVar("PBXWeapons_Armorhud_alpha", plr).GetFloat();
-        pbx_armor_boxW          = CVar.GetCVar("PBXWeapons_Armorhud_boxW", plr).GetInt();
-        pbx_armor_boxH          = CVar.GetCVar("PBXWeapons_Armorhud_boxH", plr).GetInt();
+        pbx_armor_PosX          = CVar.GetCVar("PBXCORE_ARMORHUD_X", plr).GetInt();
+        pbx_armor_PosY          = CVar.GetCVar("PBXCORE_ARMORHUD_Y", plr).GetInt();
+        pbx_armor_hudscale      = CVar.GetCVar("PBXCORE_ARMORHUD_SCALE", plr).GetFloat();
+        pbx_armor_alpha         = CVar.GetCVar("PBXCORE_ARMORHUD_ALPHA", plr).GetFloat();
+        pbx_armor_boxW          = CVar.GetCVar("PBXCORE_ARMORHUD_BOX_W", plr).GetInt();
+        pbx_armor_boxH          = CVar.GetCVar("PBXCORE_ARMORHUD_BOX_H", plr).GetInt();
 
         pbx_armor_pos           = (pbx_armor_PosX, pbx_armor_PosY);
         pbx_armor_truescale     = (pbx_armor_hudscale, pbx_armor_hudscale);
@@ -598,11 +599,11 @@ class PBXCore_HUDHandler : EventHandler
     }
 
     // Just a non verbose way to check flags
-    // will always check PBXWeapons_hudsetting_filter
+    // will always check PBXCore_HudFlags
     private 
     ui bool CheckFlag(int tipFlag)
     {
-        let check = CVar.FindCVar("PBXWeapons_hudsetting_filter");
+        let check = CVar.FindCVar("PBXCore_HudFlags");
         return (check.GetInt() & tipflag) == tipflag;
     }
 

@@ -16,10 +16,8 @@ The Core contains functions and libraries needed for other PBX Modules to run, i
 ## PBX Modules
 Currently there are 5 Modules each adding different things to the game, you can open the link below for a more detailed description:
 - [PBX - Core](https://github.com/Risdar/PBX-Core) (You are currently here)
-- [PBX - Weapons](https://github.com/Risdar/PBX-Weapons)
-- [PBX - Addons](https://github.com/Risdar/PBX-Addons)
-- [PBX - Armors](https://github.com/Risdar/PBX-Armors)
-- [PBX - Items](https://github.com/Risdar/PBX-Items)
+- [PBX - Armament](https://github.com/Risdar/PBX-Armament)
+- [PBX - Armory](https://github.com/Risdar/PBX-Armory)
 
 ## How to Download
 1. First you will need the latest version of [UZDoom/LZDoom](https://zdoom.org/downloads) for PC, [Delta Touch](https://play.google.com/store/apps/details?id=com.opentouchgaming.deltatouch&hl=en_US&gl=US "Delta Touch") for Android, or [GenZD](https://apps.apple.com/us/app/genzd/id6503916449 "GenZD") for iOS (as of July 5th 2026 the latest version is 4.14.3)

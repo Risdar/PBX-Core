@@ -7,37 +7,42 @@ server bool PBXCore_DebugCVAR = false;
 
 // Compatiblity
 server bool PBXCore_WeaponsLoaded = false;
-server bool PBXCore_AddonsLoaded = false;
 server bool PBXCore_ItemsLoaded = false;
 server bool PBXCore_GlorykillLoaded = false;
-
-// This is so we can grey out the options if a module is not loaded
-server bool PBWXWeapons_Loaded = false;
+server bool PBXCore_UltimateVisorLoaded = false;
 
 // HUD
-server int PBXWeapons_hudsetting_filter = 0;
-server int PBXWeapons_generalsetting_filter = 0;
+server int PBXCore_HudFlags = 0;
 
-user int PBXWeapons_Weaponhud_x = -100;
-user int PBXWeapons_Weaponhud_y = -90;
-user float PBXWeapons_Weaponhud_scale = 1.0;
-user float PBXWeapons_Weaponhud_alpha = 1.0;
-user int PBXWeapons_Weaponhud_boxW = 96;
-user int PBXWeapons_Weaponhud_boxH = 36;
+user int PBXCORE_WEAPONHUD_X = -100;
+user int PBXCORE_WEAPONHUD_Y = -90;
+user float PBXCORE_WEAPONHUD_SCALE = 1.0;
+user float PBXCORE_WEAPONHUD_ALPHA = 1.0;
+user int PBXCORE_WEAPONHUD_BOX_W = 96;
+user int PBXCORE_WEAPONHUD_BOX_H = 36;
 
-user int PBXWeapons_WeaponModehud_x = -260;
-user int PBXWeapons_WeaponModehud_y = -14;
-user float PBXWeapons_WeaponModehud_scale = 2.5;
-user float PBXWeapons_WeaponModehud_alpha = 1.0;
-user int PBXWeapons_WeaponModehud_boxW = 56;
-user int PBXWeapons_WeaponModehud_boxH = 56;
+user int PBXCORE_WEAPONMODE_HUD_X = -260;
+user int PBXCORE_WEAPONMODE_HUD_Y = -14;
+user float PBXCORE_WEAPONMODE_HUD_SCALE = 2.5;
+user float PBXCORE_WEAPONMODE_HUD_ALPHA = 1.0;
+user int PBXCORE_WEAPONMODE_HUD_BOX_W = 56;
+user int PBXCORE_WEAPONMODE_HUD_BOX_H = 56;
 
-user int PBXWeapons_Armorhud_x = 300;
-user int PBXWeapons_Armorhud_y = -48;
-user float PBXWeapons_Armorhud_scale = 0.25 ;
-user float PBXWeapons_Armorhud_alpha = 1.0;
-user int PBXWeapons_Armorhud_boxW = 50;
-user int PBXWeapons_Armorhud_boxH = 50;
+user int PBXCORE_ARMORHUD_X = 300;
+user int PBXCORE_ARMORHUD_Y = -48;
+user float PBXCORE_ARMORHUD_SCALE = 0.25 ;
+user float PBXCORE_ARMORHUD_ALPHA = 1.0;
+user int PBXCORE_ARMORHUD_BOX_W = 50;
+user int PBXCORE_ARMORHUD_BOX_H = 50;
+
+// Damage Indicators
+user 	int 	D4D_IndicatorType 		= 0;
+user 	float 	D4D_DIScale 			= 0.5;
+user 	float 	D4D_DIAlpha 			= 1.0;
+user 	int 	D4D_DITimer 			= 35;
+user	int		D4D_DIAnim				= 0;
+user	bool	D4D_NoColorType			= false;
+user	color	D4D_DefColor			= "FF0000";	//ig nosave could work too
 
 // Powerup Values
 // Special Powerups

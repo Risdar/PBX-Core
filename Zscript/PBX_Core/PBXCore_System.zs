@@ -7,25 +7,25 @@ class PBXCore_Handler : StaticEventHandler
     static const string CHECKED_CLASSES[] =
     {
         "PBX_PlasmaBlaster"
-        ,"PBX_SGLEdited"
         ,"PBX_Blackblur"
         ,"PB_Baron1GK"
+        ,"UV_HudVisorDraw"
     };
     // Contains the name of the CVar that should be set
     static const name LOADED_CVARS[] =
     {
         'PBXCore_WeaponsLoaded'
-        ,'PBXCore_AddonsLoaded'
         ,'PBXCore_ItemsLoaded'
         ,'PBXCore_GlorykillLoaded'
+        ,'PBXCore_UltimateVisorLoaded'
     };
     // What will be printed
     static const string VERSION_STRINGS[] =
     {
-        "$PBXWeapons_Version"
-        ,"$PBXAddons_Version"
+        "$PBX_Armament_Version"
         ,"$PBX_Armory_Version"
         ,"$PBXCore_Glorykill"
+        ,"$PBXCore_UltimateVisor"
     };
 
     // So it only prints the version once per session

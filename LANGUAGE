@@ -1,9 +1,10 @@
 [enu default]
 //////////////////////////// GENERAL ///////////////////////////////////////////////////////////////////////////////
 PBXCore_Settings                    = "\cr♛\c- PBX Options";
-PBXCore_Version                     = "\cvPBX - Core Version: 1.6.2";
+PBXCore_Version                     = "\cvPBX - Core Version: 1.7.0";
 PBXHud_Settings                     = "\cv⍟\c- PBX - HUD Settings";
 PBXCore_Glorykill                   = "Glorykills Loaded";
+PBXCore_UltimateVisor               = "Ultimate Visor Mk. III Loaded";
 
 TIP_PBXCore_SendTip                 = "Enable tooltips, this the Master Override for all tooltips in PBX. If this is disabled, no tooltips will be shown.";
 
@@ -12,9 +13,23 @@ PBXCORE_PRINT_VERSION = "Print PBX Versions";
 PBXCORE_DEBUG_MODE = "Debug Mode";
 PBXCORE_ENABLE_TOOLTIP = "Enable Tooltips";
 
+PBXCORE_HF_ENABLE = "Enable Hit Feedback";
+
+PBXCORE_HUD_RESET = "Enable Every PBX HUD Element";
 PBXCORE_WEAPONHUD_RESET = "Reset Weapon HUD to Default";
 PBXCORE_WEAPONMODEHUD_RESET = "Reset Weapon Mode HUD to Default";
 PBXCORE_ARMORHUD_RESET = "Reset Armor HUD to Default";
+
+PBXCORE_DD_ENABLE       = "Enable Damage Indicators";
+PBXCORE_DD_TYPE         = "Type ";
+PBXCORE_DD_COLORED      = "Enable damage type colored indicator ";
+PBXCORE_DD_SCALE        = "Scale ";
+PBXCORE_DD_ALPHA        = "Alpha ";
+PBXCORE_DD_DURATION     = "Duration (in Tics, 35 tics = 1 second) ";
+PBXCORE_DD_ANIMATION    = "Animation ";
+
+PBXCORE_DD_COLORPICKER  = "Color picker";
+PBXCORE_DD_HEX          = "Hex";
 
 PBXCORE_POWERUP_TAINTED_INVISIBILITY = "Tainted Invisibility Duration";
 PBXCORE_POWERUP_DEFLECT = "Deflect Duration";

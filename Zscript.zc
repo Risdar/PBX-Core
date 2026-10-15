@@ -4,6 +4,8 @@ Version 5.0
 #include "Zscript/PBX_Core/PBXCore_System.zs"
 #include "Zscript/PBX_Core/PBXCore_HUDSystem.zs"
 #include "Zscript/PBX_Core/PBXCore_HUDData.zs"
+#include "Zscript/PBX_Core/PBXCore_DamageIndicators.zs"
+#include "Zscript/PBX_Core/PBXCore_HitFeedback.zs"
 #include "Zscript/PBX_Core/PBXCore_Powerups.zs"
 #include "Zscript/PBX_Core/PBXCore_Cheats.zs"
 
