@@ -1,7 +1,7 @@
 [enu default]
 //////////////////////////// GENERAL ///////////////////////////////////////////////////////////////////////////////
 PBXCore_Settings                    = "\cr♛\c- PBX Options";
-PBXCore_Version                     = "\cvPBX - Core Version: 1.7.0";
+PBXCore_Version                     = "\cvPBX - Core Version: 1.7.1";
 PBXHud_Settings                     = "\cv⍟\c- PBX - HUD Settings";
 PBXCore_Glorykill                   = "Glorykills Loaded";
 PBXCore_UltimateVisor               = "Ultimate Visor Mk. III Loaded";

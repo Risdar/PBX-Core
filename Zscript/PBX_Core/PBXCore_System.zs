@@ -2,13 +2,13 @@ class PBXCore_Handler : StaticEventHandler
 {
     bool hasPrintedVersion;
 
-    // Parallel arrays: These three Arrays are basically paired
+    // These three Arrays are paired
     // Contains the name of classes to check
     static const string CHECKED_CLASSES[] =
     {
         "PBX_PlasmaBlaster"
         ,"PBX_Blackblur"
-        ,"PB_Baron1GK"
+        ,"PB_BaronGK"
         ,"UV_HudVisorDraw"
     };
     // Contains the name of the CVar that should be set
@@ -41,7 +41,7 @@ class PBXCore_Handler : StaticEventHandler
         if(hasPrintedVersion || e.IsSaveGame || e.IsReopen) return;
         for (int i = 0; i < CHECKED_CLASSES.Size(); i++)
         {
-            bool loaded = (class<Actor>)(CHECKED_CLASSES[i]) != null;
+            bool loaded = FindClass(CHECKED_CLASSES[i]) != null;
             CVar.FindCVar(LOADED_CVARS[i]).SetBool(loaded);
         }
     }
