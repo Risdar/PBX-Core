@@ -45,6 +45,7 @@ user	bool	D4D_NoColorType			= false;
 user	color	D4D_DefColor			= "FF0000";	//ig nosave could work too
 
 // Powerup Values
+// TODO: Move this to PBX - Armory
 // Special Powerups
 server int pbx_invistaint_duration = 75;
 server int pbx_deflect_duration    = 60;
@@ -59,7 +60,7 @@ server int pbx_highjump_duration   = 60;
 server int pbx_infammo_duration    = 12;
 server int pbx_protect_duration    = 25;
 server int pbx_reflect_duration    = 60;
-server int pbx_regen_duration      = 60;
+server int pbx_regen_duration      = 30;
 server int pbx_timefreeze_duration = 12;
 server int pbx_taintregen_duration = 30;
 // New Powerups
