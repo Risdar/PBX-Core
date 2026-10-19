@@ -44,25 +44,32 @@ user	int		D4D_DIAnim				= 0;
 user	bool	D4D_NoColorType			= false;
 user	color	D4D_DefColor			= "FF0000";	//ig nosave could work too
 
-// Powerup Values
-// TODO: Move this to PBX - Armory
-// Special Powerups
-server int pbx_invistaint_duration = 75;
-server int pbx_deflect_duration    = 60;
-server int pbx_electaura_duration  = 45;
-server int pbx_invultaint_duration = 30;
-// Vanilla Powerups
-server int pbx_buddha_duration     = 60;
-server int pbx_drain_duration      = 60;
-server int pbx_flight_duration     = 60;
-server int pbx_frightener_duration = 60;
-server int pbx_highjump_duration   = 60;
-server int pbx_infammo_duration    = 12;
-server int pbx_protect_duration    = 25;
-server int pbx_reflect_duration    = 60;
-server int pbx_regen_duration      = 30;
-server int pbx_timefreeze_duration = 12;
-server int pbx_taintregen_duration = 30;
-// New Powerups
-server int pbx_frostaura_duration  = 45;
-server int pbx_fireaura_duration   = 30;
+// Damage Flashes
+server bool OuchFlashEnabled = false;
+server bool OuchFlashOnlyMonsters = true;
+server bool OuchFlashSolidColor = true;
+server int OuchFlashMinDamage = 5;
+
+server int OuchFlashDuration = 0;
+server int OuchFlashBrightness = 64;
+server HandlerClass(OuchFlashAdjuster) int OuchFlashCooldown = 6;
+
+server color OuchFlash_ 			= "ff0000";
+//zdoom damagetypes
+server color OuchFlash_Hitscan 		= "ff0000";
+server color OuchFlash_BFGSplash 	= "a2ff00";
+server color OuchFlash_Drowning 	= "0030cc";
+server color OuchFlash_Slime 		= "8f0000";
+server color OuchFlash_Fire 		= "ff9900";
+server color OuchFlash_Crush 		= "a32727";
+server color OuchFlash_Telefrag 	= "73ff00";
+server color OuchFlash_Melee 		= "ffb8b8"; //"ff 00 00";
+server color OuchFlash_Railgun 		= "a6acff";
+server color OuchFlash_Ice 			= "6bf0ff";
+server color OuchFlash_Electric 	= "fff457";
+server color OuchFlash_Poison 		= "00FF00";
+//Generic modded names just in case
+server color OuchFlash_Plasma 		= "3856ff";
+server color OuchFlash_Freeze 		= "6bf0ff";
+server color OuchFlash_Bleed 		= "ff0000";
+

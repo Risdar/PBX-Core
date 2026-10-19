@@ -55,6 +55,7 @@ OptionMenu "PBXCore_Menu"
     Option  "$PBXCORE_DEBUG_MODE", "PBXCore_DebugCVAR", "OnOff"
     Option  "$PBXCORE_ENABLE_TOOLTIP", "PBXCore_SendTip", "OnOff"
     StaticText " "
+    StaticText " "
     StaticText	"--------- PBX HUD Settings ---------", 1
     Submenu "$PBXHud_Settings", "PBXHud_Menu"
     SafeCommand  "$PBXCORE_HUD_RESET", "set PBXCore_HudFlags 0"
@@ -62,27 +63,66 @@ OptionMenu "PBXCore_Menu"
     SafeCommand  "$PBXCORE_WEAPONMODEHUD_RESET", "resetcvar PBXCORE_WEAPONMODE_HUD_X; resetcvar PBXCORE_WEAPONMODE_HUD_Y; resetcvar PBXCORE_WEAPONMODE_HUD_SCALE; resetcvar PBXCORE_WEAPONMODE_HUD_ALPHA; resetcvar PBXCORE_WEAPONMODE_HUD_BOX_W; resetcvar PBXCORE_WEAPONMODE_HUD_BOX_H"
     SafeCommand  "$PBXCORE_ARMORHUD_RESET", "resetcvar PBXCORE_ARMORHUD_X; resetcvar PBXCORE_ARMORHUD_Y; resetcvar PBXCORE_ARMORHUD_SCALE; resetcvar PBXCORE_ARMORHUD_ALPHA; resetcvar PBXCORE_ARMORHUD_BOX_W; resetcvar PBXCORE_ARMORHUD_BOX_H"
     StaticText " "
-    StaticText	"--------- PBX Powerups Settings ---------", 1
-    Slider "$PBXCORE_POWERUP_TAINTED_INVISIBILITY",      "pbx_invistaint_duration",  1, 500, 1
-    Slider "$PBXCORE_POWERUP_DEFLECT",                   "pbx_deflect_duration",     1, 500, 1
-    Slider "$PBXCORE_POWERUP_ELECTRIC_AURA",             "pbx_electaura_duration",   1, 500, 1
-    Slider "$PBXCORE_POWERUP_TAINTED_INVULNERABILITY",   "pbx_invultaint_duration",  1, 500, 1
-    Slider "$PBXCORE_POWERUP_BUDDHA",                    "pbx_buddha_duration",      1, 500, 1
-    Slider "$PBXCORE_POWERUP_DRAIN",                     "pbx_drain_duration",       1, 500, 1
-    Slider "$PBXCORE_POWERUP_FLIGHT",                    "pbx_flight_duration",      1, 500, 1
-    Slider "$PBXCORE_POWERUP_FRIGHTENER",                "pbx_frightener_duration",  1, 500, 1
-    Slider "$PBXCORE_POWERUP_HIGH_JUMP",                 "pbx_highjump_duration",    1, 500, 1
-    Slider "$PBXCORE_POWERUP_INFINITE_AMMO",             "pbx_infammo_duration",     1, 500, 1
-    Slider "$PBXCORE_POWERUP_PROTECTION",                "pbx_protect_duration",     1, 500, 1
-    Slider "$PBXCORE_POWERUP_REFLECTION",                "pbx_reflect_duration",     1, 500, 1
-    Slider "$PBXCORE_POWERUP_REGENERATION",              "pbx_regen_duration",       1, 500, 1
-    Slider "$PBXCORE_POWERUP_TIME_FREEZE",               "pbx_timefreeze_duration",  1, 500, 1
-    Slider "$PBXCORE_POWERUP_TAINTED_REGENERATION",      "pbx_taintregen_duration",  1, 500, 1
-    Slider "$PBXCORE_POWERUP_FROST_AURA",                "pbx_frostaura_duration",   1, 500, 1
-    Slider "$PBXCORE_POWERUP_FIRE_AURA",                 "pbx_fireaura_duration",    1, 500, 1
-    SafeCommand "$PBXCORE_RESET_POWERUPS", "resetcvar pbx_invistaint_duration; resetcvar pbx_deflect_duration; resetcvar pbx_electaura_duration; resetcvar pbx_invultaint_duration; resetcvar pbx_buddha_duration; resetcvar pbx_drain_duration; resetcvar pbx_flight_duration; resetcvar pbx_frightener_duration; resetcvar pbx_highjump_duration; resetcvar pbx_infammo_duration; resetcvar pbx_protect_duration; resetcvar pbx_reflect_duration; resetcvar pbx_regen_duration; resetcvar pbx_timefreeze_duration; resetcvar pbx_taintregen_duration; resetcvar pbx_frostaura_duration; resetcvar pbx_fireaura_duration"
-    StaticText "$PBXCore_Version",cyan
     StaticText " "
+    StaticText	"--------- Hit Feedback Settings ---------", 1
+    FlagOption "$PBXCORE_HF_ENABLE",            "PBXCore_HudFlags",    "OffOn", 5, "PBXCore_UltimateVisorLoaded",0,1
+    StaticText " "
+    StaticText " "
+    StaticText	"--------- Damage Indicators Settings ---------", 1
+    FlagOption "$PBXCORE_DD_ENABLE",          	 "PBXCore_HudFlags",    "OffOn", 4
+    StaticText " "
+    option "$PBXCORE_DD_TYPE",                   "D4D_IndicatorType","D4DIndTypes"
+	option "$PBXCORE_DD_COLORED", 				 "D4D_NoColorType","NoYes"
+	slider "$PBXCORE_DD_SCALE",                  "D4D_DIScale",0.2,1.0,0.05
+	slider "$PBXCORE_DD_ALPHA",                  "D4D_DIAlpha",0.05,1.0,0.05
+	slider "$PBXCORE_DD_DURATION",               "D4D_DITimer",20,140,5
+	option "$PBXCORE_DD_ANIMATION",              "D4D_DIAnim","D4DAnimTypes"
+    StaticText " "
+    StaticText	"--------- Damage Indicator Default Color ---------", 1
+	colorpicker "$PBXCORE_DD_COLORPICKER",       "D4D_DefColor"
+	textfield "$PBXCORE_DD_HEX",                 "D4D_DefColor"
+    StaticText " "
+    StaticText " "
+    StaticText	"--------- Damage Flash Settings ---------", 1
+    ScaleSlider "$PBXCORE_DF_DURATION",                 "OuchFlashDuration", 0, 35, 1, "Disabled", "????? HOW IS IT -1"
+	ScaleSlider "$PBXCORE_DF_COOLDOWN",                 "OuchFlashCooldown", 0, 35, 1, "Disabled", "what", "OuchFlashDuration", 0
+	Option      "$PBXCORE_DF_ACTOR_TYPES",              "OuchFlashOnlyMonsters", "OuchFlashActorType", "OuchFlashDuration", 0
+	Slider      "$PBXCORE_DF_MIN_DAMAGE",               "OuchFlashMinDamage", 1, 100, 5, 0, "OuchFlashDuration", 0
+	ScaleSlider "$PBXCORE_DF_EXTRA_BRIGHT",             "OuchFlashBrightness", 0, 255, 32, "Disabled", "what", "OuchFlashDuration", 0
+	Option      "$PBXCORE_DF_FLASH_TYPE",               "OuchFlashSolidColor", "OuchFlashType", "OuchFlashDuration", 0
+	StaticText " "
+	ColorPicker "$PBXCORE_DF_DEFAULT_COLOR",            "OuchFlash_Default", "OuchFlashDuration", 0
+	StaticText " "
+    StaticText	"--------- ZDoom Damage Types ---------", 1
+	ColorPicker "$PBXCORE_DF_HITSCAN", 				    "OuchFlash_Hitscan", "OuchFlashDuration", 0
+	ColorPicker "$PBXCORE_DF_BFG_SPLASH", 				"OuchFlash_BFGSplash", "OuchFlashDuration", 0
+	ColorPicker "$PBXCORE_DF_DROWNING", 				"OuchFlash_Drowning", "OuchFlashDuration", 0
+	ColorPicker "$PBXCORE_DF_SLIME", 				    "OuchFlash_Slime", "OuchFlashDuration", 0
+	ColorPicker "$PBXCORE_DF_FIRE", 					"OuchFlash_Fire", "OuchFlashDuration", 0
+	ColorPicker "$PBXCORE_DF_CRUSH", 					"OuchFlash_Crush", "OuchFlashDuration", 0
+	ColorPicker "$PBXCORE_DF_TELEFRAG", 				"OuchFlash_Telefrag", "OuchFlashDuration", 0
+	ColorPicker "$PBXCORE_DF_MELEE",			 		"OuchFlash_Melee", "OuchFlashDuration", 0
+	ColorPicker "$PBXCORE_DF_RAILGUN", 					"OuchFlash_Railgun", "OuchFlashDuration", 0
+	ColorPicker "$PBXCORE_DF_ICE", 						"OuchFlash_Ice", "OuchFlashDuration", 0
+	ColorPicker "$PBXCORE_DF_ELECTRIC", 				"OuchFlash_Electric", "OuchFlashDuration", 0
+	ColorPicker "$PBXCORE_DF_POISON", 					"OuchFlash_Poison", "OuchFlashDuration", 0
+	ColorPicker "$PBXCORE_DF_PLASMA", 					"OuchFlash_Plasma", "OuchFlashDuration", 0
+	ColorPicker "$PBXCORE_DF_FREEZE", 					"OuchFlash_Freeze", "OuchFlashDuration", 0
+	ColorPicker "$PBXCORE_DF_BLEED", 					"OuchFlash_Bleed", "OuchFlashDuration", 0
+
+    StaticText " "
+    StaticText "$PBXCore_Version",cyan
+}
+
+OptionValue "OuchFlashActorType" 
+{
+	0, "All actors"
+	1, "Monsters only"
+}
+OptionValue "OuchFlashType" 
+{
+	0, "Tint"
+	1, "Solid color"
 }
 
 optionvalue "D4DIndTypes"
@@ -140,6 +180,7 @@ OptionMenu "PBXHud_Menu"
     /* Slider     "Scale Cut-Off (X)",     "PBXCORE_ARMORHUD_BOX_W",   1, 250, 1
     Slider     "Scale Cut-Off (Y)",     "PBXCORE_ARMORHUD_BOX_H",   1, 250, 1 */
     StaticText " "
+    StaticText " "
     StaticText	"--------- Damage Indicators Settings ---------", 1
     FlagOption "$PBXCORE_DD_ENABLE",          	 "PBXCore_HudFlags",    "OffOn", 4
     StaticText " "
@@ -154,7 +195,9 @@ OptionMenu "PBXHud_Menu"
 	colorpicker "$PBXCORE_DD_COLORPICKER",       "D4D_DefColor"
 	textfield "$PBXCORE_DD_HEX",                 "D4D_DefColor"
     StaticText " "
+    StaticText " "
     // Reset
+    StaticText	"--------- Reset to Defaults ---------", 1
     SafeCommand  "$PBXCORE_HUD_RESET", "set PBXCore_HudFlags 0"
     SafeCommand  "$PBXCORE_WEAPONHUD_RESET", "resetcvar PBXCORE_WEAPONHUD_X; resetcvar PBXCORE_WEAPONHUD_Y; resetcvar PBXCORE_WEAPONHUD_SCALE; resetcvar PBXCORE_WEAPONHUD_ALPHA; resetcvar PBXCORE_WEAPONHUD_BOX_W; resetcvar PBXCORE_WEAPONHUD_BOX_H"
     SafeCommand  "$PBXCORE_WEAPONMODEHUD_RESET", "resetcvar PBXCORE_WEAPONMODE_HUD_X; resetcvar PBXCORE_WEAPONMODE_HUD_Y; resetcvar PBXCORE_WEAPONMODE_HUD_SCALE; resetcvar PBXCORE_WEAPONMODE_HUD_ALPHA; resetcvar PBXCORE_WEAPONMODE_HUD_BOX_W; resetcvar PBXCORE_WEAPONMODE_HUD_BOX_H"

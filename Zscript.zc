@@ -1,13 +1,12 @@
 Version 5.0
 
 // General
-#include "Zscript/PBX_Core/PBXCore_System.zs"
-#include "Zscript/PBX_Core/PBXCore_HUDSystem.zs"
-#include "Zscript/PBX_Core/PBXCore_HUDData.zs"
-#include "Zscript/PBX_Core/PBXCore_DamageIndicators.zs"
-#include "Zscript/PBX_Core/PBXCore_HitFeedback.zs"
-#include "Zscript/PBX_Core/PBXCore_Powerups.zs"
-#include "Zscript/PBX_Core/PBXCore_Cheats.zs"
+#include "Zscript/PBX_Core/PBX_System.zs"
+#include "Zscript/PBX_Core/PBX_HUD_System.zs"
+#include "Zscript/PBX_Core/PBX_HUD_Data.zs"
+#include "Zscript/PBX_Core/PBX_DamageIndicators.zs"
+#include "Zscript/PBX_Core/PBX_DamageFlashes.zs"
+#include "Zscript/PBX_Core/PBX_HitFeedback.zs"
 
 // Big thanks to EmeraldCoastt and the BDP team for this
 #include "Zscript/PBX_Core/MathsNMixins/Include.zsc"

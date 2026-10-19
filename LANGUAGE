@@ -1,7 +1,7 @@
 [enu default]
 //////////////////////////// GENERAL ///////////////////////////////////////////////////////////////////////////////
 PBXCore_Settings                    = "\cr♛\c- PBX Options";
-PBXCore_Version                     = "\cvPBX - Core Version: 1.7.1";
+PBXCore_Version                     = "\cvPBX - Core Version: 1.8.0";
 PBXHud_Settings                     = "\cv⍟\c- PBX - HUD Settings";
 PBXCore_Glorykill                   = "Glorykills Loaded";
 PBXCore_UltimateVisor               = "Ultimate Visor Mk. III Loaded";
@@ -15,11 +15,23 @@ PBXCORE_ENABLE_TOOLTIP = "Enable Tooltips";
 
 PBXCORE_HF_ENABLE = "Enable Hit Feedback";
 
+// HUD
+PBXCORE_MENU_WEAPONHUD = "Enable Weapon HUD";
+PBXCORE_MENU_WEAPONMODEHUD = "Enable Weapon Mode HUD";
+PBXCORE_MENU_ARMORHUD = "Enable Armor HUD";
+PBXCORE_MENU_ARMORHUD_BACKGROUND = "Enable Armor HUD Background";
+
+PBXCORE_MENU_HORIZONTAL = "Horizontal (X)";
+PBXCORE_MENU_VERTICAL = "Vertical (Y)";
+PBXCORE_MENU_SCALE = "Scale";
+PBXCORE_MENU_TRANSPARENCY = "Transparency";
+
 PBXCORE_HUD_RESET = "Enable Every PBX HUD Element";
 PBXCORE_WEAPONHUD_RESET = "Reset Weapon HUD to Default";
 PBXCORE_WEAPONMODEHUD_RESET = "Reset Weapon Mode HUD to Default";
 PBXCORE_ARMORHUD_RESET = "Reset Armor HUD to Default";
 
+// Damage Indicators
 PBXCORE_DD_ENABLE       = "Enable Damage Indicators";
 PBXCORE_DD_TYPE         = "Type ";
 PBXCORE_DD_COLORED      = "Enable damage type colored indicator ";
@@ -31,32 +43,27 @@ PBXCORE_DD_ANIMATION    = "Animation ";
 PBXCORE_DD_COLORPICKER  = "Color picker";
 PBXCORE_DD_HEX          = "Hex";
 
-PBXCORE_POWERUP_TAINTED_INVISIBILITY = "Tainted Invisibility Duration";
-PBXCORE_POWERUP_DEFLECT = "Deflect Duration";
-PBXCORE_POWERUP_ELECTRIC_AURA = "Electric Aura Duration";
-PBXCORE_POWERUP_TAINTED_INVULNERABILITY = "Tainted Invulnerability Duration";
-PBXCORE_POWERUP_BUDDHA = "Buddha Duration";
-PBXCORE_POWERUP_DRAIN = "Drain Duration";
-PBXCORE_POWERUP_FLIGHT = "Flight Duration";
-PBXCORE_POWERUP_FRIGHTENER = "Frightener Duration";
-PBXCORE_POWERUP_HIGH_JUMP = "High Jump Duration";
-PBXCORE_POWERUP_INFINITE_AMMO = "Infinite Ammo Duration";
-PBXCORE_POWERUP_PROTECTION = "Protection Duration";
-PBXCORE_POWERUP_REFLECTION = "Reflection Duration";
-PBXCORE_POWERUP_REGENERATION = "Regeneration Duration";
-PBXCORE_POWERUP_TIME_FREEZE = "Time Freeze Duration";
-PBXCORE_POWERUP_TAINTED_REGENERATION = "Tainted Regeneration Duration";
-PBXCORE_POWERUP_FROST_AURA = "Frost Aura Duration";
-PBXCORE_POWERUP_FIRE_AURA = "Fire Aura Duration";
+// Damage Flash
+PBXCORE_DF_DURATION       = "Flash duration";
+PBXCORE_DF_COOLDOWN       = "Flash cooldown";
+PBXCORE_DF_ACTOR_TYPES    = "Actor types to trigger a flash";
+PBXCORE_DF_MIN_DAMAGE     = "Minimum damage to trigger a flash";
+PBXCORE_DF_EXTRA_BRIGHT   = "Extra brightness when flashing";
+PBXCORE_DF_FLASH_TYPE     = "Flash type";
 
-PBXCORE_RESET_POWERUPS = "Reset Powerup Durations to Default";
-
-PBXCORE_MENU_WEAPONHUD = "Enable Weapon HUD";
-PBXCORE_MENU_WEAPONMODEHUD = "Enable Weapon Mode HUD";
-PBXCORE_MENU_ARMORHUD = "Enable Armor HUD";
-PBXCORE_MENU_ARMORHUD_BACKGROUND = "Enable Armor HUD Background";
-
-PBXCORE_MENU_HORIZONTAL = "Horizontal (X)";
-PBXCORE_MENU_VERTICAL = "Vertical (Y)";
-PBXCORE_MENU_SCALE = "Scale";
-PBXCORE_MENU_TRANSPARENCY = "Transparency";
+PBXCORE_DF_DEFAULT_COLOR  = "Default color";
+PBXCORE_DF_HITSCAN = "Hitscan";
+PBXCORE_DF_BFG_SPLASH = "BFG splash";
+PBXCORE_DF_DROWNING = "Drowning";
+PBXCORE_DF_SLIME = "Slime (Damaging Floors)";
+PBXCORE_DF_FIRE = "Fire";
+PBXCORE_DF_CRUSH = "Crush";
+PBXCORE_DF_TELEFRAG = "Telefrag";
+PBXCORE_DF_MELEE = "Melee";
+PBXCORE_DF_RAILGUN = "Railgun";
+PBXCORE_DF_ICE = "Ice";
+PBXCORE_DF_ELECTRIC = "Electric";
+PBXCORE_DF_POISON = "Poison";
+PBXCORE_DF_PLASMA = "Plasma";
+PBXCORE_DF_FREEZE = "Freeze";
+PBXCORE_DF_BLEED = "Bleed";

@@ -1,4 +1,5 @@
-enum PBX_eHudSettingFlags{
+enum PBX_eHudSettingFlags
+{
     DisablePBX_WeaponHud            = 1 << 0
     ,DisablePBX_WeaponModeHud       = 1 << 1
     ,DisablePBX_ArmorHud		    = 1 << 2
@@ -58,7 +59,7 @@ class PBXCore_HUDHandler : EventHandler
 
     // Services
     ui Array<Service> PBX_HUDServices;
-        ui bool ServicesLoaded;
+    ui bool ServicesLoaded;
 
     // Others
     ui PlayerInfo plr;
@@ -69,7 +70,8 @@ class PBXCore_HUDHandler : EventHandler
     ui vector2 powerupPosition;
     bool isGearboxOpened;
 
-    enum PBXHud_DrawImageSettings{
+    enum PBXHud_DrawImageSettings
+    {
         DRAW_WEAPON_ICON,
         DRAW_MODE_ICON,
         DRAW_MODE2_ICON,
@@ -77,7 +79,8 @@ class PBXCore_HUDHandler : EventHandler
         DRAW_ARMOR_BG
     }
 
-    enum PBXHud_DrawBarSettings{
+    enum PBXHud_DrawBarSettings
+    {
         DRAW_SECOND_BAR,
         DRAW_THIRD_BAR
     }
@@ -362,7 +365,6 @@ class PBXCore_HUDHandler : EventHandler
         // Dont draw if its disabled
         if(CheckFlag(DisablePBX_ArmorHud)) return;
 
-
         // Draw the Armor Box if Enabled
         if(!CheckFlag(DisablePBX_ArmorHudBG))
             PBX_DrawImage(DRAW_ARMOR_BG);
@@ -436,7 +438,9 @@ class PBXCore_HUDHandler : EventHandler
         };
 
         for (int i = 0; i < PBXPowerups.Size(); i++)
+        {
             if (PBXPowerups[i] == powerName) return true;
+        }
 
         return false;
     }

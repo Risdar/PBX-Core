@@ -4,5 +4,6 @@ Gameinfo
 	addeventhandlers = "PBXCore_HUDHandler"
 	addeventhandlers = "PBXCore_CheatsHandler"
 	addeventhandlers = "PBX_HitFeedback_Handler"
+	AddEventHandlers = "PBX_DamageFlash_Handler"
 	addeventhandlers = "D4DHandler"
 }
